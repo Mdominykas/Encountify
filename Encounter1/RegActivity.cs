@@ -27,12 +27,14 @@ namespace Encounter1
             btnCreate = FindViewById<Button>(Resource.Id.button1);
             txtUsername = FindViewById<EditText>(Resource.Id.editText2);
             txtPassword = FindViewById<EditText>(Resource.Id.editText1);
+    
             btnCreate.Click += Btncreate_Click;
         }
         private void Btncreate_Click (object sender, EventArgs e)
         {
             try
             {
+                
                 string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
                 var db = new SQLiteConnection(dpPath);
                 db.CreateTable<LoginTable>();
@@ -41,6 +43,7 @@ namespace Encounter1
                     username = txtUsername.Text,
                     password = txtPassword.Text
                 };
+              
                 db.Insert(tbl);
                 Toast.MakeText(this, "Record Added Successfully...,", ToastLength.Short).Show();
             }

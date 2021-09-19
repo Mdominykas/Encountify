@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout2"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
     <TextView
-        android:text="                          REGISTER"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="REGISTER"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView1" />
@@ -13,16 +16,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
-        android:text="User Name" />
+        android:hint="Username" />
     <EditText
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText1"
-        android:text="Password" />
+        android:hint="Password" />
+
+   
+
     <Button
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/black"
         android:text="Create"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/button1" />
