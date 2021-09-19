@@ -49,6 +49,7 @@ namespace Encounter1
                 if(data1 != null)
                 {
                     Toast.MakeText(this, "Logged in successfully", ToastLength.Short).Show();
+                    StartActivity(typeof(MenuActivity));
                 }
                 else
                 {
