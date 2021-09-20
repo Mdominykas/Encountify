@@ -8,15 +8,23 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|ARM.Build.0 = Debug|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Debug|ARM.Deploy.0 = Debug|Any CPU
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|ARM.ActiveCfg = Release|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|ARM.Build.0 = Release|Any CPU
+		{57D6F9B0-A838-4CB4-B9F6-CB3FA7B64118}.Release|ARM.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

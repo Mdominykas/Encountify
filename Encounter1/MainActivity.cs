@@ -2,27 +2,40 @@
 using Android.OS;
 using Android.Runtime;
 using AndroidX.AppCompat.App;
-using Android.Views;
 using Android.Widget;
 using System.IO;
 using System;
 using SQLite;
+using Android.Graphics.Drawables;
+using Xamarin.Forms.Platform.Android;
 
 namespace Encounter1
 {
     [Activity(Label = "EncounterMe", Theme = "@style/AppTheme", MainLauncher = true)]
+    
+    
     public class MainActivity : AppCompatActivity
     {
         EditText txtUsername;
         EditText txtPassword;
         Button btnCreate;
         Button btnSign;
-
+        private AnimationDrawable animationDrawable;
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
             // Set our view from the "main" layout resource
+
+            animationDrawable = (Android.Graphics.Drawables.AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
+            LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
+            img.SetBackground(animationDrawable);
+
+            animationDrawable.SetEnterFadeDuration(4000);
+            animationDrawable.SetExitFadeDuration(4000);
+            animationDrawable.Start();
+            
 
             btnSign = FindViewById<Button>(Resource.Id.button1);
             btnCreate = FindViewById<Button>(Resource.Id.button2);
