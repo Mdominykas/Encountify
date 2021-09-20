@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Runtime;
 using AndroidX.AppCompat.App;
 using Android.Widget;
+using Android.Views;
 using System.IO;
 using System;
 using SQLite;
