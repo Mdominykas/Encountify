@@ -14,11 +14,12 @@ namespace Encounter1
     [Activity(Label = "MenuActivity")]
     public class MenuActivity : Activity
     {
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Menu);
+            TextView currentCharacterName = FindViewById<TextView>(Resource.Id.textViewUserName);
+            currentCharacterName.Text = Intent.Extras.GetString("userName");
         }
     }
 }
