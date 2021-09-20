@@ -20,7 +20,6 @@ namespace Encounter1
         EditText txtPassword;
         Button btnCreate;
         Button btnSign;
-
         private AnimationDrawable animationDrawable;
         
         protected override void OnCreate(Bundle bundle)
@@ -29,24 +28,13 @@ namespace Encounter1
             SetContentView(Resource.Layout.Main);
             // Set our view from the "main" layout resource
 
-
-            //LinearLayout layout = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
-           // layout.SetBackgroundResource(Resource.Drawable.background);
-
             animationDrawable = (Android.Graphics.Drawables.AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
             LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
             img.SetBackground(animationDrawable);
 
-            //ImageView img = (ImageView)FindViewById(Resource.Id.linearLayout1);
-            //img.SetImageDrawable((Android.Graphics.Drawables.Drawable)animationDrawable);
-           
-
             animationDrawable.SetEnterFadeDuration(4000);
             animationDrawable.SetExitFadeDuration(4000);
             animationDrawable.Start();
-
-            
-
             
 
             btnSign = FindViewById<Button>(Resource.Id.button1);

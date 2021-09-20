@@ -7,7 +7,8 @@
     android:background="@drawable/background">
     <TextView
         android:text="REGISTER"
-        android:textColor="@android:color/black"
+        android:textSize="60px"
+        android:textColor="@android:color/white"
         android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,12 +16,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:id="@+id/editText2"
         android:hint="Username" />
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:id="@+id/editText1"
         android:hint="Password" />
 
