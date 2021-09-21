@@ -4,22 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:text="MENU"
+        android:text="Location list"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView1" />
-    <TextView
-        android:text="USERNAME"
-        android:gravity="center"
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textViewUserName" />
-    <Button
-        android:text="Location List"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button1" />
+        android:layout_height="match_parent"
+        android:id="@+id/locationListView1" />
+
 </LinearLayout>
