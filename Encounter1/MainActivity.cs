@@ -26,35 +26,13 @@ namespace Encounter1
         Button btnSign;
         private AnimationDrawable animationDrawable;
 
-        const int RequestLocationId = 0;
-
-        readonly string[] LocationPermissions =
-        {
-            Manifest.Permission.AccessCoarseLocation,
-            Manifest.Permission.AccessFineLocation
-        };
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-            if ((int)Build.VERSION.SdkInt >= 23)
-            {
-                if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) != Permission.Granted)
-                {
-                    RequestPermissions(LocationPermissions, RequestLocationId);
-                }
-
-            }
-        }
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
             // Set our view from the "main" layout resource
 
-            animationDrawable = (Android.Graphics.Drawables.AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
+            animationDrawable = (AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
             LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
             img.SetBackground(animationDrawable);
 
@@ -112,25 +90,6 @@ namespace Encounter1
             output += "\n Database Created....";
             return output;
         }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
-        {
-
-            if (requestCode == RequestLocationId)
-            {
-                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted))
-                {
-                    // Permissions granted message
-                }
-                else
-                {
-                    // Permissions denied message
-                }
-            }
-            else
-            {
-                Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            }
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+        
     }
 }

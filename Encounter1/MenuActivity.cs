@@ -1,33 +1,78 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
+using Android.Content.PM;
 using Android.Gms.Maps;
 using Android.OS;
+using Android.Runtime;
+using Android.Widget;
+using AndroidX.Core.Content;
+using System;
 
 namespace Encounter1
 {
     [Activity(Label = "MenuActivity")]
-    public class MenuActivity : Activity, IOnMapReadyCallback
+    public class MenuActivity : Activity
     {
+
+        const int RequestLocationId = 0;
+
+        readonly string[] LocationPermissions =
+        {
+            Manifest.Permission.AccessCoarseLocation,
+            Manifest.Permission.AccessFineLocation
+        };
+        private Button btnLocationList;
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if ((int)Build.VERSION.SdkInt >= 23)
+            {
+                if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) != Permission.Granted)
+                {
+                    RequestPermissions(LocationPermissions, RequestLocationId);
+                }
+
+            }
+        }
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Menu);
 
-            var mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.map);
-            mapFragment.GetMapAsync(this);
+            TextView currentCharacterName = FindViewById<TextView>(Resource.Id.textViewUserName);
+            currentCharacterName.Text = Intent.Extras.GetString("userName");
 
-            //TextView currentCharacterName = FindViewById<TextView>(Resource.Id.textViewUserName);
-            //currentCharacterName.Text = Intent.Extras.GetString("userName");
-
-            // remainder of code omitted
+            btnLocationList = FindViewById<Button>(Resource.Id.button2);
+            btnLocationList.Click += OnMapButtonClicked;
         }
 
-        public void OnMapReady(GoogleMap map)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
-            // Do something with the map, i.e. add markers, move to a specific location, etc.
-            map.UiSettings.ZoomControlsEnabled = true;
-            map.UiSettings.CompassEnabled = true;
-            map.MyLocationEnabled = true;
+
+            if (requestCode == RequestLocationId)
+            {
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) == (int)Permission.Granted)
+                {
+                    Toast.MakeText(this, "Permissions granted successfully", ToastLength.Short).Show();
+                }
+                else
+                {
+                    Toast.MakeText(this, "Logged in successfully", ToastLength.Short).Show();
+                }
+            }
+            else
+            {
+                Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void OnMapButtonClicked(object sender, EventArgs e)
+        {
+            StartActivity(typeof(MapActivity));
         }
 
     }
