@@ -15,8 +15,6 @@ namespace Encounter1
     [Activity(Label = "MapActivity")]
     public class MapActivity : Activity, IOnMapReadyCallback
     {
-
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

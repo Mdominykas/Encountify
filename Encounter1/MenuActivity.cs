@@ -15,7 +15,6 @@ namespace Encounter1
     {
 
         const int RequestLocationId = 0;
-
         readonly string[] LocationPermissions =
         {
             Manifest.Permission.AccessCoarseLocation,
