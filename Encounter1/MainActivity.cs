@@ -9,6 +9,7 @@ using System;
 using SQLite;
 using Android.Graphics.Drawables;
 using Xamarin.Forms.Platform.Android;
+using Android.Content;
 
 namespace Encounter1
 {
@@ -63,7 +64,9 @@ namespace Encounter1
                 if(data1 != null)
                 {
                     Toast.MakeText(this, "Logged in successfully", ToastLength.Short).Show();
-                    StartActivity(typeof(MenuActivity));
+                    Intent intent = new Intent(this.ApplicationContext, typeof(MenuActivity));
+                    intent.PutExtra("userName", data1.username);
+                    StartActivity(intent);
                 }
                 else
                 {
