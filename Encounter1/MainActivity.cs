@@ -10,6 +10,8 @@ using SQLite;
 using Android.Graphics.Drawables;
 using Xamarin.Forms.Platform.Android;
 using Android.Content;
+using Android;
+using Android.Content.PM;
 
 namespace Encounter1
 {
@@ -23,14 +25,14 @@ namespace Encounter1
         Button btnCreate;
         Button btnSign;
         private AnimationDrawable animationDrawable;
-        
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
             // Set our view from the "main" layout resource
 
-            animationDrawable = (Android.Graphics.Drawables.AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
+            animationDrawable = (AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
             LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
             img.SetBackground(animationDrawable);
 
@@ -88,7 +90,7 @@ namespace Encounter1
             output += "\n Database Created....";
             return output;
         }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
