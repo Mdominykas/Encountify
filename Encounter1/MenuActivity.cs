@@ -36,6 +36,7 @@ namespace Encounter1
             }
         }
 
+        Button btnLocationList;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -43,7 +44,8 @@ namespace Encounter1
 
             TextView currentCharacterName = FindViewById<TextView>(Resource.Id.textViewUserName);
             currentCharacterName.Text = Intent.Extras.GetString("userName");
-
+            btnLocationList = FindViewById<Button>(Resource.Id.button1);
+            btnLocationList.Click += OnLocationListButtonClicked;
             btnLocationList = FindViewById<Button>(Resource.Id.button2);
             btnLocationList.Click += OnMapButtonClicked;
         }
@@ -67,6 +69,11 @@ namespace Encounter1
                 Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             }
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void OnLocationListButtonClicked(object sender, EventArgs e)
+        {
+            StartActivity(typeof(LocationListActivity));
         }
 
         private void OnMapButtonClicked(object sender, EventArgs e)

@@ -62,6 +62,8 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Location.cs" />
+    <Compile Include="LocationListActivity.cs" />
     <Compile Include="MapActivity.cs" />
     <Compile Include="LoginTable.cs" />
     <Compile Include="MainActivity.cs" />
@@ -149,6 +151,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\LocationList.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Map.xml" />
