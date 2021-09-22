@@ -15,14 +15,14 @@ using Android.Content.PM;
 
 namespace Encounter1
 {
-    [Activity(Label = "EncounterMe", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "EncounterMe", Theme = "@style/EncounterMe.LightMode", MainLauncher = true)]
     
     
     public class MainActivity : AppCompatActivity
     {
         EditText txtUsername;
         EditText txtPassword;
-        Button btnCreate;
+        TextView btnCreate;
         Button btnSign;
         private AnimationDrawable animationDrawable;
 
@@ -30,21 +30,11 @@ namespace Encounter1
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-            // Set our view from the "main" layout resource
 
-            animationDrawable = (AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
-            LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
-            img.SetBackground(animationDrawable);
-
-            animationDrawable.SetEnterFadeDuration(4000);
-            animationDrawable.SetExitFadeDuration(4000);
-            animationDrawable.Start();
-            
-
-            btnSign = FindViewById<Button>(Resource.Id.button1);
-            btnCreate = FindViewById<Button>(Resource.Id.button2);
-            txtUsername = FindViewById<EditText>(Resource.Id.editText1);
-            txtPassword = FindViewById<EditText>(Resource.Id.editText2);
+            btnSign = FindViewById<Button>(Resource.Id.button_login);
+            btnCreate = FindViewById<TextView>(Resource.Id.button_register);
+            txtUsername = FindViewById<EditText>(Resource.Id.button_login_username);
+            txtPassword = FindViewById<EditText>(Resource.Id.button_login_password);
             btnSign.Click += BtnSign_Click;
             btnCreate.Click += BtnCreate_Click;
             CreateDB();
@@ -85,7 +75,7 @@ namespace Encounter1
         {
             var output = "";
             output += "Creating Databse if it doesnt exists";
-            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); //Create New Database  
+            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); 
             _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;
