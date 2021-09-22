@@ -62,12 +62,12 @@ namespace Encounter1
                 string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
                 var db = new SQLiteConnection(dbPath);
                 var data = db.Table<LoginTable>();
-                var data1 = data.Where(x => x.username == txtUsername.Text && x.password == txtPassword.Text).FirstOrDefault();
+                var data1 = data.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).FirstOrDefault();
                 if(data1 != null)
                 {
                     Toast.MakeText(this, "Logged in successfully", ToastLength.Short).Show();
                     Intent intent = new Intent(this.ApplicationContext, typeof(MenuActivity));
-                    intent.PutExtra("userName", data1.username);
+                    intent.PutExtra("userName", data1.Username);
                     StartActivity(intent);
                 }
                 else
@@ -86,7 +86,7 @@ namespace Encounter1
             var output = "";
             output += "Creating Databse if it doesnt exists";
             string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); //Create New Database  
-            var db = new SQLiteConnection(dpPath);
+            _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;
         }

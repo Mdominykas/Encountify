@@ -54,8 +54,8 @@ namespace Encounter1
                 db.CreateTable<LoginTable>();
                 LoginTable tbl = new LoginTable
                 {
-                    username = txtUsername.Text,
-                    password = txtPassword.Text
+                    Username = txtUsername.Text,
+                    Password = txtPassword.Text
                 };
               
                 db.Insert(tbl);

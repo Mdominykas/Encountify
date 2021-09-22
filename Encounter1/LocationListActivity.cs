@@ -22,33 +22,33 @@ namespace Encounter1
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.LocationList);
             locationList = FindViewById<ListView>(Resource.Id.locationListView1);
-            List<String> listItems = getLocationList();
+            List<String> listItems = GetLocationList();
             ArrayAdapter adapter = new ArrayAdapter(this,
                 Android.Resource.Layout.SimpleListItem1, listItems);
             locationList.Adapter = adapter;
         }
 
-        List<String> getLocationList()
+        List<string> GetLocationList()
         {
             string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "locationList.db3");
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<Location>();
-            loadDummyData(db);
+            LoadDummyData(db);
             var table = db.Table<Location>();
             List<string> locationNameList = new List<String>();
             foreach (var s in table)
             {
-                locationNameList.Add(s.locationName);
+                locationNameList.Add(s.LocationName);
             }
             return locationNameList;
         }
 
-        void loadDummyData(SQLiteConnection db)
+        void LoadDummyData(SQLiteConnection db)
         {
             if(db.Table<Location>().Count() == 0)
             {
-                var location1 = new Location() { locationName = "Katedra" };
-                var location2 = new Location() { locationName = "Gedimino bokštas" };
+                var location1 = new Location() { LocationName = "Katedra" };
+                var location2 = new Location() { LocationName = "Gedimino bokštas" };
                 db.Insert(location1);
                 db.Insert(location2);
             }

@@ -15,13 +15,13 @@ namespace Encounter1
     public class LoginTable
     {
         [PrimaryKey, AutoIncrement, Column("_Id")]
-        public int id { get; set; }
+        public int Id { get; set; }
         [MaxLength(25)]
 
-        public string username { get; set; }
+        public string Username { get; set; }
 
         [MaxLength(15)]
 
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }

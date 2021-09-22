@@ -15,6 +15,6 @@ namespace Encounter1
     class Location
     {
         [MaxLength(30), Unique]
-        public string locationName { get; set; }
+        public string LocationName { get; set; }
     }
 }
