@@ -21,7 +21,7 @@ namespace Encounter1
             Manifest.Permission.AccessFineLocation
         };
         private Button btnLocationList;
-
+        private Button btnMap;
         protected override void OnStart()
         {
             base.OnStart();
@@ -36,7 +36,6 @@ namespace Encounter1
             }
         }
 
-        Button btnLocationList;
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -46,8 +45,8 @@ namespace Encounter1
             currentCharacterName.Text = Intent.Extras.GetString("userName");
             btnLocationList = FindViewById<Button>(Resource.Id.button1);
             btnLocationList.Click += OnLocationListButtonClicked;
-            btnLocationList = FindViewById<Button>(Resource.Id.button2);
-            btnLocationList.Click += OnMapButtonClicked;
+            btnMap = FindViewById<Button>(Resource.Id.button2);
+            btnMap.Click += OnMapButtonClicked;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
