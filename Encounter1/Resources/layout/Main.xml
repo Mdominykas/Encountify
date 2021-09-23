@@ -54,6 +54,7 @@
             android:id="@+id/button_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:layout_marginRight="50dp"
