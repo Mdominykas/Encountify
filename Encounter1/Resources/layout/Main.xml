@@ -26,10 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:fontFamily="@font/poppins_medium"
-            android:textSize="30dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="28dp"
             android:lineSpacingMultiplier="0.8"
-            android:textFontWeight="800"
             android:textColor="@color/encounter_accent_2"
             android:text="Welcome to Encounter Me!"/>
 

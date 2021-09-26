@@ -12,6 +12,8 @@ using Xamarin.Forms.Platform.Android;
 using Android.Content;
 using Android;
 using Android.Content.PM;
+using Android.Graphics;
+using CaptainDroid.TvgLib;
 
 namespace Encounter1
 {
@@ -31,6 +33,9 @@ namespace Encounter1
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
 
+            TextView header = FindViewById<TextView>(Resource.Id.login_header);
+            Tvg.Change(header, Resources.GetColor(Resource.Color.encounter_accent_1), Resources.GetColor(Resource.Color.encounter_accent_2));
+
             btnSign = FindViewById<Button>(Resource.Id.button_login);
             btnCreate = FindViewById<TextView>(Resource.Id.button_register);
             txtUsername = FindViewById<EditText>(Resource.Id.button_login_username);
@@ -49,7 +54,7 @@ namespace Encounter1
         {
             try
             {
-                string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
+                string dbPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
                 var db = new SQLiteConnection(dbPath);
                 var data = db.Table<LoginTable>();
                 var data1 = data.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).FirstOrDefault();
@@ -74,8 +79,8 @@ namespace Encounter1
         public string CreateDB()
         {
             var output = "";
-            output += "Creating Databse if it doesnt exists";
-            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); 
+            output += "Creating Database if it doesn't exists";
+            string dpPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); 
             _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;
