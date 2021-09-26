@@ -45,7 +45,7 @@
             android:radius="10dp"
             android:background="@drawable/field"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="#8E8E8E"
+            android:textColor="@color/encounter_light_field_text"
             android:textSize="13dp"
             android:hint="Username"/>
 
