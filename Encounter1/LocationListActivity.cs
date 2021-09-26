@@ -32,9 +32,9 @@ namespace Encounter1
         {
             string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "locationList.db3");
             var db = new SQLiteConnection(dbPath);
-            db.CreateTable<Location>();
+            db.CreateTable<LocationTable>();
             LoadDummyData(db);
-            var table = db.Table<Location>();
+            var table = db.Table<LocationTable>();
             List<string> locationNameList = new List<String>();
             foreach (var s in table)
             {
@@ -45,10 +45,10 @@ namespace Encounter1
 
         void LoadDummyData(SQLiteConnection db)
         {
-            if(db.Table<Location>().Count() == 0)
+            if(db.Table<LocationTable>().Count() == 0)
             {
-                var location1 = new Location() { LocationName = "Katedra" };
-                var location2 = new Location() { LocationName = "Gedimino bokštas" };
+                var location1 = new LocationTable() { LocationName = "Vilniaus katedra", LocationCoordX = 54.685849042698216, LocationCoordY = 25.287750880122083 };
+                var location2 = new LocationTable() { LocationName = "Gedimino bokštas", LocationCoordX = 54.68667445192699, LocationCoordY = 25.29056883194689 };
                 db.Insert(location1);
                 db.Insert(location2);
             }
