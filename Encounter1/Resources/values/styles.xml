@@ -1,11 +1,27 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+	<style name="EncounterMe.LightMode" parent="@style/Theme.AppCompat.NoActionBar">
+		<item name="android:colorBackground">@color/encounter_light_background</item>
+		<item name="android:windowBackground">@color/encounter_light_background</item>
+		<item name="android:colorAccent">@color/encounter_accent_1</item>
+		<item name="android:colorPrimary">@color/encounter_light_text</item>
+		<item name="android:colorPrimaryDark">@color/encounter_accent_2</item>
+		<item name="android:colorControlActivated">@color/encounter_accent_2</item>
+		<item name="android:colorButtonNormal">@color/encounter_light_accent</item>
+		<item name="android:colorControlNormal">@color/encounter_light_field</item>
+		<item name="android:buttonStyle">@style/encounter_light_button</item>
+		<item name="android:textColor">@color/encounter_light_text</item>
+		<item name="android:textColorPrimary">@color/encounter_light_text</item>
+		<item name="android:textColorSecondary">@color/encounter_light_field_text</item>
+		<item name="android:textColorHint">@color/encounter_light_field_text</item>
+	</style>
 
+	<style name="encounter_light_button" parent="@android:style/Widget.Button">
+		<item name="android:textColor">@color/encounter_light_button_text</item>
+		<item name="android:background">@drawable/button</item>
+		<item name="android:fontFamily">@font/poppins_bold</item>
+		<item name="android:textSize">20dp</item>
+		<item name="android:textAllCaps">false</item>
+	</style>
+	
 </resources>

@@ -12,17 +12,19 @@ using Xamarin.Forms.Platform.Android;
 using Android.Content;
 using Android;
 using Android.Content.PM;
+using Android.Graphics;
+using CaptainDroid.TvgLib;
 
 namespace Encounter1
 {
-    [Activity(Label = "EncounterMe", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "EncounterMe", Theme = "@style/EncounterMe.LightMode", MainLauncher = true)]
     
     
     public class MainActivity : AppCompatActivity
     {
         EditText txtUsername;
         EditText txtPassword;
-        Button btnCreate;
+        TextView btnCreate;
         Button btnSign;
         private AnimationDrawable animationDrawable;
 
@@ -30,21 +32,14 @@ namespace Encounter1
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
-            // Set our view from the "main" layout resource
 
-            animationDrawable = (AnimationDrawable)Resources.GetDrawable(Resource.Drawable.background);
-            LinearLayout img = (LinearLayout)FindViewById(Resource.Id.linearLayout1);
-            img.SetBackground(animationDrawable);
+            TextView header = FindViewById<TextView>(Resource.Id.login_header);
+            Tvg.Change(header, Resources.GetColor(Resource.Color.encounter_accent_1), Resources.GetColor(Resource.Color.encounter_accent_2));
 
-            animationDrawable.SetEnterFadeDuration(4000);
-            animationDrawable.SetExitFadeDuration(4000);
-            animationDrawable.Start();
-            
-
-            btnSign = FindViewById<Button>(Resource.Id.button1);
-            btnCreate = FindViewById<Button>(Resource.Id.button2);
-            txtUsername = FindViewById<EditText>(Resource.Id.editText1);
-            txtPassword = FindViewById<EditText>(Resource.Id.editText2);
+            btnSign = FindViewById<Button>(Resource.Id.button_login);
+            btnCreate = FindViewById<TextView>(Resource.Id.button_register);
+            txtUsername = FindViewById<EditText>(Resource.Id.button_login_username);
+            txtPassword = FindViewById<EditText>(Resource.Id.button_login_password);
             btnSign.Click += BtnSign_Click;
             btnCreate.Click += BtnCreate_Click;
             CreateDB();
@@ -59,7 +54,7 @@ namespace Encounter1
         {
             try
             {
-                string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
+                string dbPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
                 var db = new SQLiteConnection(dbPath);
                 var data = db.Table<LoginTable>();
                 var data1 = data.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).FirstOrDefault();
@@ -84,8 +79,8 @@ namespace Encounter1
         public string CreateDB()
         {
             var output = "";
-            output += "Creating Databse if it doesnt exists";
-            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); //Create New Database  
+            output += "Creating Database if it doesn't exists";
+            string dpPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); 
             _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;

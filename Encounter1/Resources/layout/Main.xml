@@ -1,49 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<LinearLayout
-    
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout1"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:layout_height="match_parent">
 
-    <EditText
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:id="@+id/editText1"
-        android:hint="Username"/>
+        android:layout_height="match_parent"
+        android:src="@drawable/blobs"
+        android:scaleType="fitXY"/>
 
-    
-    <EditText
-        android:inputType="textPassword"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:id="@+id/editText2" 
-        android:hint="Password"/>
-   
-    <Button
-        android:backgroundTint="@android:color/white"
-        android:textColor="@android:color/black"
-        android:text="LOGIN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/button1"
-        android:layout_marginBottom="0.0dp"
-        android:layout_marginTop="0.0dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginTop="60dp">
 
-    <Button
-        android:backgroundTint="@android:color/white"
-        android:textColor="@android:color/black"
-        android:text="REGISTER"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/button2"
-         />
-</LinearLayout>
+        <TextView
+	        android:id="@+id/login_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="28dp"
+            android:lineSpacingMultiplier="0.8"
+            android:textColor="@color/encounter_accent_2"
+            android:text="Welcome to Encounter Me!"/>
+
+        <EditText
+            android:id="@+id/button_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:radius="10dp"
+            android:background="@drawable/field"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/encounter_light_field_text"
+            android:textSize="13dp"
+            android:hint="Username"/>
+
+        <EditText
+            android:id="@+id/button_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
+            android:radius="10dp"
+            android:background="@drawable/field"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="13dp"
+            android:hint="Password"/>
+
+		<Button
+			android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+			android:layout_marginTop="40dp"
+		    android:paddingLeft="30dp"
+		    android:paddingRight="30dp"
+			android:text="Login"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="bottom|center"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/encounter_light_button_text"
+            android:textSize="13dp"
+            android:text="Don't have an account? "/>
+
+        <TextView
+            android:id="@+id/button_register"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/encounter_light_accent"
+            android:textSize="13dp"
+            android:textAllCaps="false"
+            android:text="Register" />
+
+    </LinearLayout>
+
+</RelativeLayout>
