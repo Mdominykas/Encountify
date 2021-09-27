@@ -153,13 +153,13 @@
     <AndroidResource Include="Resources\layout\image.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\LocationList.xml">
+    <AndroidResource Include="Resources\layout\Map.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\newLocation.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\Map.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

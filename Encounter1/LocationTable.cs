@@ -12,12 +12,11 @@ using SQLite;
 
 namespace Encounter1
 {
-    class LocationTable
+    public class LocationTable
     {
         [MaxLength(30), Unique]
         public string LocationName { get; set; }
         public double LocationCoordX { get; set; }
         public double LocationCoordY { get; set; }
-
     }
 }
