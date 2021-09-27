@@ -157,7 +157,7 @@
     <AndroidResource Include="Resources\layout\Map.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\newLocation.xml">
+    <AndroidResource Include="Resources\layout\NewLocation.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

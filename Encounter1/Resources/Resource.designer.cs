@@ -18879,7 +18879,7 @@ namespace Encounter1
 			public const int mtrl_picker_text_input_date_range = 2131427427;
 			
 			// aapt resource value: 0x7F0B0064
-			public const int newLocation = 2131427428;
+			public const int NewLocation = 2131427428;
 			
 			// aapt resource value: 0x7F0B0065
 			public const int NewUser = 2131427429;

@@ -17,30 +17,28 @@ namespace Encounter1
     public class LocationListActivity : Activity
     {
         ExpandableListView locationList;
+        private Button _btnAddNewLocation;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.LocationList);
             locationList = FindViewById<ExpandableListView>(Resource.Id.expandableListView1);
-            List<String> listItems = GetLocationList();
+            _btnAddNewLocation = FindViewById<Button>(Resource.Id.button1);
+            _btnAddNewLocation.Click += OnAddNewLocationListButtonClicked;
 
-            var items = CreateDummyLocationTableList();
+            var items = GetLocationList();
             locationList.SetAdapter(new MyAdapter(this, items));
         }
 
-        List<string> GetLocationList()
+        List<LocationTable> GetLocationList()
         {
             string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "locationList.db3");
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<LocationTable>();
-            LoadDummyData(db);
+            IfEmptyLoadDummyData(db);
             var table = db.Table<LocationTable>();
-            List<string> locationNameList = new List<String>();
-            foreach (var s in table)
-            {
-                locationNameList.Add(s.LocationName);
-            }
-            return locationNameList;
+            List<LocationTable> locationList = table.ToList();
+            return locationList;
         }
 
         private List<LocationTable> CreateDummyLocationTableList()
@@ -48,7 +46,7 @@ namespace Encounter1
             return new List<LocationTable> { new LocationTable() { LocationName = "Vilniaus katedra", LocationCoordX = 54.685849042698216, LocationCoordY = 25.287750880122083 }, new LocationTable() { LocationName = "Gedimino bokštas", LocationCoordX = 54.68667445192699, LocationCoordY = 25.29056883194689 } };
         }
 
-        private void LoadDummyData(SQLiteConnection db)
+        private void IfEmptyLoadDummyData(SQLiteConnection db)
         {
             if(db.Table<LocationTable>().Count() == 0)
             {
@@ -59,6 +57,12 @@ namespace Encounter1
                 }
             }
         }
+
+        private void OnAddNewLocationListButtonClicked(object sender, EventArgs e)
+        {
+            StartActivity(typeof(NewLocationActivity));
+        }
+
     }
 
     public class MyAdapter : BaseExpandableListAdapter
