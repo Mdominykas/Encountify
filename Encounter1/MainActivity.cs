@@ -53,13 +53,13 @@ namespace Encounter1
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            StartActivity(typeof(RegActivity));
+             StartActivity(typeof(RegActivity));
         }
         private void BtnSign_Click(object sender, EventArgs e)
         {
             try
             {
-                string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
+                string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
                 var db = new SQLiteConnection(dbPath);
                 var data = db.Table<LoginTable>();
                 var data1 = data.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).FirstOrDefault();
@@ -85,7 +85,7 @@ namespace Encounter1
         {
             var output = "";
             output += "Creating Databse if it doesnt exists";
-            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); //Create New Database  
+            string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3"); //Create New Database  
             _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;
