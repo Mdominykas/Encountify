@@ -92,27 +92,32 @@
                         </Frame>
 
                         <local:CustomEntry
-                            IsPassword="True"
+                            IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"
                             Placeholder="Password"
                             HorizontalOptions="FillAndExpand"
                             Margin="0,0,0,0"/>
 
-                        <Frame
+                        <Button
+                            Text="&#xf06e;"
+                            FontFamily="Font Awesome Solid"
+                            FontSize="Small"
+                            TextColor="{DynamicResource FieldPlaceholder}"
                             BackgroundColor="Transparent"
-                            CornerRadius="50"
                             HeightRequest="25"
                             WidthRequest="25"
                             Padding="0"
-                            Margin="0,10,15,10">
+                            Margin="10,10,10,10">
 
-                            <Label
-                                Text="&#xf06e;"
-                                FontFamily="Font Awesome Solid"
-                                TextColor="{DynamicResource FieldPlaceholder}"
-                                HorizontalTextAlignment="Center"
-                                VerticalTextAlignment="Center"/>
-                            
-                        </Frame>
+                            <Button.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <local:ShowPasswordTrigger
+                                            ShowIcon="&#xf06e;"
+                                            HideIcon="&#xf070;"
+                                            x:Name="ShowPasswordActualTrigger"/>
+                                </EventTrigger>
+                            </Button.Triggers>
+
+                        </Button>
 
                     </StackLayout>
 
