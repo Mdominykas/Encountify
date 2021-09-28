@@ -22,6 +22,7 @@ namespace Encounter1
         };
         private Button btnLocationList;
         private Button btnMap;
+        private Button btnLogOut;
         protected override void OnStart()
         {
             base.OnStart();
@@ -47,6 +48,8 @@ namespace Encounter1
             btnLocationList.Click += OnLocationListButtonClicked;
             btnMap = FindViewById<Button>(Resource.Id.button2);
             btnMap.Click += OnMapButtonClicked;
+            btnLogOut = FindViewById<Button>(Resource.Id.button3);
+            btnLogOut.Click += OnLogOutButtonClicked; 
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
@@ -80,5 +83,9 @@ namespace Encounter1
             StartActivity(typeof(MapActivity));
         }
 
+        private void OnLogOutButtonClicked(Object sender, EventArgs e)
+        {
+            StartActivity(typeof(MainActivity));
+        }
     }
 }

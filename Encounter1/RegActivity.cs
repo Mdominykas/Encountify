@@ -22,6 +22,8 @@ namespace Encounter1
         EditText txtUsername;
         EditText txtPassword;
         Button btnCreate;
+        EditText confirmPassword;
+        EditText txtEmail;
         private AnimationDrawable animationDrawable;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -38,40 +40,123 @@ namespace Encounter1
             animationDrawable.Start();
 
             // Create your application here  
-            btnCreate = FindViewById<Button>(Resource.Id.button1);
-            txtUsername = FindViewById<EditText>(Resource.Id.editText2);
-            txtPassword = FindViewById<EditText>(Resource.Id.editText1);
-    
+            txtUsername = (EditText)FindViewById<EditText>(Resource.Id.editText2);
+            txtPassword = (EditText)FindViewById<EditText>(Resource.Id.editText1);
+            confirmPassword = (EditText)FindViewById<EditText>(Resource.Id.editText3);
+            txtEmail = (EditText)FindViewById<EditText>(Resource.Id.editText4);
+            btnCreate = FindViewById<Button>(Resource.Id.buttonCreate);
             btnCreate.Click += Btncreate_Click;
         }
-        private void Btncreate_Click (object sender, EventArgs e)
+
+        private Boolean RegistrationPassword()
         {
-            try
+            var userReg = (string)txtPassword.Text;
+
+            if (string.IsNullOrEmpty(userReg))
             {
-                
-                string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
-                var db = new SQLiteConnection(dpPath);
-                db.CreateTable<LoginTable>();
-                LoginTable tbl = new LoginTable
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private Boolean RegistrationConfirmPassword()
+        {
+            var userReg = confirmPassword.Text;
+
+            if (string.IsNullOrEmpty(userReg))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private Boolean Verify()
+        {
+            if (((string)txtPassword.Text).Equals((string)confirmPassword.Text))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private bool VerifyPassword()
+        {
+            if (!RegistrationPassword() | !RegistrationConfirmPassword() | !Verify())
+            {
+                Toast.MakeText(this, "Passwords do not match", ToastLength.Short).Show();
+                return false;
+            }
+            return true;
+        }
+
+        public bool ValidEmail()
+        {
+            if(Android.Util.Patterns.EmailAddress.Matcher((string)txtEmail.Text).Matches())
+            {
+                return true;
+            }
+            else
+            {
+                Toast.MakeText(this, "Invalid mail format", ToastLength.Short).Show();
+                return false;
+            }
+        }
+
+
+
+        private void Btncreate_Click(object sender, EventArgs e)
+        {
+            VerifyPassword();
+            ValidEmail();
+
+            if (VerifyPassword() && ValidEmail())
+            {
+                try
                 {
-                    Username = txtUsername.Text,
-                    Password = txtPassword.Text
-                };
-              
-                db.Insert(tbl);
-                Toast.MakeText(this, "Record Added Successfully...,", ToastLength.Short).Show();
+                    string dpPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
+                    var db = new SQLiteConnection(dpPath);
+                    var data = db.Table<LoginTable>();
+                    var dataUser = data.Where(x => x.Username == txtUsername.Text).FirstOrDefault();
+                    if (dataUser == null)
+                    {
+                        LoginTable tbl = new LoginTable
+                        {
+                            Username = txtUsername.Text,
+                            Password = txtPassword.Text,
+                            Email = txtEmail.Text
+                        };
+
+                        db.Insert(tbl);
+
+                        Toast.MakeText(this, "Record Added Successfully.....", ToastLength.Short).Show();
+                        StartActivity(typeof(MainActivity));
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, "Username unavailable", ToastLength.Short).Show();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(this, ex.ToString(), ToastLength.Short).Show();
+                }
+                
             }
-            catch (Exception ex)
-            {
-                Toast.MakeText(this, ex.ToString(), ToastLength.Short).Show();
-            }
-            StartActivity(typeof(MainActivity));
         }
 
     }
-
-
-
-
-
 }
+
+
+
+
+
+
