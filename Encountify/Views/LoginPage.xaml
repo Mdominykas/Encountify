@@ -7,19 +7,16 @@
              mc:Ignorable="d"
              x:Class="Encountify.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{DynamicResource Background}">
+             Shell.TabBarIsVisible="False"
+             Shell.FlyoutItemIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundImageSource="{local:ImageResource Encountify.Resources.Images.background_blobs.png}">
 
     <ContentPage.Content>
 
         <AbsoluteLayout 
             HorizontalOptions="FillAndExpand" 
             VerticalOptions="FillAndExpand">
-
-            <Image
-                Source="{local:ImageResource Encountify.Resources.Images.background_blobs.png}"
-                Aspect="Fill"
-                AbsoluteLayout.LayoutBounds="0,0,1,1" 
-                AbsoluteLayout.LayoutFlags="All"/>
 
             <StackLayout 
                 Padding="35,125,35,35" 
