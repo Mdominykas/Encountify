@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Encountify.CustomRenderer"
+             mc:Ignorable="d"
+             x:Class="Encountify.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{DynamicResource Background}">
+
+    <ContentPage.Content>
+
+        <AbsoluteLayout 
+            HorizontalOptions="FillAndExpand" 
+            VerticalOptions="FillAndExpand">
+
+            <Image
+                Source="{local:ImageResource Encountify.Resources.Images.background_blobs.png}"
+                Aspect="Fill"
+                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutFlags="All"/>
+
+            <StackLayout 
+                Padding="35,125,35,35" 
+                VerticalOptions="Center"
+                HorizontalOptions="FillAndExpand"
+                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutFlags="All">
+                
+                <local:GradientLabel
+                    Text="Welcome to Encountify!"/>
+
+                <Frame                
+                    BackgroundColor="{DynamicResource FieldBackground}"                
+                    Padding="0"
+                    Margin="0"
+                    CornerRadius="50"
+                    HorizontalOptions="FillAndExpand">
+
+                    <StackLayout
+                        Orientation="Horizontal">
+
+                        <Frame
+                            BackgroundColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="10,10,0,10">
+
+                            <Label
+                                Text="&#xf007;"
+                                FontFamily="Font Awesome"
+                                TextColor="{DynamicResource FieldPlaceholder}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            
+                        </Frame>
+
+                        <local:CustomEntry
+                            Placeholder="Username"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,15,0"/>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <Frame
+                    BackgroundColor="{DynamicResource FieldBackground}"
+                    Padding="0"
+                    Margin="0,10,0,0"
+                    CornerRadius="50"
+                    HorizontalOptions="FillAndExpand">
+
+                    <StackLayout
+                        Orientation="Horizontal">
+
+                        <Frame
+                            BackgroundColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="10,10,0,10">
+
+                            <Label
+                                Text="&#xf023;"
+                                FontFamily="Font Awesome Solid"
+                                TextColor="{DynamicResource FieldPlaceholder}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            
+                        </Frame>
+
+                        <local:CustomEntry
+                            IsPassword="True"
+                            Placeholder="Password"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,0,0"/>
+
+                        <Frame
+                            BackgroundColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="0,10,15,10">
+
+                            <Label
+                                Text="&#xf06e;"
+                                FontFamily="Font Awesome Solid"
+                                TextColor="{DynamicResource FieldPlaceholder}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            
+                        </Frame>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <CheckBox 
+                        IsChecked="False"/>
+
+                    <Label
+                        Text="Remember"
+                        TextColor="{DynamicResource FieldPlaceholder}"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center"
+                        Padding="0,2,0,0"/>
+
+                    <local:CustomLink
+                        Text="Forgot password?"
+                        HorizontalTextAlignment="End"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="Center"
+                        Padding="0,2,0,0"/>
+
+                </StackLayout>
+
+                <Button
+                    Text="Login" 
+                    Clicked="OnLoginClicked"
+                    HorizontalOptions="Center"
+                    Padding="50,0,50,0"/>
+
+            </StackLayout>
+
+            <StackLayout 
+                Padding="35,35,35,35" 
+                VerticalOptions="End"
+                HorizontalOptions="FillAndExpand"
+                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutFlags="All">
+                
+                    <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="Center">
+
+                    <Label
+                        Text="Don't have an account?"
+                        TextColor="{DynamicResource ButtonText}"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"/>
+
+                    <local:CustomLink
+                        Text="Register"
+                        HorizontalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Tapped="OnRegisterClicked"/>
+                        </Label.GestureRecognizers>
+                    </local:CustomLink>
+
+                </StackLayout>
+
+            </StackLayout>
+            
+        </AbsoluteLayout>
+
+    </ContentPage.Content>
+    
+</ContentPage>
