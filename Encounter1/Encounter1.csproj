@@ -68,6 +68,7 @@
     <Compile Include="LoginTable.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MenuActivity.cs" />
+    <Compile Include="NewLocationActivity.cs" />
     <Compile Include="RegActivity.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -167,6 +168,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Map.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\NewLocation.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\LocationList.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\blobs.png" />
