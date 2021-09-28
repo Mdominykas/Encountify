@@ -37,6 +37,7 @@ namespace Encounter1
                 AddNewLocationToDatabase(newLocation);
                 Toast.MakeText(this, "New nocation created", ToastLength.Short).Show();
                 StartActivity(typeof(LocationListActivity));
+                Finish();
             }
             else
             {

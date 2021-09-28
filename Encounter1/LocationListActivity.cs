@@ -61,6 +61,7 @@ namespace Encounter1
         private void OnAddNewLocationListButtonClicked(object sender, EventArgs e)
         {
             StartActivity(typeof(NewLocationActivity));
+            Finish();
         }
 
     }
