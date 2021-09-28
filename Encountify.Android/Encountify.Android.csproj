@@ -48,6 +48,7 @@
     <Reference Include="Mono.Android" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +67,7 @@
   <ItemGroup>
     <Compile Include="CustomRenderer\CustomLinkRenderer.cs" />
     <Compile Include="CustomRenderer\GradientLabelRender.cs" />
+    <Compile Include="CustomRenderer\MessagePopupRender.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="CustomRenderer\CustomEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

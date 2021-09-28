@@ -58,7 +58,8 @@
                         </Frame>
 
                         <local:CustomEntry
-                            Placeholder="Username"
+                            x:Name="Username"
+                            Placeholder="Enter your username"
                             HorizontalOptions="FillAndExpand"
                             Margin="0,0,15,0"/>
 
@@ -95,7 +96,8 @@
 
                         <local:CustomEntry
                             IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"
-                            Placeholder="Password"
+                            x:Name="Password"
+                            Placeholder="Enter your password"
                             HorizontalOptions="FillAndExpand"
                             Margin="0,0,0,0"/>
 

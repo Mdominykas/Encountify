@@ -26,9 +26,6 @@
                 AbsoluteLayout.LayoutBounds="0,0,1,1" 
                 AbsoluteLayout.LayoutFlags="All">
 
-                <local:GradientLabel
-                    Text="Register to Encountify!"/>
-
                 <Frame                
                     BackgroundColor="{DynamicResource FieldBackground}"                
                     Padding="0"
@@ -58,9 +55,106 @@
 
                         <local:CustomEntry
                             x:Name="Username"
-                            Placeholder="Username"
+                            Placeholder="Enter your username"
                             HorizontalOptions="FillAndExpand"
                             Margin="0,0,15,0"/>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <Frame                
+                    BackgroundColor="{DynamicResource FieldBackground}"                
+                    Padding="0"
+                    Margin="0,10,0,0"
+                    CornerRadius="50"
+                    HorizontalOptions="FillAndExpand">
+
+                    <StackLayout
+                        Orientation="Horizontal">
+
+                        <Frame
+                            BackgroundColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="10,10,0,10">
+
+                            <Label
+                                Text="&#xf0e0;"
+                                FontFamily="Font Awesome"
+                                TextColor="{DynamicResource FieldPlaceholder}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+
+                        </Frame>
+
+                        <local:CustomEntry
+                            x:Name="Email"
+                            Placeholder="Enter your e-mail"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,15,0"/>
+
+                    </StackLayout>
+
+                </Frame>
+                
+                <Frame
+                    BackgroundColor="{DynamicResource FieldBackground}"
+                    Padding="0"
+                    Margin="0,10,0,0"
+                    CornerRadius="50"
+                    HorizontalOptions="FillAndExpand">
+
+                    <StackLayout
+                        Orientation="Horizontal">
+
+                        <Frame
+                            BackgroundColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="10,10,0,10">
+
+                            <Label
+                                Text="&#xf023;"
+                                FontFamily="Font Awesome Solid"
+                                TextColor="{DynamicResource FieldPlaceholder}"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+
+                        </Frame>
+
+                        <local:CustomEntry
+                            IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"
+                            x:Name="Password"
+                            Placeholder="Enter your password"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="0,0,0,0"/>
+
+                        <Button
+                            Text="&#xf06e;"
+                            FontFamily="Font Awesome Solid"
+                            FontSize="Small"
+                            TextColor="{DynamicResource FieldPlaceholder}"
+                            BackgroundColor="Transparent"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            Padding="0"
+                            Margin="10,10,10,10">
+
+                            <Button.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <local:ShowPasswordTrigger
+                                            ShowIcon="&#xf06e;"
+                                            HideIcon="&#xf070;"
+                                            x:Name="ShowPasswordActualTrigger"/>
+                                </EventTrigger>
+                            </Button.Triggers>
+
+                        </Button>
 
                     </StackLayout>
 
@@ -94,28 +188,33 @@
                         </Frame>
 
                         <local:CustomEntry
-                            x:Name="Password"
-                            IsPassword="True"
-                            Placeholder="Password"
+                            IsPassword="{Binding Source={x:Reference ShowPasswordConfirmActualTrigger}, Path=HidePassword}"
+                            x:Name="PasswordConfirm"
+                            Placeholder="Repeat your password"
                             HorizontalOptions="FillAndExpand"
                             Margin="0,0,0,0"/>
 
-                        <Frame
+                        <Button
+                            Text="&#xf06e;"
+                            FontFamily="Font Awesome Solid"
+                            FontSize="Small"
+                            TextColor="{DynamicResource FieldPlaceholder}"
                             BackgroundColor="Transparent"
-                            CornerRadius="50"
                             HeightRequest="25"
                             WidthRequest="25"
                             Padding="0"
-                            Margin="0,10,15,10">
+                            Margin="10,10,10,10">
 
-                            <Label
-                                Text="&#xf06e;"
-                                FontFamily="Font Awesome Solid"
-                                TextColor="{DynamicResource FieldPlaceholder}"
-                                HorizontalTextAlignment="Center"
-                                VerticalTextAlignment="Center"/>
+                            <Button.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <local:ShowPasswordTrigger
+                                            ShowIcon="&#xf06e;"
+                                            HideIcon="&#xf070;"
+                                            x:Name="ShowPasswordConfirmActualTrigger"/>
+                                </EventTrigger>
+                            </Button.Triggers>
 
-                        </Frame>
+                        </Button>
 
                     </StackLayout>
 
