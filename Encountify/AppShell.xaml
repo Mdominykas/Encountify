@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Encountify.Views"
        xmlns:resource="clr-namespace:Encountify.CustomRenderer"
        Title="Encountify"
        x:Class="Encountify.AppShell">
-
-    <!-- CONTENT -->
 
     <FlyoutItem 
         Title="Login"
@@ -26,19 +24,24 @@
     </FlyoutItem>
    
     <FlyoutItem 
-        Title="About" 
-        Icon="icon_about.png">
+        Title="Home">
         <ShellContent 
-            Route="AboutPage" 
-            ContentTemplate="{DataTemplate local:AboutPage}" />
+            Route="HomePage" 
+            ContentTemplate="{DataTemplate local:HomePage}"/>
     </FlyoutItem>
-    
+
     <FlyoutItem 
-        Title="Browse" 
-        Icon="icon_feed.png">
+        Title="Locations">
         <ShellContent 
             Route="ItemsPage" 
-            ContentTemplate="{DataTemplate local:ItemsPage}" />
+            ContentTemplate="{DataTemplate local:ItemsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem 
+        Title="Map">
+        <ShellContent 
+            Route="MapPage" 
+            ContentTemplate="{DataTemplate local:MapPage}"/>
     </FlyoutItem>
 
     <MenuItem 
@@ -46,38 +49,5 @@
         StyleClass="MenuItemLayoutStyle"
         Clicked="OnMenuItemClicked">
     </MenuItem>
-
-    <!-- Optional Templates 
-    // These may be provided inline as below or as separate classes.
-
-    // This header appears at the top of the Flyout.
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyout-header
-    <Shell.FlyoutHeaderTemplate>
-        <DataTemplate>
-            <Grid>ContentHere</Grid>
-        </DataTemplate>
-    </Shell.FlyoutHeaderTemplate>
-
-    // ItemTemplate is for ShellItems as displayed in a Flyout
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-flyoutitem-appearance
-    <Shell.ItemTemplate>
-        <DataTemplate>
-            <ContentView>
-                Bindable Properties: Title, Icon
-            </ContentView>
-        </DataTemplate>
-    </Shell.ItemTemplate>
-
-    // MenuItemTemplate is for MenuItems as displayed in a Flyout
-    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-menuitem-appearance
-    <Shell.MenuItemTemplate>
-        <DataTemplate>
-            <ContentView>
-                Bindable Properties: Text, Icon
-            </ContentView>
-        </DataTemplate>
-    </Shell.MenuItemTemplate>
-
-    -->
 
 </Shell>

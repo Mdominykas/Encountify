@@ -3,7 +3,6 @@ using Xamarin.Forms;
 
 namespace Encountify
 {
-
     public partial class App : Application
     {
 
@@ -18,19 +17,14 @@ namespace Encountify
 
         protected override void OnStart()
         {
-
         }
 
         protected override void OnSleep()
         {
-
         }
 
         protected override void OnResume()
         {
-
         }
-
     }
-
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Encountify.Models
+﻿namespace Encountify.Models
 {
     public class Item
     {

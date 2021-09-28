@@ -19,7 +19,7 @@ namespace Encountify.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "Locations";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 

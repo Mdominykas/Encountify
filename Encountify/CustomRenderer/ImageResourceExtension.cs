@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
+﻿// Access Image files from /Resources/Images, without the need to add them to Android and iOS projects
 
+using System;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Encountify.CustomRenderer
 {
     [ContentProperty(nameof(Source))]
-
+    
     public class ImageResourceExtension : IMarkupExtension
     {
         public string Source { get; set; }
@@ -25,7 +24,5 @@ namespace Encountify.CustomRenderer
 
             return imageSource;
         }
-
     }
-
 }

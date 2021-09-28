@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Render <Entry> without underline
+
 using Xamarin.Forms;
 
 namespace Encountify.CustomRenderer
 {
-    public sealed class CustomEntry : Entry
+    public class CustomEntry : Entry
     {
-
     }
 }

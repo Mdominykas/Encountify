@@ -68,7 +68,7 @@
                 <Setter Property="Color" Value="{StaticResource Checkbox}"/>
             </Style>            
 
-            <!-- CUSTOM STYLES -->
+            <!-- CUSTOM RENDERER STYLES -->
 
             <Style TargetType="local:CustomEntry">
                 <Setter Property="TextColor" Value="{StaticResource FieldText}"/>

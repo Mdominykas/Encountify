@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Turn <Button> into a trigger for password viewing
+
 using System.ComponentModel;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Encountify.CustomRenderer
@@ -11,7 +10,6 @@ namespace Encountify.CustomRenderer
         public string ShowIcon { get; set; }
         public string HideIcon { get; set; }
 
-        string _icon;
         bool _hidePassword = true;
 
         public bool HidePassword
@@ -35,7 +33,5 @@ namespace Encountify.CustomRenderer
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-
     }
 }

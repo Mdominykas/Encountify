@@ -1,5 +1,4 @@
 ﻿using Encountify.ViewModels;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace Encountify.Views

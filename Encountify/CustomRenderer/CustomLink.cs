@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Render <Label> as a link
+
 using Xamarin.Forms;
 
 namespace Encountify.CustomRenderer
