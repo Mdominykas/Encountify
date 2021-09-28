@@ -3,7 +3,25 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
     x:Class="Encountify.Views.MapPage"
     Title="Map">
 
+    <ContentPage.Content>
+        
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <maps:Map 
+                x:Name="map" 
+                VerticalOptions="FillAndExpand"
+                MyLocationEnabled="True"/>
+            
+        </Grid>
+        
+    </ContentPage.Content>
+    
 </ContentPage>

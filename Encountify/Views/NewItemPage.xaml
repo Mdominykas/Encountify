@@ -15,23 +15,43 @@
             Padding="15">
             
             <Label 
-                Text="Text" 
+                Text="Name" 
                 FontSize="Medium" />
             
             <Entry 
-                Text="{Binding Text, Mode=TwoWay}" 
+                Text="{Binding Name, Mode=TwoWay}" 
                 FontSize="Medium" />
-            
+
             <Label 
                 Text="Description" 
                 FontSize="Medium" />
-            
+
             <Editor 
                 Text="{Binding Description, Mode=TwoWay}" 
                 AutoSize="TextChanges" 
                 FontSize="Medium" 
                 Margin="0" />
-            
+
+            <Label 
+                Text="X" 
+                FontSize="Medium" />
+
+            <Editor 
+                Text="{Binding CoordX, Mode=TwoWay}" 
+                AutoSize="TextChanges" 
+                FontSize="Medium" 
+                Margin="0" />
+
+            <Label 
+                Text="Y" 
+                FontSize="Medium" />
+
+            <Editor 
+                Text="{Binding CoordY, Mode=TwoWay}" 
+                AutoSize="TextChanges" 
+                FontSize="Medium" 
+                Margin="0" />
+
             <StackLayout 
                 Orientation="Horizontal">
 

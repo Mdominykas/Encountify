@@ -6,7 +6,7 @@ namespace Encountify.Views
 {
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Location location { get; set; }
 
         public NewItemPage()
         {

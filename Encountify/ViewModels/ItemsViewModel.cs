@@ -10,19 +10,19 @@ namespace Encountify.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Location _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Location> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Location> ItemTapped { get; }
 
         public ItemsViewModel()
         {
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Location>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<Location>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -56,7 +56,7 @@ namespace Encountify.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Location SelectedItem
         {
             get => _selectedItem;
             set
@@ -71,12 +71,12 @@ namespace Encountify.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(Location item)
         {
             if (item == null)
                 return;
 
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.Id)}={item.Id}");
         }
     }
 }

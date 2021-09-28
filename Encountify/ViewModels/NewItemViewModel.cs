@@ -6,8 +6,10 @@ namespace Encountify.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
-        private string text;
+        private string name;
         private string description;
+        private double coordX;
+        private double coordY;
 
         public NewItemViewModel()
         {
@@ -19,20 +21,32 @@ namespace Encountify.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
+            return !String.IsNullOrWhiteSpace(name)
                 && !String.IsNullOrWhiteSpace(description);
         }
 
-        public string Text
+        public string Name
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => name;
+            set => SetProperty(ref name, value);
         }
 
         public string Description
         {
             get => description;
             set => SetProperty(ref description, value);
+        }
+
+        public double CoordX
+        {
+            get => coordX;
+            set => SetProperty(ref coordX, value);
+        }
+
+        public double CoordY
+        {
+            get => coordY;
+            set => SetProperty(ref coordY, value);
         }
 
         public Command SaveCommand { get; }
@@ -45,14 +59,15 @@ namespace Encountify.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            Location location = new Location()
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
+                Name = Name,
+                Description = Description,
+                CoordX = CoordX,
+                CoordY = CoordY
             };
 
-            await DataStore.AddItemAsync(newItem);
+            await DataStore.AddItemAsync(location);
 
             await Shell.Current.GoToAsync("..");
         }

@@ -61,8 +61,16 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.116</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Geolocator">
+      <Version>4.5.0.6</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Android.Support.Compat" Version="26.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.Core.UI" Version="26.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="26.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.Fragment" Version="26.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.Media.Compat" Version="26.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderer\CustomLinkRenderer.cs" />

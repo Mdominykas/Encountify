@@ -23,6 +23,7 @@ namespace Encountify.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            Xamarin.FormsGoogleMaps.Init("AIzaSyCZqFOCnWT0Arbi6KrX-NxTVibQJ3Zytdo");
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

@@ -11,21 +11,37 @@
         Padding="15">
         
         <Label 
-            Text="Text:" 
+            Text="Name:" 
             FontSize="Medium" />
         
         <Label 
-            Text="{Binding Text}" 
+            Text="{Binding Name}" 
             FontSize="Small"/>
-        
+
         <Label 
             Text="Description:" 
             FontSize="Medium" />
-        
+
         <Label 
             Text="{Binding Description}" 
             FontSize="Small"/>
-        
+
+        <Label 
+            Text="X:" 
+            FontSize="Medium" />
+
+        <Label 
+            Text="{Binding CoordX}" 
+            FontSize="Small"/>
+
+        <Label 
+            Text="Y:" 
+            FontSize="Medium" />
+
+        <Label 
+            Text="{Binding CoordY}" 
+            FontSize="Small"/>
+
     </StackLayout>
     
 </ContentPage>

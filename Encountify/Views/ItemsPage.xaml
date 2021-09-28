@@ -29,10 +29,10 @@
                     
                     <StackLayout 
                         Padding="10" 
-                        x:DataType="model:Item">
+                        x:DataType="model:Location">
                         
                         <Label 
-                            Text="{Binding Text}" 
+                            Text="{Binding Name}" 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" />

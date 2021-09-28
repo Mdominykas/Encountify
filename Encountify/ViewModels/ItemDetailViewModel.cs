@@ -4,18 +4,29 @@ using Xamarin.Forms;
 
 namespace Encountify.ViewModels
 {
-    [QueryProperty(nameof(ItemId), nameof(ItemId))]
+    [QueryProperty(nameof(Id), nameof(Id))]
     public class ItemDetailViewModel : BaseViewModel
     {
-        private string itemId;
-        private string text;
+        private int id;
+        private string name;
         private string description;
-        public string Id { get; set; }
+        private double coordX;
+        private double coordY;
 
-        public string Text
+        public int Id
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => id;
+            set
+            {
+                SetProperty(ref id, value);
+                LoadItemId(value);
+            }
+        }
+
+        public string Name
+        {
+            get => name;
+            set => SetProperty(ref name, value);
         }
 
         public string Description
@@ -24,27 +35,28 @@ namespace Encountify.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public string ItemId
+        public double CoordX
         {
-            get
-            {
-                return itemId;
-            }
-            set
-            {
-                itemId = value;
-                LoadItemId(value);
-            }
+            get => coordX;
+            set => SetProperty(ref coordX, value);
         }
 
-        public async void LoadItemId(string itemId)
+        public double CoordY
+        {
+            get => coordY;
+            set => SetProperty(ref coordY, value);
+        }
+
+        public async void LoadItemId(int Id)
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
+                var location = await DataStore.GetItemAsync(Id);
+                Id = location.Id;
+                Name = location.Name;
+                Description = location.Description;
+                CoordX = location.CoordX;
+                CoordY = location.CoordY;
             }
             catch (Exception)
             {
