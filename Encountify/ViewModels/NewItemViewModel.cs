@@ -40,7 +40,6 @@ namespace Encountify.ViewModels
 
         private async void OnCancel()
         {
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
 
@@ -55,7 +54,6 @@ namespace Encountify.ViewModels
 
             await DataStore.AddItemAsync(newItem);
 
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
     }

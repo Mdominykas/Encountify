@@ -19,7 +19,6 @@ namespace Encountify.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "Locations";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
@@ -77,7 +76,6 @@ namespace Encountify.ViewModels
             if (item == null)
                 return;
 
-            // This will push the ItemDetailPage onto the navigation stack
             await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
         }
     }
