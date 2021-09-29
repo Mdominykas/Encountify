@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 *our git users*
+Copyright (c) 2021 Rokas Lekečinskas, Miglė Micevičiūtė, Urtė Grabliauskaitė, Dominykas Marma
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
