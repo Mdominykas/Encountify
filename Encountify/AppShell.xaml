@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Shell 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Encountify.Views"
+    x:Class="Encountify.AppShell"
+    Title="Encountify">
+
+    <FlyoutItem 
+        Title="Login"
+        FlyoutItemIsVisible="False">
+        <ShellContent 
+            Route="LoginPage" 
+            ContentTemplate="{DataTemplate local:LoginPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem 
+        Title="Register"
+        FlyoutItemIsVisible="False">
+        <ShellContent 
+            Route="RegisterPage" 
+            ContentTemplate="{DataTemplate local:RegisterPage}"/>
+    </FlyoutItem>
+   
+    <FlyoutItem 
+        Title="Home">
+        <ShellContent 
+            Route="HomePage" 
+            ContentTemplate="{DataTemplate local:HomePage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem 
+        Title="Locations">
+        <ShellContent 
+            Route="LocationsPage" 
+            ContentTemplate="{DataTemplate local:LocationsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem 
+        Title="Map">
+        <ShellContent 
+            Route="MapPage" 
+            ContentTemplate="{DataTemplate local:MapPage}"/>
+    </FlyoutItem>
+
+    <MenuItem 
+        Text="Logout" 
+        StyleClass="MenuItemLayoutStyle"
+        Clicked="OnMenuItemClicked">
+    </MenuItem>
+
+</Shell>

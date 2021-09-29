@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\fa-brands-400.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Black.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-BlackItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-BoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-ExtraBold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-ExtraBoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-ExtraLight.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-ExtraLightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Light.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-LightItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Medium.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-MediumItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-SemiBold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-SemiBoldItalic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-Thin.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Poppins-ThinItalic.ttf" />
+    <EmbeddedResource Include="Resources\Images\background_blobs.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net" Version="1.6.292" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\LocationsPage.xaml.cs">
+      <DependentUpon>LocationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LocationDetailPage.xaml.cs">
+      <DependentUpon>LocationDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewLocationPage.xaml.cs">
+      <DependentUpon>NewLocationPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
