@@ -54,7 +54,7 @@ namespace Encounter1
         {
             try
             {
-                string dbPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3");
+                string dbPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
                 var db = new SQLiteConnection(dbPath);
                 var data = db.Table<LoginTable>();
                 var data1 = data.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).FirstOrDefault();
@@ -80,7 +80,7 @@ namespace Encounter1
         {
             var output = "";
             output += "Creating Database if it doesn't exists";
-            string dpPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "users.db3"); 
+            string dpPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3"); 
             _ = new SQLiteConnection(dpPath);
             output += "\n Database Created....";
             return output;
