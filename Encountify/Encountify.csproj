@@ -38,4 +38,16 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />  
     <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\LocationsPage.xaml.cs">
+      <DependentUpon>LocationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LocationDetailPage.xaml.cs">
+      <DependentUpon>LocationDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewLocationPage.xaml.cs">
+      <DependentUpon>NewLocationPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

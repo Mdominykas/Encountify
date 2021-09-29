@@ -4,14 +4,14 @@ using Xamarin.Forms;
 
 namespace Encountify.ViewModels
 {
-    public class NewItemViewModel : BaseViewModel
+    public class NewLocationViewModel : BaseViewModel
     {
         private string name;
         private string description;
         private double coordX;
         private double coordY;
 
-        public NewItemViewModel()
+        public NewLocationViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
@@ -67,7 +67,7 @@ namespace Encountify.ViewModels
                 CoordY = CoordY
             };
 
-            await DataStore.AddItemAsync(location);
+            await DataStore.AddLocationAsync(location);
 
             await Shell.Current.GoToAsync("..");
         }

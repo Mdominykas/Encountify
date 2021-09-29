@@ -17,7 +17,7 @@ namespace Encountify.Services
             locations = GetLocationList();
         }
 
-        public async Task<bool> AddItemAsync(Location location)
+        public async Task<bool> AddLocationAsync(Location location)
         {
             string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Locations.db3");
             SQLiteConnection db = new SQLiteConnection(dbPath);
@@ -28,16 +28,16 @@ namespace Encountify.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> UpdateItemAsync(Location location)
+        public async Task<bool> UpdateLocationAsync(Location location)
         {
-            var oldItem = locations.Where((Location arg) => arg.Id == location.Id).FirstOrDefault();
-            locations.Remove(oldItem);
+            var oldLocation = locations.Where((Location arg) => arg.Id == location.Id).FirstOrDefault();
+            locations.Remove(oldLocation);
             locations.Add(location);
 
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteItemAsync(int id)
+        public async Task<bool> DeleteLocationAsync(int id)
         {
             var old = locations.Where((Location arg) => arg.Id == id).FirstOrDefault();
             locations.Remove(old);
@@ -45,12 +45,12 @@ namespace Encountify.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<Location> GetItemAsync(int id)
+        public async Task<Location> GetLocationAsync(int id)
         {
             return await Task.FromResult(locations.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<Location>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Location>> GetLocationsAsync(bool forceRefresh = false)
         {
             return await Task.FromResult(locations);
         }

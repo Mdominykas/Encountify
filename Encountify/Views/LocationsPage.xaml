@@ -3,24 +3,24 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Encountify.Views.ItemsPage"
+    x:Class="Encountify.Views.LocationsPage"
     xmlns:local="clr-namespace:Encountify.ViewModels"  
     xmlns:model="clr-namespace:Encountify.Models"  
-    x:Name="BrowseItemsPage"             
+    x:Name="BrowseLocationsPage"             
     Title="Locations">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="Add" Command="{Binding AddLocationCommand}" />
     </ContentPage.ToolbarItems>
 
     <RefreshView 
-        x:DataType="local:ItemsViewModel" 
-        Command="{Binding LoadItemsCommand}" 
+        x:DataType="local:LocationsViewModel" 
+        Command="{Binding LoadLocationsCommand}" 
         IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         
         <CollectionView 
-            x:Name="ItemsListView"
-            ItemsSource="{Binding Items}"
+            x:Name="LocationsListView"
+            ItemsSource="{Binding Locations}"
             SelectionMode="None">
             
             <CollectionView.ItemTemplate>
@@ -34,19 +34,19 @@
                         <Label 
                             Text="{Binding Name}" 
                             LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
+                            Style="{DynamicResource ListLocationTextStyle}" 
                             FontSize="16" />
                         
                         <Label 
                             Text="{Binding Description}" 
                             LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            Style="{DynamicResource ListLocationDetailTextStyle}"
                             FontSize="13" />
                         
                         <StackLayout.GestureRecognizers>                            
                             <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:LocationsViewModel}}, Path=LocationTapped}"		
                                 CommandParameter="{Binding .}">
                             </TapGestureRecognizer>                            
                         </StackLayout.GestureRecognizers>

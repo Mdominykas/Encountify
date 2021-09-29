@@ -4,7 +4,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Encountify.Views"
-    xmlns:resource="clr-namespace:Encountify.CustomRenderer"
     x:Class="Encountify.AppShell"
     Title="Encountify">
 
@@ -34,8 +33,8 @@
     <FlyoutItem 
         Title="Locations">
         <ShellContent 
-            Route="ItemsPage" 
-            ContentTemplate="{DataTemplate local:ItemsPage}"/>
+            Route="LocationsPage" 
+            ContentTemplate="{DataTemplate local:LocationsPage}"/>
     </FlyoutItem>
 
     <FlyoutItem 

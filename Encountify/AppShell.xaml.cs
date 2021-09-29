@@ -10,8 +10,8 @@ namespace Encountify
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("ItemDetailPage", typeof(ItemDetailPage));
-            Routing.RegisterRoute("NewItemPage", typeof(NewItemPage));
+            Routing.RegisterRoute("LocationDetailPage", typeof(LocationDetailPage));
+            Routing.RegisterRoute("NewLocationPage", typeof(NewLocationPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

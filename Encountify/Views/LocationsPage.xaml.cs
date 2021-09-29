@@ -3,15 +3,15 @@ using Xamarin.Forms;
 
 namespace Encountify.Views
 {
-    public partial class ItemsPage : ContentPage
+    public partial class LocationsPage : ContentPage
     {
-        ItemsViewModel _viewModel;
+        LocationsViewModel _viewModel;
 
-        public ItemsPage()
+        public LocationsPage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new ItemsViewModel();
+            BindingContext = _viewModel = new LocationsViewModel();
         }
 
         protected override void OnAppearing()

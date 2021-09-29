@@ -5,7 +5,7 @@ using Xamarin.Forms;
 namespace Encountify.ViewModels
 {
     [QueryProperty(nameof(Id), nameof(Id))]
-    public class ItemDetailViewModel : BaseViewModel
+    public class LocationDetailViewModel : BaseViewModel
     {
         private int id;
         private string name;
@@ -19,7 +19,7 @@ namespace Encountify.ViewModels
             set
             {
                 SetProperty(ref id, value);
-                LoadItemId(value);
+                LoadLocationId(value);
             }
         }
 
@@ -47,11 +47,11 @@ namespace Encountify.ViewModels
             set => SetProperty(ref coordY, value);
         }
 
-        public async void LoadItemId(int Id)
+        public async void LoadLocationId(int Id)
         {
             try
             {
-                var location = await DataStore.GetItemAsync(Id);
+                var location = await DataStore.GetLocationAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;
@@ -60,7 +60,7 @@ namespace Encountify.ViewModels
             }
             catch (Exception)
             {
-                Debug.WriteLine("Failed to Load Item");
+                Debug.WriteLine("Failed to Load Location");
             }
         }
     }

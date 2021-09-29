@@ -5,10 +5,10 @@ namespace Encountify.Services
 {
     public interface IDataStore<T>
     {
-        Task<bool> AddItemAsync(T item);
-        Task<bool> UpdateItemAsync(T item);
-        Task<bool> DeleteItemAsync(int id);
-        Task<T> GetItemAsync(int id);
-        Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<bool> AddLocationAsync(T location);
+        Task<bool> UpdateLocationAsync(T location);
+        Task<bool> DeleteLocationAsync(int id);
+        Task<T> GetLocationAsync(int id);
+        Task<IEnumerable<T>> GetLocationsAsync(bool forceRefresh = false);
     }
 }

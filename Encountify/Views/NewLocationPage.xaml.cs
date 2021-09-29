@@ -4,14 +4,14 @@ using Xamarin.Forms;
 
 namespace Encountify.Views
 {
-    public partial class NewItemPage : ContentPage
+    public partial class NewLocationPage : ContentPage
     {
         public Location location { get; set; }
 
-        public NewItemPage()
+        public NewLocationPage()
         {
             InitializeComponent();
-            BindingContext = new NewItemViewModel();
+            BindingContext = new NewLocationViewModel();
         }
     }
 }
