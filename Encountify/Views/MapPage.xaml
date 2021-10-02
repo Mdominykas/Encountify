@@ -16,10 +16,9 @@
             </Grid.RowDefinitions>
 
             <clustering:ClusteredMap x:Name="map"
-                                 HorizontalOptions="FillAndExpand"
-                                 VerticalOptions="FillAndExpand"
-                                 MyLocationEnabled="True"/>
-                                 
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                MyLocationEnabled="True"/>
         </Grid>
         
     </ContentPage.Content>
