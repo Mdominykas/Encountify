@@ -5,6 +5,7 @@ using System.IO;
 using SQLite;
 using Encountify.Models;
 using Encountify.CustomRenderer;
+using Encountify.Services;
 
 namespace Encountify.Views
 {
@@ -42,7 +43,7 @@ namespace Encountify.Views
 
         public void RegisterUser(User user)
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
+            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
 
             try

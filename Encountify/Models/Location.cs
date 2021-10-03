@@ -4,16 +4,15 @@ namespace Encountify.Models
 {
     public class Location
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [MaxLength(30), Unique]
+        public string Name { get; set; } = "";
 
-        public string Name { get; set; }
+        public string Description { get; set; } = "";
 
-        public string Description { get; set; }
+        public double CoordX { get; set; } = 0;
 
-        public double CoordX { get; set; }
-
-        public double CoordY { get; set; }
+        public double CoordY { get; set; } = 0;
     }
 }
