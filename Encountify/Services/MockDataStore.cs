@@ -61,7 +61,6 @@ namespace Encountify.Services
             {
                 var location1 = new Location() { Name = "Vilniaus katedra", CoordX = 54.685849042698216, CoordY = 25.287750880122083 };
                 var location2 = new Location() { Name = "Gedimino bokštas", CoordX = 54.68667445192699, CoordY = 25.29056883194689 };
-
                 db.Insert(location1);
                 db.Insert(location2);
             }
