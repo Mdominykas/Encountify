@@ -71,6 +71,9 @@
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="26.0.2" />
     <PackageReference Include="Xamarin.Android.Support.Fragment" Version="26.0.2" />
     <PackageReference Include="Xamarin.Android.Support.Media.Compat" Version="26.0.2" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps.Clustering">
+      <Version>1.1.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderer\CustomLinkRenderer.cs" />
