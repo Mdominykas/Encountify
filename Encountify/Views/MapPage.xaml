@@ -3,7 +3,7 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    xmlns:clustering="clr-namespace:Xamarin.Forms.GoogleMaps.Clustering;assembly=Xamarin.Forms.GoogleMaps.Clustering"
     x:Class="Encountify.Views.MapPage"
     Title="Map">
 
@@ -15,11 +15,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <maps:Map 
-                x:Name="map" 
+            <clustering:ClusteredMap x:Name="map"
+                HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 MyLocationEnabled="True"/>
-            
         </Grid>
         
     </ContentPage.Content>
