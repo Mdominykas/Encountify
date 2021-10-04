@@ -14,7 +14,6 @@ namespace Encountify.Views
     public partial class RegisterPage : ContentPage
     {
         User user = new User();
-        private string ErrorMessage;
 
         public RegisterPage()
         {
@@ -40,28 +39,29 @@ namespace Encountify.Views
                     if (dataUser == null)
                     {
                         var dataUser2 = data.Where(x => x.Email == Email.Text).FirstOrDefault();
-                    if (dataUser2 == null)
-                    {
-                        user.Username = Username.Text;
-                        user.Password = Password.Text;
-                        user.Email = Email.Text;
-                        RegisterUser(user);
-                        await Navigation.PushAsync(new LoginPage());
 
-                        Username.Text = string.Empty;
-                        Email.Text = string.Empty;
-                        Password.Text = string.Empty;
-                        PasswordConfirm.Text = string.Empty;
+                        if (dataUser2 == null)
+                        {
+                            user.Username = Username.Text;
+                            user.Password = Password.Text;
+                            user.Email = Email.Text;
+                            RegisterUser(user);
+                            await Navigation.PushAsync(new LoginPage());
+
+                            Username.Text = string.Empty;
+                            Email.Text = string.Empty;
+                            Password.Text = string.Empty;
+                            PasswordConfirm.Text = string.Empty;
+                        }
+                    else
+                    {
+                        await DisplayAlert("Warning", "Email in use", "OK");
+                    }
+
                     }
                     else
                     {
-                        DependencyService.Get<MessagePopup>().ShortAlert("Email in use");
-                    }
-
-                    }
-                    else
-                    {
-                    DependencyService.Get<MessagePopup>().ShortAlert("Username in use");
+                        await DisplayAlert("Warning","Username in use", "OK");
                     }
             }
         }
@@ -90,11 +90,12 @@ namespace Encountify.Views
             var userNameValidation = new Regex(@"^[a-zaA-Z][a-zA-Z0-9]{2,15}$");
             if (string.IsNullOrEmpty(username))
             {
+                DisplayAlert("Error", "Username cannot be empty", "OK");
                 return false;
             }
             if(!userNameValidation.IsMatch(username))
             {
-                DisplayAlert("Error", "Username should start with letters and has to be 3-16 long", "Cancel");
+                DisplayAlert("Error", "Username should start with letters and has to be 3-16 long", "OK");
                 return false;
             }
             else
@@ -104,39 +105,42 @@ namespace Encountify.Views
         }
 
         private Boolean ValidPassword(string password)
-        {
-            var passwordValidation = Password.Text;
-            
+        {   
             var hasUpperCase = new Regex(@"[A-Z]+");
             var hasLowerCase = new Regex(@"[a-z]+");
             var hasNumbers = new Regex(@"[0-9]+");
-            var hasSpecialSymbols = new Regex(@"[!@#$%^&8()_+=\[{\]};:<>|.?,-]");
+            var hasSpecialSymbols = new Regex(@"[!@#$%^&*`~()_+=\[{\]};:<>|.?,-]");
             var hasRequiredLength = new Regex(@".{8,15}");
 
 
-            if (!hasUpperCase.IsMatch(passwordValidation))
+            if (!hasUpperCase.IsMatch(password))
             {
-                DisplayAlert("Error", "Password should contain at least one upper case letter", "Cancel");
+                DisplayAlert("Error", "Password should contain at least one upper case letter", "OK");
                 return false;
             }
-            if(!hasLowerCase.IsMatch(passwordValidation))
+            if(!hasLowerCase.IsMatch(password))
             {
-                DisplayAlert("Error", "Password should contain at least one lower case letter", "Cancel");
+                DisplayAlert("Error", "Password should contain at least one lower case letter", "OK");
                 return false;
             }
-            if(!hasNumbers.IsMatch(passwordValidation))
+            if(!hasNumbers.IsMatch(password))
             {
-                DisplayAlert ("Error", "Password should contain at least one number", "Cancel");
+                DisplayAlert ("Error", "Password should contain at least one number", "OK");
                 return false;
             }
-            if(!hasSpecialSymbols.IsMatch(passwordValidation))
+            if(!hasSpecialSymbols.IsMatch(password))
             {
-                DisplayAlert("Error","Password should contain at least one special symbol", "Cancel");
+                DisplayAlert("Error","Password should contain at least one special symbol", "OK");
                 return false;
             }
-            if(!hasRequiredLength.IsMatch(passwordValidation))
+            if(!hasRequiredLength.IsMatch(password))
             {
-                DisplayAlert ("Error","Password should not be shorter than 8 or longer than 15 symbols", "Cancel");
+                DisplayAlert ("Error","Password should not be shorter than 8 or longer than 15 symbols", "OK");
+                return false;
+            }
+            if(string.IsNullOrEmpty(password))
+            {
+                DisplayAlert("Error", "Password field cannot be empty", "OK");
                 return false;
             }
             else
@@ -161,12 +165,11 @@ namespace Encountify.Views
         {
             if (!ValidPassword(password) | !ValidPassword(passwordconfirm))
             {
-                DependencyService.Get<MessagePopup>().ShortAlert("Password is invalid");
                 return false;
             }
             else if (!PasswordsMatch(password, passwordconfirm))
             {
-                DependencyService.Get<MessagePopup>().ShortAlert("Passwords do not match");
+                DisplayAlert("Error", "Passwords do not match", "OK");
                 return false;
             }
             return true;
@@ -181,15 +184,28 @@ namespace Encountify.Views
             }
             catch
             {
-                DependencyService.Get<MessagePopup>().ShortAlert("Invalid mail format");
+                DisplayAlert("Error", "Invalid mail format", "OK");
                 return false;
             }
         }
 
-    public bool ValidateFields()
+        public bool ValidateTerms()
+        {
+            if (!Terms.IsChecked)
+            {
+                DisplayAlert("Warning", "You have to agree to the Terms of Service ", "OK");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool ValidateFields()
         {
             if(ValidUsername((string)Username.Text) & VerifyPassword((string)Password.Text, 
-                (string)PasswordConfirm.Text) & ValidEmail((string)Email.Text))
+                (string)PasswordConfirm.Text) & ValidEmail((string)Email.Text) & ValidateTerms())
             {
                 return true;
             }
