@@ -224,6 +224,7 @@
                     Orientation="Horizontal">
 
                     <CheckBox 
+                        x:Name="Terms"
                         IsChecked="False"/>
 
                     <Label
