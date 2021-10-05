@@ -163,7 +163,7 @@ namespace Encountify.Views
 
         private bool VerifyPassword(string password, string passwordconfirm)
         {
-            if (!ValidPassword(password) | !ValidPassword(passwordconfirm))
+            if (!ValidPassword(password))
             {
                 return false;
             }
