@@ -5,6 +5,7 @@ using System.IO;
 using SQLite;
 using Encountify.Models;
 using Encountify.CustomRenderer;
+using Encountify.Services;
 using System.Text.RegularExpressions;
 using Xunit.Sdk;
 
@@ -69,7 +70,7 @@ namespace Encountify.Views
 
         public void RegisterUser(User user)
         {
-            var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
+            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
             try
             {

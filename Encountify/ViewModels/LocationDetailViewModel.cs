@@ -51,7 +51,7 @@ namespace Encountify.ViewModels
         {
             try
             {
-                var location = await DataStore.GetLocationAsync(Id);
+                var location = await DataStore.GetAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;

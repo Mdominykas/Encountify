@@ -67,7 +67,7 @@ namespace Encountify.ViewModels
                 CoordY = CoordY
             };
 
-            await DataStore.AddLocationAsync(location);
+            await DataStore.AddAsync(location);
 
             await Shell.Current.GoToAsync("..");
         }
