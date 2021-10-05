@@ -7,12 +7,14 @@ using Encountify.Models;
 using Encountify.CustomRenderer;
 using System.Text.RegularExpressions;
 using Xunit.Sdk;
+using Encountify.ViewModels;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
+        RegisterPageViewModel _viewModel;
         User user = new User();
 
         public RegisterPage()
@@ -21,6 +23,8 @@ namespace Encountify.Views
             Username.ReturnCommand = new Command(() => Email.Focus());
             Email.ReturnCommand = new Command(() => Password.Focus());
             Password.ReturnCommand = new Command(() => PasswordConfirm.Focus());
+
+            BindingContext = _viewModel = new RegisterPageViewModel();
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
@@ -214,6 +218,9 @@ namespace Encountify.Views
                 return false;
             }
         }
+
+
+
 
 
     }
