@@ -1,5 +1,6 @@
 ﻿using Encountify.CustomRenderer;
 using Encountify.Models;
+using Encountify.Services;
 using SQLite;
 using System;
 using System.IO;
@@ -19,7 +20,7 @@ namespace Encountify.Views
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
+            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
 
             try

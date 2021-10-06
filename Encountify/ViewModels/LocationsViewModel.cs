@@ -34,9 +34,10 @@ namespace Encountify.ViewModels
             try
             {
                 Locations.Clear();
-                var locations = await DataStore.GetLocationsAsync(true);
+                var locations = await DataStore.GetAllAsync(true);
                 foreach (var location in locations)
                 {
+                    ///cia ideda su gerom koordinatem
                     Locations.Add(location);
                 }
             }
