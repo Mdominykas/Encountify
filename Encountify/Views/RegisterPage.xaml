@@ -234,7 +234,7 @@
                         VerticalTextAlignment="Center"
                         Padding="0,2,0,0">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                            <TapGestureRecognizer Command="{Binding ReadServiceTermsCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
                 </StackLayout>

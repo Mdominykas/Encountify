@@ -1,6 +1,5 @@
-﻿using Encountify.Models;
-using System;
-using System.Text;
+﻿using System.IO;
+using System.Reflection;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -8,7 +7,7 @@ namespace Encountify.ViewModels
 {
     class RegisterPageViewModel : BaseViewModel
     {
-        public ICommand ForgotPasswordCommand => new Command(OnForgotPassword);
+        public ICommand ReadServiceTermsCommand => new Command(OnReadServiceTerms);
         public Command CancelCommand { get; }
 
         public RegisterPageViewModel()
@@ -21,13 +20,16 @@ namespace Encountify.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void OnForgotPassword()
+        private async void OnReadServiceTerms()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"ServiceTerms.txt");
-            StringBuilder sb = new StringBuilder();
-            foreach (string line in lines)
-                sb.AppendLine(line);
-            await App.Current.MainPage.DisplayAlert("Service terms", sb.ToString(), "OK");
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(LoadResourceText)).Assembly;
+            Stream stream = assembly.GetManifestResourceStream("Encountify.ServiceTerms.txt");
+            string terms = "";
+            using (var reader = new StreamReader(stream))
+            {
+                terms = reader.ReadToEnd();
+            }
+            await App.Current.MainPage.DisplayAlert("Service terms", terms, "OK");
         }
 
     }
