@@ -12,12 +12,10 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-   
 
         public MapPage()
         {
             InitializeComponent();
-            LoadMarkersFromDb(map);
 
             map.MapClicked += async (sender, e) =>
             {
@@ -27,14 +25,19 @@ namespace Encountify.Views
             };
         }
 
+       
+
+
         protected override async void OnAppearing()
         {
             try
             {
+                LoadMarkersFromDb(map);
                 var locator = CrossGeolocator.Current;
                 var position = await locator.GetPositionAsync();
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromMeters(5000)));
                 map.Cluster();
+          
             }
             catch
             {
@@ -48,8 +51,11 @@ namespace Encountify.Views
                 Label = title,
                 Position = new Position(latitude, longitude)
             };
-            map.Pins.Add(marker);
-           
+
+            if(!map.Pins.Contains(marker))
+            {
+                map.Pins.Add(marker);
+            }
         }
 
         public void LoadMarkersFromDb(Map map)
