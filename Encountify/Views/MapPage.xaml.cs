@@ -14,16 +14,25 @@ namespace Encountify.Views
         public MapPage()
         {
             InitializeComponent();
+            LoadMarkersFromDb(map);
+
+            map.MapClicked += async (sender, e) =>
+            {
+                var lat = e.Point.Latitude;
+                var lng = e.Point.Longitude;
+                await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
+            };
+
         }
 
         protected override async void OnAppearing()
         {
-            LoadMarkersFromDb(map);
+            
             try
             {
                 var locator = CrossGeolocator.Current;
                 var position = await locator.GetPositionAsync();
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Xamarin.Forms.GoogleMaps.Position(position.Latitude, position.Longitude), Distance.FromMeters(5000)));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromMeters(5000)));
             }
             catch
             {
@@ -35,7 +44,7 @@ namespace Encountify.Views
             Pin marker = new Pin()
             {
                 Label = title,
-                Position = new Xamarin.Forms.GoogleMaps.Position(latitude, longitude)
+                Position = new Position(latitude, longitude)
             };
             map.Pins.Add(marker);
         }
@@ -51,5 +60,6 @@ namespace Encountify.Views
                 LoadMarker(map, s.Name, s.CoordX, s.CoordY);
             }
         }
+
     }
 }
