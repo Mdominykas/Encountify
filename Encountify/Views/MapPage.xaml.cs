@@ -39,7 +39,7 @@ namespace Encountify.Views
             }
         }
 
-        public void LoadMarker(Map map, string title, double latitude, double longitude)
+        static public void LoadMarker(Map map, string title, double latitude, double longitude)
         {
             Pin marker = new Pin()
             {
