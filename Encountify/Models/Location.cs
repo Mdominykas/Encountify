@@ -14,5 +14,7 @@ namespace Encountify.Models
         public double CoordX { get; set; } = 0;
 
         public double CoordY { get; set; } = 0;
+
+        public string Category { get; set; } = "";
     }
 }

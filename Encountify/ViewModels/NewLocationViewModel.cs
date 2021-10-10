@@ -12,6 +12,7 @@ namespace Encountify.ViewModels
         private string description;
         private double coordX;
         private double coordY;
+        private string category;
 
         public NewLocationViewModel()
         {
@@ -52,6 +53,12 @@ namespace Encountify.ViewModels
             set => SetProperty(ref coordY, value);
         }
 
+        public string Category
+        {
+            get => category;
+            set => SetProperty(ref category, value);
+        }
+
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
         public Command SelectCommand { get; }
@@ -68,7 +75,8 @@ namespace Encountify.ViewModels
                 Name = Name,
                 Description = Description,
                 CoordX = CoordX,
-                CoordY = CoordY
+                CoordY = CoordY,
+                Category = Category
             };
 
             await DataStore.AddAsync(location);

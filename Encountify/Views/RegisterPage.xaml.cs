@@ -31,46 +31,47 @@ namespace Encountify.Views
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
-            if(ValidateFields())
+            if (ValidateFields())
             {
-                    var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Users.db3");
-                    SQLiteConnection db = new SQLiteConnection(dbPath);
-                    var data = db.Table<User>();
-                    var dataUser = data.Where(x => x.Username == Username.Text).FirstOrDefault();
-                    if (dataUser == null)
+                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Users.db3");
+                SQLiteConnection db = new SQLiteConnection(dbPath);
+                db.CreateTable<User>();
+                var data = db.Table<User>();      
+                var dataUser = data.Where(x => x.Username == Username.Text).FirstOrDefault();
+                if (dataUser == null)
+                {
+                    var dataUser2 = data.Where(x => x.Email == Email.Text).FirstOrDefault();
+
+                    if (dataUser2 == null)
                     {
-                        var dataUser2 = data.Where(x => x.Email == Email.Text).FirstOrDefault();
+                        user.Username = Username.Text;
+                        user.Password = Password.Text;
+                        user.Email = Email.Text;
+                        RegisterUser(user);
+                        await Navigation.PushAsync(new LoginPage());
 
-                        if (dataUser2 == null)
-                        {
-                            user.Username = Username.Text;
-                            user.Password = Password.Text;
-                            user.Email = Email.Text;
-                            RegisterUser(user);
-                            await Navigation.PushAsync(new LoginPage());
-
-                            Username.Text = string.Empty;
-                            Email.Text = string.Empty;
-                            Password.Text = string.Empty;
-                            PasswordConfirm.Text = string.Empty;
-                        }
+                        Username.Text = string.Empty;
+                        Email.Text = string.Empty;
+                        Password.Text = string.Empty;
+                        PasswordConfirm.Text = string.Empty;
+                    }
                     else
                     {
                         await DisplayAlert("Warning", "Email in use", "OK");
                     }
 
-                    }
-                    else
-                    {
-                        await DisplayAlert("Warning","Username in use", "OK");
-                    }
+                }
+                else
+                {
+                    await DisplayAlert("Warning", "Username in use", "OK");
+                }
             }
         }
-        
+
 
         public void RegisterUser(User user)
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
             try
             {
@@ -94,7 +95,7 @@ namespace Encountify.Views
                 DisplayAlert("Error", "Username cannot be empty", "OK");
                 return false;
             }
-            if(!userNameValidation.IsMatch(username))
+            if (!userNameValidation.IsMatch(username))
             {
                 DisplayAlert("Error", "Username should start with letters and has to be 3-16 long", "OK");
                 return false;
@@ -106,7 +107,7 @@ namespace Encountify.Views
         }
 
         private Boolean ValidPassword(string password)
-        {   
+        {
             var hasUpperCase = new Regex(@"[A-Z]+");
             var hasLowerCase = new Regex(@"[a-z]+");
             var hasNumbers = new Regex(@"[0-9]+");
@@ -119,27 +120,27 @@ namespace Encountify.Views
                 DisplayAlert("Error", "Password should contain at least one upper case letter", "OK");
                 return false;
             }
-            if(!hasLowerCase.IsMatch(password))
+            if (!hasLowerCase.IsMatch(password))
             {
                 DisplayAlert("Error", "Password should contain at least one lower case letter", "OK");
                 return false;
             }
-            if(!hasNumbers.IsMatch(password))
+            if (!hasNumbers.IsMatch(password))
             {
-                DisplayAlert ("Error", "Password should contain at least one number", "OK");
+                DisplayAlert("Error", "Password should contain at least one number", "OK");
                 return false;
             }
-            if(!hasSpecialSymbols.IsMatch(password))
+            if (!hasSpecialSymbols.IsMatch(password))
             {
-                DisplayAlert("Error","Password should contain at least one special symbol", "OK");
+                DisplayAlert("Error", "Password should contain at least one special symbol", "OK");
                 return false;
             }
-            if(!hasRequiredLength.IsMatch(password))
+            if (!hasRequiredLength.IsMatch(password))
             {
-                DisplayAlert ("Error","Password should not be shorter than 8 or longer than 15 symbols", "OK");
+                DisplayAlert("Error", "Password should not be shorter than 8 or longer than 15 symbols", "OK");
                 return false;
             }
-            if(string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(password))
             {
                 DisplayAlert("Error", "Password field cannot be empty", "OK");
                 return false;
@@ -205,7 +206,7 @@ namespace Encountify.Views
 
         public bool ValidateFields()
         {
-            if(ValidUsername((string)Username.Text) & VerifyPassword((string)Password.Text, 
+            if (ValidUsername((string)Username.Text) & VerifyPassword((string)Password.Text,
                 (string)PasswordConfirm.Text) & ValidEmail((string)Email.Text) & ValidateTerms())
             {
                 return true;
