@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ServiceTerms.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-brands-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
@@ -28,6 +32,7 @@
     <EmbeddedResource Include="Resources\Fonts\Poppins-Thin.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Poppins-ThinItalic.ttf" />
     <EmbeddedResource Include="Resources\Images\background_blobs.png" />
+    <EmbeddedResource Include="ServiceTerms.txt" />
   </ItemGroup>
 
   <ItemGroup>
