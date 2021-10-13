@@ -1,10 +1,8 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
-using System.IO;
-using SQLite;
-using Encountify.Models;
 using Plugin.Geolocator;
+using Encountify.Services;
 
 
 namespace Encountify.Views
@@ -60,12 +58,10 @@ namespace Encountify.Views
 
         public void LoadMarkersFromDb(Map map)
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Locations.db3");
-            SQLiteConnection db = new SQLiteConnection(dbPath);
-            db.CreateTable<Location>();
-            var table = db.Table<Location>();
+            var access = new LocationDatabaseAccess();
+            var locationList = access.GetLocationList();
 
-            foreach (var s in table)
+            foreach (var s in locationList)
             {
                 LoadMarker(map, s.Name, s.CoordX, s.CoordY);
             }
