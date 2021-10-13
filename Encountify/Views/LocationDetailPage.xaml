@@ -41,6 +41,14 @@
         <Label 
             Text="{Binding CoordY}" 
             FontSize="Small"/>
+        
+        <Label 
+            Text="Category" 
+            FontSize="Medium" />
+
+        <Label 
+            Text="{Binding Category}" 
+            FontSize="Small"/>
 
     </StackLayout>
     

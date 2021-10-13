@@ -7,17 +7,17 @@
     x:Class="Encountify.Views.NewLocationPage"
     Shell.PresentationMode="ModalAnimated"
     Title="New Location">
-    
+
     <ContentPage.Content>
-        
+
         <StackLayout 
             Spacing="3" 
             Padding="15">
-            
+
             <Label 
                 Text="Name" 
                 FontSize="Medium" />
-            
+
             <Entry 
                 Text="{Binding Name, Mode=TwoWay}" 
                 FontSize="Medium" />
@@ -52,10 +52,41 @@
                 FontSize="Medium" 
                 Margin="0" />
 
+            <Picker
+                Title="Select location category"
+                SelectedItem="{Binding Category, Mode=TwoWay}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Amusement park</x:String>
+                        <x:String>Aquaria</x:String>
+                        <x:String>Beach</x:String>
+                        <x:String>Botanical garden</x:String>
+                        <x:String>Casino hotel</x:String>
+                        <x:String>Casino</x:String>
+                        <x:String>Castle</x:String>
+                        <x:String>Cathedral</x:String>
+                        <x:String>Fort</x:String>
+                        <x:String>Heritage railway</x:String>
+                        <x:String>Memorial</x:String>
+                        <x:String>Monument</x:String>
+                        <x:String>Museum</x:String>
+                        <x:String>Park</x:String>
+                        <x:String>Resort</x:String>
+                        <x:String>Ski area</x:String>
+                        <x:String>Sports facility</x:String>
+                        <x:String>Street</x:String>
+                        <x:String>Zoo</x:String>
+                        <x:String>Tourist trap</x:String>
+                        <x:String>Other</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+
             <Button 
-                    Text="Select Location" 
-                    Command="{Binding SelectCommand}" 
-                    HorizontalOptions="FillAndExpand"/>
+                Text="Select Location" 
+                Command="{Binding SelectCommand}" 
+                HorizontalOptions="FillAndExpand"/>
 
             <StackLayout 
                 Orientation="Horizontal">
@@ -71,9 +102,9 @@
                     HorizontalOptions="FillAndExpand"/>
 
             </StackLayout>
-            
+
         </StackLayout>
-        
+
     </ContentPage.Content>
-    
+
 </ContentPage>

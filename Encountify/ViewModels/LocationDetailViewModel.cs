@@ -12,6 +12,7 @@ namespace Encountify.ViewModels
         private string description;
         private double coordX;
         private double coordY;
+        private string category;
 
         public int Id
         {
@@ -47,6 +48,12 @@ namespace Encountify.ViewModels
             set => SetProperty(ref coordY, value);
         }
 
+        public string Category
+        {
+            get => category;
+            set => SetProperty(ref category, value);
+        }
+
         public async void LoadLocationId(int Id)
         {
             try
@@ -57,6 +64,7 @@ namespace Encountify.ViewModels
                 Description = location.Description;
                 CoordX = location.CoordX;
                 CoordY = location.CoordY;
+                Category = location.Category;
             }
             catch (Exception)
             {
