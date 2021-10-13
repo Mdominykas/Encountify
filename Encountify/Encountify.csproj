@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ServiceTerms.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\fa-brands-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
@@ -28,6 +32,7 @@
     <EmbeddedResource Include="Resources\Fonts\Poppins-Thin.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Poppins-ThinItalic.ttf" />
     <EmbeddedResource Include="Resources\Images\background_blobs.png" />
+    <EmbeddedResource Include="ServiceTerms.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +44,12 @@
     <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />  
     <PackageReference Include="Xamarin.Forms.GoogleMaps.Clustering" Version="1.1.0" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v11.0\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

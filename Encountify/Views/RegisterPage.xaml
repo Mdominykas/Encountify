@@ -229,11 +229,14 @@
 
                     <Label
                         Text="I agree to the Terms of Service"
-                        TextColor="{DynamicResource FieldPlaceholder}"
+                        TextColor="Aqua"
                         HorizontalTextAlignment="Start"
                         VerticalTextAlignment="Center"
-                        Padding="0,2,0,0"/>
-
+                        Padding="0,2,0,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ReadServiceTermsCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
 
                 <Button
