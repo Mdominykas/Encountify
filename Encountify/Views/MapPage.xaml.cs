@@ -22,10 +22,7 @@ namespace Encountify.Views
                 await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
             };
         }
-
-       
-
-
+        
         protected override async void OnAppearing()
         {
             try
