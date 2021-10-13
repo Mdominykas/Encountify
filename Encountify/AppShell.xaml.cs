@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Encountify
 {
-    public partial class AppShell : Xamarin.Forms.Shell
+    public partial class AppShell : Shell
     {
         public AppShell()
         {
@@ -12,6 +12,7 @@ namespace Encountify
 
             Routing.RegisterRoute("LocationDetailPage", typeof(LocationDetailPage));
             Routing.RegisterRoute("NewLocationPage", typeof(NewLocationPage));
+            Routing.RegisterRoute("MapPage", typeof(MapPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

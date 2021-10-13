@@ -52,6 +52,11 @@
                 FontSize="Medium" 
                 Margin="0" />
 
+            <Button 
+                    Text="Select Location" 
+                    Command="{Binding SelectCommand}" 
+                    HorizontalOptions="FillAndExpand"/>
+
             <StackLayout 
                 Orientation="Horizontal">
 

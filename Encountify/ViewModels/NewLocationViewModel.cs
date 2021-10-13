@@ -4,6 +4,8 @@ using Xamarin.Forms;
 
 namespace Encountify.ViewModels
 {
+    [QueryProperty(nameof(CoordX), "CoordX")]
+    [QueryProperty(nameof(CoordY), "CoordY")]
     public class NewLocationViewModel : BaseViewModel
     {
         private string name;
@@ -15,6 +17,7 @@ namespace Encountify.ViewModels
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
+            SelectCommand = new Command(OnSelect);
             this.PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
@@ -51,6 +54,7 @@ namespace Encountify.ViewModels
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
+        public Command SelectCommand { get; }
 
         private async void OnCancel()
         {
@@ -70,6 +74,11 @@ namespace Encountify.ViewModels
             await DataStore.AddAsync(location);
 
             await Shell.Current.GoToAsync("..");
+        }
+
+        private async void OnSelect()
+        {
+            await Shell.Current.GoToAsync("MapPage");
         }
     }
 }
