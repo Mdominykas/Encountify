@@ -6,12 +6,15 @@ using System.Diagnostics;
 using System;
 using Encountify.Services;
 using Encountify.Models;
+using Encountify.ViewModels;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        MapViewModel _viewModel;
+
         public MapPage()
         {
             InitializeComponent();
@@ -22,6 +25,7 @@ namespace Encountify.Views
                 var lng = e.Point.Longitude;
                 await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
             };
+            BindingContext = _viewModel = new MapViewModel();
         }
 
         protected override async void OnAppearing()
