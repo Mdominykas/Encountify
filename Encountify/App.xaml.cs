@@ -24,8 +24,6 @@ namespace Encountify
 
             InitializeComponent();
 
-            DependencyService.Register<LocationDataStore>();
-
             MainPage = new AppShell();
         }
 
