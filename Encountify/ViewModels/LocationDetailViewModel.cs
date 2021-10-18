@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Encountify.Models;
+using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 
@@ -64,7 +65,7 @@ namespace Encountify.ViewModels
                 Description = location.Description;
                 CoordX = location.CoordX;
                 CoordY = location.CoordY;
-                Category = location.Category;
+                Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
             }
             catch (Exception)
             {

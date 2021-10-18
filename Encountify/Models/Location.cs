@@ -15,6 +15,6 @@ namespace Encountify.Models
 
         public double CoordY { get; set; } = 0;
 
-        public string Category { get; set; } = "";
+        public int Category { get; set; } = 0;
     }
 }

@@ -61,22 +61,18 @@
                         <x:String>Aquaria</x:String>
                         <x:String>Beach</x:String>
                         <x:String>Botanical garden</x:String>
-                        <x:String>Casino hotel</x:String>
                         <x:String>Casino</x:String>
                         <x:String>Castle</x:String>
                         <x:String>Cathedral</x:String>
                         <x:String>Fort</x:String>
-                        <x:String>Heritage railway</x:String>
                         <x:String>Memorial</x:String>
                         <x:String>Monument</x:String>
                         <x:String>Museum</x:String>
                         <x:String>Park</x:String>
                         <x:String>Resort</x:String>
-                        <x:String>Ski area</x:String>
                         <x:String>Sports facility</x:String>
                         <x:String>Street</x:String>
                         <x:String>Zoo</x:String>
-                        <x:String>Tourist trap</x:String>
                         <x:String>Other</x:String>
                     </x:Array>
                 </Picker.ItemsSource>

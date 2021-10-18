@@ -76,7 +76,7 @@ namespace Encountify.ViewModels
                 Description = Description,
                 CoordX = CoordX,
                 CoordY = CoordY,
-                Category = Category
+                Category = (int)CategoryConverter.ConvertStringToCategory(Category)
             };
 
             await DataStore.AddAsync(location);

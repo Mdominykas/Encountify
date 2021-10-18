@@ -5,6 +5,7 @@ using Plugin.Geolocator;
 using System.Diagnostics;
 using System;
 using Encountify.Services;
+using System.Collections.Generic;
 using Encountify.Models;
 using Encountify.ViewModels;
 
@@ -45,61 +46,62 @@ namespace Encountify.Views
             }
         }
 
-        static public void LoadMarker(Map map, string title, double latitude, double longitude, Color color)
+        static public void LoadMarker(Map map, Marker marker, Color color)
         {
-
-            Pin marker = new Pin()
+            Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
-                Label = title,
-                Position = new Position(latitude, longitude),
+                Label = marker.Name,
+                Position = new Position(marker.Lattitude, marker.Longitude),
             };
 
-            if (!map.Pins.Contains(marker))
+            if (!map.Pins.Contains(pin))
             {
-                map.Pins.Add(marker);
+                map.Pins.Add(pin);
             }
         }
 
         public void LoadMarkersFromDb(Map map)
         {
-
             var access = new DatabaseAccess<Location>();
             var locationList = access.GetAllAsync().Result;
-
             foreach (var s in locationList)
             {
-                LoadMarker(map, s.Name, s.CoordX, s.CoordY, SelectMarkerColor(s.Category));
+                var marker = new Marker(s.Name, s.CoordY, s.CoordX);
+                LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
 
         //Color pallet very limited due to BitmapDescriptorFactory class, custom rendered will be needed eventually
-        public static Color SelectMarkerColor(string category)
+        public static Color SelectMarkerColor(int category)
         {
-            if (category == "Aquaria")
-                return Color.Blue;
-            else if (category == "Beach" || category == "Amusement park")
-                return Color.Yellow;
-            else if (category == "Botanical garden" || category == "Park" || category == "Zoo")
-                return Color.Green;
-            else if (category == "Casino" || category == "Casino hotel")
-                return Color.Orange;
-            else if (category == "Cathedral" || category == "Castle" || category == "Church" || category == "Fort" || category == "Heritage railway")
-                return Color.SaddleBrown;
-            else if (category == "Memorial" || category == "Monument")
-                return Color.GhostWhite;
-            else if (category == "Museum" || category == "Tourist trap")
-                return Color.LightGoldenrodYellow;
-            else if (category == "Ski area" || category == "Resort")
-                return Color.Cyan;
-            else if (category == "Sports facility")
-                return Color.OrangeRed;
-            else if (category == "Street")
-                return Color.SlateGray;
-            else if (category == "Other")
-                return Color.Red;
-            else
-                return Color.Violet;
+            Dictionary<Category, Color> dictionary = new Dictionary<Category, Color>();
+            var bluePins = Category.Aquaria;
+            dictionary[bluePins] = Color.Blue;
+            if ((category & (int)Category.Aquaria) != 0) return Color.Blue;
+            else if ((category & (int)(Category.Beach | Category.AmusementPark)) != 0) return Color.Yellow;
+            else if ((category & (int)(Category.BotanicalGarden | Category.Park | Category.Zoo)) != 0) return Color.Green;
+            else if ((category & (int)(Category.Casino)) != 0) return Color.Orange;
+            else if ((category & (int)(Category.Cathedral| Category.Castle | Category.Church | Category.Fort)) != 0) return Color.SaddleBrown;
+            else if ((category & (int)(Category.Memorial | Category.Monument)) != 0) return Color.GhostWhite;
+            else if ((category & (int)(Category.Museum)) != 0) return Color.LightGoldenrodYellow;
+            else if ((category & (int)(Category.Resort)) != 0) return Color.Cyan;
+            else if ((category & (int)(Category.SportFacility)) != 0) return Color.OrangeRed;
+            else if ((category & (int)(Category.Street)) != 0) return Color.SlateGray;
+            else if ((category & (int)(Category.Other)) != 0) return Color.Red;
+            else return Color.Violet;
+        }
+    }
+
+    public struct Marker
+    {
+        public string Name;
+        public double Longitude, Lattitude;
+        public Marker(string name, double longitude, double lattitude)
+        {
+            Name = name;
+            Longitude = longitude;
+            Lattitude = lattitude;
         }
     }
 }
