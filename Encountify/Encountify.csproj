@@ -62,5 +62,8 @@
     <Compile Update="Views\NewLocationPage.xaml.cs">
       <DependentUpon>NewLocationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ScoreboardPage.xaml.cs">
+      <DependentUpon>ScoreboardPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

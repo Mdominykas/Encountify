@@ -99,6 +99,8 @@ namespace Encountify.Services
                 return DatabaseAccessConstants.LocationDatabaseName;
             else if (typeof(T) == typeof(User))
                 return DatabaseAccessConstants.UserDatabaseName;
+            else if (typeof(T) == typeof(VisitedLocations))
+                return DatabaseAccessConstants.VisitedLocationDatabaseName;
             else
                 throw new Exception("Database of given type does not exist");
         }
@@ -109,6 +111,8 @@ namespace Encountify.Services
                 return (element as Location).Id;
             else if (typeof(T) == typeof(User))
                 return (element as User).Id;
+            else if (typeof(T) == typeof(VisitedLocations))
+                return (element as VisitedLocations).Id;
             else
                 throw new Exception("Database of given type does not exist");
         }
