@@ -5,14 +5,9 @@ using Plugin.Geolocator;
 using System.Diagnostics;
 using System;
 using Encountify.Services;
-<<<<<<< HEAD
 using System.Collections.Generic;
 using Encountify.Models;
-||||||| 96967b0
-=======
-using Encountify.Models;
 using Encountify.ViewModels;
->>>>>>> main
 
 namespace Encountify.Views
 {
@@ -68,19 +63,8 @@ namespace Encountify.Views
 
         public void LoadMarkersFromDb(Map map)
         {
-<<<<<<< HEAD
-            var access = new LocationDatabaseAccess();
-            var locationList = access.GetLocationList();
-||||||| 96967b0
-
-            var access = new LocationDatabaseAccess();
-            var locationList = access.GetLocationList();
-=======
-
             var access = new DatabaseAccess<Location>();
             var locationList = access.GetAllAsync().Result;
->>>>>>> main
-
             foreach (var s in locationList)
             {
                 var marker = new Marker(s.Name, s.CoordY, s.CoordX);

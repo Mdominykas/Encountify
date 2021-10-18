@@ -79,6 +79,21 @@ namespace Encountify.Models
                 case "Museum":
                     return Category.Museum;
 
+                case "Park":
+                    return Category.Park;
+
+                case "Resort":
+                    return Category.Resort;
+
+                case "Sports facility":
+                    return Category.SportFacility;
+
+                case "Street":
+                    return Category.Street;
+
+                case "Zoo":
+                    return Category.Zoo;
+
                 default:
                     return Category.None;
             }
