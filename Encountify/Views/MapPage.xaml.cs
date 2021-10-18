@@ -5,12 +5,16 @@ using Plugin.Geolocator;
 using System.Diagnostics;
 using System;
 using Encountify.Services;
+using Encountify.Models;
+using Encountify.ViewModels;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        MapViewModel _viewModel;
+
         public MapPage()
         {
             InitializeComponent();
@@ -21,6 +25,7 @@ namespace Encountify.Views
                 var lng = e.Point.Longitude;
                 await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
             };
+            BindingContext = _viewModel = new MapViewModel();
         }
 
         protected override async void OnAppearing()
@@ -59,8 +64,8 @@ namespace Encountify.Views
         public void LoadMarkersFromDb(Map map)
         {
 
-            var access = new LocationDatabaseAccess();
-            var locationList = access.GetLocationList();
+            var access = new DatabaseAccess<Location>();
+            var locationList = access.GetAllAsync().Result;
 
             foreach (var s in locationList)
             {
