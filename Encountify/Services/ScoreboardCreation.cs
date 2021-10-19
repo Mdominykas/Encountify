@@ -35,7 +35,7 @@ namespace Encountify.Services
                     Score = group.Locations.Count()
                 });
             }
-            results.SortDescingOrder();
+            results.SortDescendingOrder();
             return results;
         }
     }
