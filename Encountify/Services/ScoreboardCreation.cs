@@ -8,7 +8,7 @@ namespace Encountify.Services
 {
     public class ScoreboardCreation
     {
-        public List<ScoreboardEntry> CreateScoreboard()
+        public List<ScoreboardEntry> CreateScoreboard(bool reversed = false)
         {
             DatabaseAccess<User> userData = new DatabaseAccess<User>();
             List<User> users = (List<User>) userData.GetAllAsync().Result;
@@ -35,7 +35,16 @@ namespace Encountify.Services
                     Score = group.Locations.Count()
                 });
             }
-            results.SortDescendingOrder();
+
+            if (reversed)
+            {
+                results.SortDescendingOrder();
+            }
+            else
+            {
+                results.Sort();
+            }
+            
             return results;
         }
     }
