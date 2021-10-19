@@ -8,19 +8,21 @@ namespace Encountify.ViewModels
     [QueryProperty(nameof(Id), nameof(Id))]
     public class LocationDetailViewModel : BaseViewModel
     {
-        private int id;
+        private long id;
         private string name;
         private string description;
         private double coordX;
         private double coordY;
         private string category;
 
+       
         public int Id
         {
-            get => id;
+            get => (int)id;
             set
             {
-                SetProperty(ref id, value);
+                int temp = (int)id;
+                SetProperty(ref temp, value);
                 LoadLocationId(value);
             }
         }
@@ -45,7 +47,7 @@ namespace Encountify.ViewModels
 
         public double CoordY
         {
-            get => coordY;
+            get => coordX;
             set => SetProperty(ref coordY, value);
         }
 
