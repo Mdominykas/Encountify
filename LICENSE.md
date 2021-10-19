@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 Rokas Lekečinskas, Miglė Micevičiūtė, Urtė Grabliauskaitė, Dominykas Marma
+Copyright (c) 2021 Urtė Grabliauskaitė, Rokas Lekečinskas, Dominykas Marma, Miglė Micevičiūtė
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
