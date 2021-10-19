@@ -8,6 +8,10 @@ namespace Encountify.Services
 {
     public class ScoreboardCreation
     {
+        public ScoreboardEntry this[int i]
+        {
+            get { return CreateScoreboard().ToArray()[i]; }
+        }
         public List<ScoreboardEntry> CreateScoreboard()
         {
             DatabaseAccess<User> userData = new DatabaseAccess<User>();
