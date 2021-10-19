@@ -47,7 +47,7 @@ namespace Encountify.ViewModels
 
         public double CoordY
         {
-            get => coordX;
+            get => coordY;
             set => SetProperty(ref coordY, value);
         }
 
