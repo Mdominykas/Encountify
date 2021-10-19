@@ -6,7 +6,7 @@ namespace Encountify
 {
     public static class ListExtensions
     {
-        public static void SortdescendingOrder<T>(this List<T> list)
+        public static void SortDescendingOrder<T>(this List<T> list)
         {
             list.Sort();
             list.Reverse();
