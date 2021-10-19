@@ -9,14 +9,17 @@
 
 ## Key Features
 
-WIP
+- Doesn't let Miglė sleep
+- Opens
+- Works
+- It has a map
 
 ## Developers
 #### Students of Vilnius University, BSc Software Engineering
-- Rokas Lekečinskas 
-- Miglė Micevičiūtė
 - Urtė Grabliauskaitė
+- Rokas Lekečinskas 
 - Dominykas Marma
+- Miglė Micevičiūtė
 
 ## Screenshots
 
