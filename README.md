@@ -16,10 +16,10 @@
 
 ## Developers
 #### Students of Vilnius University, BSc Software Engineering
-- Rokas Lekečinskas 
-- Miglė Micevičiūtė
 - Urtė Grabliauskaitė
+- Rokas Lekečinskas 
 - Dominykas Marma
+- Miglė Micevičiūtė
 
 ## Screenshots
 
