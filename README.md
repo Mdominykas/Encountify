@@ -9,10 +9,7 @@
 
 ## Key Features
 
-- Doesn't let Miglė sleep
-- Opens
-- Works
-- It has a map
+WIP
 
 ## Developers
 #### Students of Vilnius University, BSc Software Engineering
