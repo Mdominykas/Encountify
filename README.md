@@ -31,4 +31,5 @@ WIP
 
 ## Credits & Tools
 
-- Vector graphics for walkthrough splash screens: [Undraw.co](https://undraw.co/)
+- Vector graphics: [unDraw](https://undraw.co/)
+- Emojis: [Twemoji](https://twemoji.twitter.com/)
