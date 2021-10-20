@@ -8,10 +8,7 @@ namespace Encountify.Services
 {
     public class ScoreboardCreation
     {
-        public ScoreboardEntry this[int i]
-        {
-            get { return CreateScoreboard().ToArray()[i]; }
-        }
+        public ScoreboardEntry this[int i] => CreateScoreboard().ToArray()[i];
         public List<ScoreboardEntry> CreateScoreboard(bool reversed = false)
         {
             DatabaseAccess<User> userData = new DatabaseAccess<User>();
@@ -20,15 +17,15 @@ namespace Encountify.Services
             List<VisitedLocations> visitedLocations = (List<VisitedLocations>) visitedLocationsData.GetAllAsync().Result;
 
             var query =
-                users.GroupJoin(visitedLocations,
-                    user => user.Id,
-                    loc => loc.UserId,
-                    (user, locations) =>
-                        new
-                        {
-                            Users = user.Username,
-                            Locations = locations.Select(loc => loc.LocationId)
-                        });
+            users.GroupJoin(visitedLocations,
+                user => user.Id,
+                loc => loc.UserId,
+                (user, locations) =>
+                    new
+                    {
+                        Users = user.Username,
+                        Locations = locations.Select(loc => loc.LocationId)
+                    });
             List<ScoreboardEntry> results = new List<ScoreboardEntry>();
 
             foreach(var group in query)

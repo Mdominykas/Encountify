@@ -40,7 +40,7 @@ namespace Encountify.Views
                 var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Users.db3");
                 SQLiteConnection db = new SQLiteConnection(dbPath);
                 db.CreateTable<User>();
-                var data = db.Table<User>();      
+                var data = db.Table<User>();
                 var dataUser = data.Where(x => x.Username == Username.Text).FirstOrDefault();
                 if (dataUser == null)
                 {
