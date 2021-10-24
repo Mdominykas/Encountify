@@ -51,6 +51,13 @@
             ContentTemplate="{DataTemplate local:ScoreboardPage}"/>
     </FlyoutItem>
 
+    <FlyoutItem
+        Title="Profile">
+        <ShellContent
+            Route="ProfilePage"
+            ContentTemplate="{DataTemplate local:ProfilePage}"/>
+    </FlyoutItem>
+
     <MenuItem 
         Text="Logout" 
         StyleClass="MenuItemLayoutStyle"

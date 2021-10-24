@@ -9,6 +9,7 @@ namespace Encountify
 {
     public partial class App : Application
     {
+        public static int UserID; // { get; set; }
 
         public App()
         {
@@ -21,6 +22,8 @@ namespace Encountify
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LocationDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
             db.DropTable<Location>();
+            //UserID = 
+
 
             InitializeComponent();
 

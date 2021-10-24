@@ -73,6 +73,7 @@ namespace Encountify.Services
             return Task.FromResult(list.FirstOrDefault(s => GetId(s) == id));
         }
 
+
         public Task<IEnumerable<T>> GetAllAsync(bool forceRefresh = false)
         {
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),
