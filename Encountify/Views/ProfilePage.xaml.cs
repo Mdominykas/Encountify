@@ -10,8 +10,9 @@ namespace Encountify.Views
         public ProfilePage()
         {
             InitializeComponent();
+
             BindingContext = new ProfilePageViewModel();
-            Debug.WriteLine("AppId:" + App.UserID);
+            //Debug.WriteLine("ViewPagEID:" + view.Id + "username" + view.Username);
             
         }
 

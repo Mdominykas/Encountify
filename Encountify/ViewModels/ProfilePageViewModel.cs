@@ -3,10 +3,12 @@ using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using Encountify.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Encountify.ViewModels
 {
-    [QueryProperty(nameof(Id), nameof(Id))]
     class ProfilePageViewModel : BaseViewModel
     {
         private int id;
@@ -16,29 +18,45 @@ namespace Encountify.ViewModels
 
         public int Id
         {
-            get => id;
-            set
+            get
             {
                 id = App.UserID;
-                LoadProfile(App.UserID);
+                return id;
+            }
+            set
+            {
+                SetProperty(ref id, value);
+                LoadProfile(value);
             }
         }
 
         public string Username
         {
-            get => username;
+            get
+            {
+                username = App.UserName;
+                return username;
+            }
             set => SetProperty(ref username, value);
         }
 
         public string Email
         {
-            get => email;
+            get
+            {
+                email = App.UserEmail;
+                return email;
+            }
             set => SetProperty(ref email, value);
         }
 
         public string Password
         {
-            get => password;
+            get
+            {
+                password = App.UserPassword;
+                return password;
+            }
             set => SetProperty(ref password, value);
         }
 
@@ -46,12 +64,11 @@ namespace Encountify.ViewModels
         {
             try
             {
-                var profile = await Repository.GetAsync(id);
+                User profile = new User();
                 Id = profile.Id;
                 Username = profile.Username;
                 Password = profile.Password;
                 Email = profile.Email;
-
             }
             catch(Exception)
             {

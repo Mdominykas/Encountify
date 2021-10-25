@@ -28,26 +28,28 @@ namespace Encountify.Views
             try
             {
                 var data = db.Table<User>();
-                var data1 = data.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();
-                //db.Close();
+                var data1 = data.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();   
                 if (data1 != null && data1.Id != 0)
                 {
-
                     App.UserID = data1.Id;
+                    App.UserName = data1.Username;
+                    App.UserEmail = data1.Email;
+                    App.UserPassword = data1.Password;
+
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
-                    Debug.WriteLine("Id:" + data1.Id + " appId:" + App.UserID);
                     await Shell.Current.GoToAsync("//HomePage");
                 }
                 else
                 {
                     DependencyService.Get<MessagePopup>().ShortAlert("Username or Password invalid");
                 }
-                db.Close();
+                
             }
             catch
             {
                 DependencyService.Get<MessagePopup>().ShortAlert("Username or Password invalid");
             }
+            db.Close();
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)

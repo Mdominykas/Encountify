@@ -14,7 +14,6 @@ namespace Encountify.ViewModels
     {
         //public IDataStore<Location> DataStore => DependencyService.Get<IDataStore<Location>>();
         public static DatabaseAccess<Location> DataStore = null;
-        public static DatabaseAccess<User> Repository = null;
 
         public BaseViewModel()
         {
@@ -23,13 +22,6 @@ namespace Encountify.ViewModels
                 DataStore = new DatabaseAccess<Location>();
                 LoadLocationDummyData();
             }
-
-            if (Repository == null)
-            {
-                Repository = new DatabaseAccess<User>();
-                LoadUsers();
-            }
-
         }
 
         bool isBusy = false;
@@ -81,18 +73,6 @@ namespace Encountify.ViewModels
             foreach (Location location in locationList)
             {
                 DataStore.AddAsync(location);
-            }
-        }
-
-        public  void  LoadUsers()
-        {
-            DatabaseAccess<User> data = new DatabaseAccess<User>();
-            var userList = (List<User>)data.GetAllAsync().Result;
-
-            foreach(User user in userList)
-            {
-                Repository.AddAsync(user);
-                Debug.WriteLine(user.Username + user.Id);
             }
         }
 
