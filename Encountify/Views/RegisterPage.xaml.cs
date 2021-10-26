@@ -31,6 +31,8 @@ namespace Encountify.Views
         private async void OnLoginClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LoginPage");
+            ResetValues();
+            ResetFocus();
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)
@@ -52,12 +54,9 @@ namespace Encountify.Views
                         user.Password = Password.Text;
                         user.Email = Email.Text;
                         RegisterUser(user);
-                        await Navigation.PushAsync(new LoginPage());
-
-                        Username.Text = string.Empty;
-                        Email.Text = string.Empty;
-                        Password.Text = string.Empty;
-                        PasswordConfirm.Text = string.Empty;
+                        await Shell.Current.GoToAsync("//LoginPage");
+                        ResetValues();
+                        ResetFocus();
                     }
                     else
                     {
@@ -221,8 +220,22 @@ namespace Encountify.Views
             }
         }
 
+        private void ResetValues()
+        {
+            Username.Text = string.Empty;
+            Email.Text = string.Empty;
+            Password.Text = string.Empty;
+            PasswordConfirm.Text = string.Empty;
+            Terms.IsChecked = false;
+        }
 
-
+        private void ResetFocus()
+        {
+            Username.Unfocus();
+            Email.Unfocus();
+            Password.Unfocus();
+            PasswordConfirm.Unfocus();
+        }
 
 
     }

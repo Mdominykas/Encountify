@@ -131,6 +131,7 @@
                     Orientation="Horizontal">
 
                     <CheckBox 
+                        x:Name="Remember"
                         IsChecked="False"/>
 
                     <Label

@@ -39,6 +39,8 @@ namespace Encountify.Views
                     OnLogin?.Invoke();
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
                     await Shell.Current.GoToAsync("//HomePage");
+                    if (!Remember.IsChecked) ResetValues();
+                    ResetFocus();
                 }
                 else
                 {
@@ -58,6 +60,20 @@ namespace Encountify.Views
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//RegisterPage");
+            ResetFocus();
+        }
+
+        private void ResetValues()
+        {
+            Username.Text = string.Empty;
+            Password.Text = string.Empty;
+            Remember.IsChecked = false;
+        }
+
+        private void ResetFocus()
+        {
+            Username.Unfocus();
+            Password.Unfocus();
         }
 
     }
