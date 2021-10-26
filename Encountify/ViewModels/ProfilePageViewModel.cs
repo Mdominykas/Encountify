@@ -6,75 +6,45 @@ using System.Threading.Tasks;
 using Encountify.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using Encountify.Views;
 
 namespace Encountify.ViewModels
 {
-    class ProfilePageViewModel : BaseViewModel
+    class ProfilePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        private int id;
-        private string username;
-        private string email;
-        private string password;
+        public ProfilePageViewModel()
+        {
+            LoginPage.OnLogin += OnLogin;
+        }
+
+        private void OnLogin()
+        {
+            OnPropertyChanged(nameof(Id));
+            OnPropertyChanged(nameof(Username));
+            OnPropertyChanged(nameof(Email));
+            OnPropertyChanged(nameof(Password));
+        }
 
         public int Id
         {
-            get
-            {
-                id = App.UserID;
-                return id;
-            }
-            set
-            {
-                SetProperty(ref id, value);
-                LoadProfile(value);
-            }
+            get => App.UserID;
         }
 
         public string Username
         {
-            get
-            {
-                username = App.UserName;
-                return username;
-            }
-            set => SetProperty(ref username, value);
+            get => App.UserName;
         }
 
         public string Email
         {
-            get
-            {
-                email = App.UserEmail;
-                return email;
-            }
-            set => SetProperty(ref email, value);
+            get => App.UserEmail;
         }
 
         public string Password
         {
-            get
-            {
-                password = App.UserPassword;
-                return password;
-            }
-            set => SetProperty(ref password, value);
-        }
-
-        public async void LoadProfile(int id)
-        {
-            try
-            {
-                User profile = new User();
-                Id = profile.Id;
-                Username = profile.Username;
-                Password = profile.Password;
-                Email = profile.Email;
-            }
-            catch(Exception)
-            {
-                Debug.WriteLine("Profile cannot be loaded");
-            }
-            
+            get => App.UserPassword;
         }
     }
 }

@@ -6,13 +6,14 @@ using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
 
         public LoginPage()
@@ -35,7 +36,7 @@ namespace Encountify.Views
                     App.UserName = data1.Username;
                     App.UserEmail = data1.Email;
                     App.UserPassword = data1.Password;
-
+                    OnLogin?.Invoke();
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
                     await Shell.Current.GoToAsync("//HomePage");
                 }
@@ -51,6 +52,8 @@ namespace Encountify.Views
             }
             db.Close();
         }
+
+        public static event Action OnLogin;
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
