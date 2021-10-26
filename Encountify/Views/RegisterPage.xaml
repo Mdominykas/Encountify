@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -15,19 +15,19 @@
 
     <ContentPage.Content>
 
-        <AbsoluteLayout 
-            HorizontalOptions="FillAndExpand" 
+        <AbsoluteLayout
+            HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
 
-            <StackLayout 
-                Padding="35,125,35,35" 
+            <StackLayout
+                Padding="35,125,35,35"
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand"
-                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All">
 
-                <Frame                
-                    BackgroundColor="{DynamicResource FieldBackground}"                
+                <Frame
+                    BackgroundColor="{DynamicResource FieldBackground}"
                     Padding="0"
                     Margin="0"
                     CornerRadius="50"
@@ -63,8 +63,8 @@
 
                 </Frame>
 
-                <Frame                
-                    BackgroundColor="{DynamicResource FieldBackground}"                
+                <Frame
+                    BackgroundColor="{DynamicResource FieldBackground}"
                     Padding="0"
                     Margin="0,10,0,0"
                     CornerRadius="50"
@@ -99,7 +99,7 @@
                     </StackLayout>
 
                 </Frame>
-                
+
                 <Frame
                     BackgroundColor="{DynamicResource FieldBackground}"
                     Padding="0"
@@ -223,7 +223,7 @@
                 <StackLayout
                     Orientation="Horizontal">
 
-                    <CheckBox 
+                    <CheckBox
                         x:Name="Terms"
                         IsChecked="False"/>
 
@@ -240,18 +240,18 @@
                 </StackLayout>
 
                 <Button
-                    Text="Register" 
+                    Text="Register"
                     Clicked="OnRegisterClicked"
                     HorizontalOptions="Center"
                     Padding="50,0,50,0"/>
 
             </StackLayout>
 
-            <StackLayout 
-                Padding="35,35,35,35" 
+            <StackLayout
+                Padding="35,35,35,35"
                 VerticalOptions="End"
                 HorizontalOptions="FillAndExpand"
-                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All">
 
                 <StackLayout

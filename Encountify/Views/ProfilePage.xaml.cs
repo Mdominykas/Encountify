@@ -12,8 +12,6 @@ namespace Encountify.Views
             InitializeComponent();
 
             BindingContext = new ProfilePageViewModel();
-            //Debug.WriteLine("ViewPagEID:" + view.Id + "username" + view.Username);
-            
         }
 
         private async void LogOutButton_onClicked(object sender, EventArgs e)

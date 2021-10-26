@@ -33,7 +33,7 @@ namespace Encountify
 
             MainPage = new AppShell();
 
-            
+
         }
 
         protected override void OnStart()

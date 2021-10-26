@@ -15,7 +15,7 @@ namespace Encountify.ViewModels
         private double coordY;
         private string category;
 
-       
+
         public int Id
         {
             get => (int)id;

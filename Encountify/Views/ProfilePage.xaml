@@ -23,7 +23,7 @@
             Text="Username:"
             FontSize="Medium"
             />
-   
+
         <Label
             Text="{Binding Username}"
             FontSize="Small"/>

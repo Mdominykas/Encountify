@@ -30,10 +30,10 @@ namespace Encountify.Droid.CustomRenderer
         {
             base.OnElementChanged(e);
 
-            if(Control != null)
+            if (Control != null)
             {
                 Control.SetBackgroundColor(Android.Graphics.Color.Transparent);
-                Control.SetPadding(0,10,0,0);
+                Control.SetPadding(0, 10, 0, 0);
             }
 
         }

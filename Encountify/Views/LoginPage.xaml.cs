@@ -103,6 +103,12 @@ namespace Encountify.Views
             File.Delete(LastSession);
         }
 
+        private async void OnForgotPasswordClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//ForgotPasswordPage");
+            ResetFocus();
+        }
+
         private void ResetValues()
         {
             Username.Text = string.Empty;
