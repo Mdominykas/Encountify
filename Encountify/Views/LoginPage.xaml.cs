@@ -8,17 +8,29 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    
+
     public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
+        String LastSession = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LastSessionJSONName);
 
         public LoginPage()
         {
             InitializeComponent();
+            try
+            {
+                GetLastSession();
+            }
+            catch
+            {
+                // Skip if there is no file
+            }
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
@@ -29,7 +41,7 @@ namespace Encountify.Views
             try
             {
                 var data = db.Table<User>();
-                var data1 = data.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();   
+                var data1 = data.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();
                 if (data1 != null && data1.Id != 0)
                 {
                     App.UserID = data1.Id;
@@ -39,14 +51,16 @@ namespace Encountify.Views
                     OnLogin?.Invoke();
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
                     await Shell.Current.GoToAsync("//HomePage");
-                    if (!Remember.IsChecked) ResetValues();
+                    DeleteSession();
+                    if (Remember.IsChecked) SaveSession();
+                    else ResetValues();
                     ResetFocus();
                 }
                 else
                 {
                     DependencyService.Get<MessagePopup>().ShortAlert("Username or Password invalid");
                 }
-                
+
             }
             catch
             {
@@ -61,6 +75,32 @@ namespace Encountify.Views
         {
             await Shell.Current.GoToAsync("//RegisterPage");
             ResetFocus();
+        }
+
+        private void GetLastSession()
+        {
+            User user = JsonConvert.DeserializeObject<User>(File.ReadAllText(LastSession));
+            Username.Text = user.Username;
+            Password.Text = user.Password;
+            Remember.IsChecked = true;
+        }
+
+        private void SaveSession()
+        {
+            User user = new User
+            {
+                Id = App.UserID,
+                Username = App.UserName,
+                Email = App.UserEmail,
+                Password = App.UserPassword
+            };
+            string json = JsonConvert.SerializeObject(user);
+            File.WriteAllText(LastSession, json);
+        }
+
+        private void DeleteSession()
+        {
+            File.Delete(LastSession);
         }
 
         private void ResetValues()
