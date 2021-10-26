@@ -19,7 +19,7 @@ namespace Encountify.Views
         private async void LogOutButton_onClicked(object sender, EventArgs e)
         {
             await DisplayAlert("Quit", "You want to log out?", "Yes");
-            await Navigation.PushAsync(new LoginPage()); 
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }
