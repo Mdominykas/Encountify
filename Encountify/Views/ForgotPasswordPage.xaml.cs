@@ -35,7 +35,7 @@ namespace Encountify.Views
 
         private async void OnSendPasswordClicked(object sender, EventArgs e)
         {
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Users.db3");
+            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
             db.CreateTable<User>();
             var data = db.Table<User>();
