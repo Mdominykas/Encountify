@@ -25,12 +25,10 @@ namespace Encountify
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LocationDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
             db.DropTable<Location>();
-            
+
             InitializeComponent();
 
             MainPage = new AppShell();
-
-
         }
 
         protected override void OnStart()

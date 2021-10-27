@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Encountify.Views.ProfilePage"
-             xmlns:viewModel="clr-namespace:Encountify.ViewModels"
-             Title="Profile">
-
-
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Encountify.Views.ProfilePage"
+    xmlns:viewModel="clr-namespace:Encountify.ViewModels"
+    Title="Profile">
 
     <ContentPage.BindingContext>
         <viewModel:ProfilePageViewModel/>
@@ -16,8 +15,8 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout
-       Spacing="20"
-       Padding="15">
+        Spacing="20"
+        Padding="15">
 
         <Label
             Text="Username:"

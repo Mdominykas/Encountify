@@ -1,25 +1,19 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.IO;
-using SQLite;
 using Encountify.Models;
-using Encountify.CustomRenderer;
 using Encountify.Services;
-using System.Text.RegularExpressions;
-using Xunit.Sdk;
-using Encountify.ViewModels;
 using MimeKit;
 using MailKit.Net.Smtp;
-using System.Diagnostics;
-using System.Security.Authentication;
 using MailKit.Security;
+using System.Linq;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ForgotPasswordPage : ContentPage
     {
+        public static DatabaseAccess<User> DataStore = new DatabaseAccess<User>();
 
         public ForgotPasswordPage()
         {
@@ -35,22 +29,17 @@ namespace Encountify.Views
 
         private async void OnSendPasswordClicked(object sender, EventArgs e)
         {
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
-            SQLiteConnection db = new SQLiteConnection(dbPath);
-            db.CreateTable<User>();
-            var data = db.Table<User>();
-            var dataUser = data.Where(x => x.Email == Email.Text).FirstOrDefault();
-            if (dataUser != null)
+            var users = await DataStore.GetAllAsync(true);
+            var user = users.Where(x => x.Email == Email.Text).FirstOrDefault();
+            if (user != null)
             {
-                SendEmail(dataUser);
+                SendEmail(user);
                 await DisplayAlert("Success!", $"Email was sent to {Email.Text}", "OK");
             }
             else
             {
                 await DisplayAlert("Warning", "No such email", "OK");
             }
-
-
         }
 
         private async void SendEmail(User user)
@@ -64,6 +53,7 @@ namespace Encountify.Views
             mailMessage.Body = bodyBuilder.ToMessageBody();
 
             // TODO: Get data from .env instead of writing it here
+            // TODO: Move to a separate class
             using (var client = new SmtpClient())
             {
                 client.CheckCertificateRevocation = false;
@@ -85,7 +75,5 @@ namespace Encountify.Views
         {
             Email.Unfocus();
         }
-
-
     }
 }

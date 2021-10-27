@@ -1,16 +1,13 @@
 ﻿using Encountify.CustomRenderer;
 using Encountify.Models;
 using Encountify.Services;
-using SQLite;
 using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Encountify.Views
 {
@@ -19,6 +16,7 @@ namespace Encountify.Views
     public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
         String LastSession = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LastSessionJSONName);
+        public static DatabaseAccess<User> DataStore = new DatabaseAccess<User>();
 
         public LoginPage()
         {
@@ -35,19 +33,17 @@ namespace Encountify.Views
 
         private async void OnLoginClicked(object sender, EventArgs e)
         {
-            string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
-            SQLiteConnection db = new SQLiteConnection(dbPath);
+            var users = await DataStore.GetAllAsync(true);
 
             try
             {
-                var data = db.Table<User>();
-                var data1 = data.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();
-                if (data1 != null && data1.Id != 0)
+                var user = users.Where(x => x.Username == Username.Text && x.Password == Password.Text).FirstOrDefault();
+                if (user != null && user.Id != 0)
                 {
-                    App.UserID = data1.Id;
-                    App.UserName = data1.Username;
-                    App.UserEmail = data1.Email;
-                    App.UserPassword = data1.Password;
+                    App.UserID = user.Id;
+                    App.UserName = user.Username;
+                    App.UserEmail = user.Email;
+                    App.UserPassword = user.Password;
                     OnLogin?.Invoke();
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
                     await Shell.Current.GoToAsync("//HomePage");
@@ -66,7 +62,6 @@ namespace Encountify.Views
             {
                 DependencyService.Get<MessagePopup>().ShortAlert("Username or Password invalid");
             }
-            db.Close();
         }
 
         public static event Action OnLogin;
@@ -121,6 +116,5 @@ namespace Encountify.Views
             Username.Unfocus();
             Password.Unfocus();
         }
-
     }
 }
