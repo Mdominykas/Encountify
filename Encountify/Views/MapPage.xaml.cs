@@ -1,13 +1,18 @@
+using Encountify.Models;
+using Encountify.Services;
+using Encountify.ViewModels;
+using System;
+using System.Threading;
+using System.Diagnostics;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
-using Plugin.Geolocator;
-using System.Diagnostics;
-using System;
-using Encountify.Services;
-using System.Collections.Generic;
-using Encountify.Models;
-using Encountify.ViewModels;
+using Locations = Xamarin.Essentials.Location;
+using Geolocation = Xamarin.Essentials.Geolocation;
+using DistanceUnits = Xamarin.Essentials.DistanceUnits;
+using GeolocationRequest = Xamarin.Essentials.GeolocationRequest;
+using GeolocationAccuracy = Xamarin.Essentials.GeolocationAccuracy;
 
 namespace Encountify.Views
 {
@@ -15,10 +20,12 @@ namespace Encountify.Views
     public partial class MapPage : ContentPage
     {
         MapViewModel _viewModel;
+        private CancellationTokenSource cts;
 
         public MapPage()
         {
             InitializeComponent();
+            BindingContext = _viewModel = new MapViewModel();
 
             map.MapClicked += async (sender, e) =>
             {
@@ -26,7 +33,23 @@ namespace Encountify.Views
                 var lng = e.Point.Longitude;
                 await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
             };
-            BindingContext = _viewModel = new MapViewModel();
+
+            map.PinClicked += async (sender, e) =>
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
+                cts = new CancellationTokenSource();
+                Locations location = await Geolocation.GetLocationAsync(request, cts.Token);
+
+                Locations pinLocation = new Locations(e.Pin.Position.Latitude, e.Pin.Position.Longitude);
+                Locations personLocation = new Locations(location.Latitude, location.Longitude);
+
+                var distance = Locations.CalculateDistance(pinLocation, personLocation, DistanceUnits.Kilometers);
+
+                if (distance <= 0.03)
+                {
+                    await DisplayAlert($"You visited {e.Pin.Label}!" , distance.ToString(), "OK");
+                }
+            };
         }
 
         protected override async void OnAppearing()
@@ -34,10 +57,13 @@ namespace Encountify.Views
             try
             {
                 LoadMarkersFromDb(map);
-                var locator = CrossGeolocator.Current;
-                var position = await locator.GetPositionAsync();
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromMeters(5000)));
-                map.Cluster();
+
+                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
+                cts = new CancellationTokenSource();
+                Locations location = await Geolocation.GetLocationAsync(request, cts.Token);
+
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(1000)));
+                //map.Cluster();
 
             }
             catch (Exception) // Later will need to find a more elegant way on how to handle this on xamarin forms
@@ -46,13 +72,20 @@ namespace Encountify.Views
             }
         }
 
+        protected override void OnDisappearing()
+        {
+            if (cts != null && !cts.IsCancellationRequested)
+                cts.Cancel();
+            base.OnDisappearing();
+        }
+
         static public void LoadMarker(Map map, Marker marker, Color color)
         {
             Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
                 Label = marker.Name,
-                Position = new Position(marker.Lattitude, marker.Longitude),
+                Position = new Position(marker.Latitude, marker.Longitude),
             };
 
             if (!map.Pins.Contains(pin))
@@ -96,12 +129,12 @@ namespace Encountify.Views
     public struct Marker
     {
         public string Name;
-        public double Longitude, Lattitude;
-        public Marker(string name, double longitude, double lattitude)
+        public double Longitude, Latitude;
+        public Marker(string name, double longitude, double latitude)
         {
             Name = name;
             Longitude = longitude;
-            Lattitude = lattitude;
+            Latitude = latitude;
         }
     }
 }
