@@ -67,7 +67,7 @@ namespace Encountify.Views
             var locationList = access.GetAllAsync().Result;
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.CoordY, s.CoordX);
+                var marker = new Marker(s.Name, s.Lattitude, s.Longitude);
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
@@ -97,7 +97,7 @@ namespace Encountify.Views
     {
         public string Name;
         public double Longitude, Lattitude;
-        public Marker(string name, double longitude, double lattitude)
+        public Marker(string name, double lattitude, double longitude)
         {
             Name = name;
             Longitude = longitude;

@@ -19,6 +19,14 @@
             FontSize="Small"/>
 
         <Label 
+            Text="Distance:" 
+            FontSize="Medium" />
+
+        <Label 
+            Text="{Binding Distance}" 
+            FontSize="Small"/>
+
+        <Label 
             Text="Description:" 
             FontSize="Medium" />
 

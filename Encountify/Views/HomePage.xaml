@@ -5,5 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Encountify.Views.HomePage"
     Title="Home">
-    
+
+    <StackLayout>
+        <Label Text="Show distance in:" />
+        <RadioButton Content="Yards" CheckedChanged="OnColorsRadioButtonCheckedChanged" />
+        <RadioButton Content="Meters" CheckedChanged="OnColorsRadioButtonCheckedChanged" IsChecked="true" />
+    </StackLayout>
+
 </ContentPage>

@@ -74,8 +74,8 @@ namespace Encountify.ViewModels
             {
                 Name = Name,
                 Description = Description,
-                CoordX = CoordX,
-                CoordY = CoordY,
+                Longitude = CoordX,
+                Lattitude = CoordY,
                 Category = (int)CategoryConverter.ConvertStringToCategory(Category)
             };
 

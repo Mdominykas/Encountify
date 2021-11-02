@@ -1,4 +1,5 @@
 ﻿using Encountify.Models;
+using Encountify.Services;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -14,6 +15,8 @@ namespace Encountify.ViewModels
         private double coordX;
         private double coordY;
         private string category;
+        private string distance;
+        private Location location;
 
        
         public int Id
@@ -39,6 +42,12 @@ namespace Encountify.ViewModels
             set => SetProperty(ref description, value);
         }
 
+        public string Distance
+        {
+            get => distance;
+            set => SetProperty(ref distance, value);
+        }
+
         public double CoordX
         {
             get => coordX;
@@ -61,12 +70,13 @@ namespace Encountify.ViewModels
         {
             try
             {
-                var location = await DataStore.GetAsync(Id);
+                location = await DataStore.GetAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;
-                CoordX = location.CoordX;
-                CoordY = location.CoordY;
+                CoordX = location.Longitude;
+                CoordY = location.Lattitude;
+                Distance = await DistanceCounter.GetDistance(location);
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
             }
             catch (Exception)
