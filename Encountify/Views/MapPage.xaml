@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage 
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:clustering="clr-namespace:Xamarin.Forms.GoogleMaps.Clustering;assembly=Xamarin.Forms.GoogleMaps.Clustering"
@@ -8,9 +8,9 @@
     Title="Map">
 
     <ContentPage.Content>
-        
+
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -20,7 +20,7 @@
                 VerticalOptions="FillAndExpand"
                 MyLocationEnabled="True"/>
         </Grid>
-        
+
     </ContentPage.Content>
-    
+
 </ContentPage>

@@ -6,6 +6,7 @@
 
 [View app mockup](https://www.figma.com/file/pB1qSpWIsvEqnoaA2hukpM/Encountify?node-id=0%3A1) or [try the prototype](https://www.figma.com/proto/pB1qSpWIsvEqnoaA2hukpM/Encountify?page-id=0%3A1&node-id=3%3A115&viewport=241%2C48%2C0.25&scaling=scale-down&starting-point-node-id=3%3A115).
 
+[Requirement tracking sheet.](https://docs.google.com/spreadsheets/d/1aG4Q3lQ1KEkM-e96eVip8ZZBviwKQK94gVyalPKQ9rI/edit#gid=1803437500)
 
 ## Key Features
 
@@ -31,4 +32,5 @@ WIP
 
 ## Credits & Tools
 
-- Vector graphics for walkthrough splash screens: [Undraw.co](https://undraw.co/)
+- Vector graphics: [unDraw](https://undraw.co/)
+- Emojis: [Twemoji](https://twemoji.twitter.com/)

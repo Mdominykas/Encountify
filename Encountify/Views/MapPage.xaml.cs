@@ -82,7 +82,7 @@ namespace Encountify.Views
             else if ((category & (int)(Category.Beach | Category.AmusementPark)) != 0) return Color.Yellow;
             else if ((category & (int)(Category.BotanicalGarden | Category.Park | Category.Zoo)) != 0) return Color.Green;
             else if ((category & (int)(Category.Casino)) != 0) return Color.Orange;
-            else if ((category & (int)(Category.Cathedral| Category.Castle | Category.Church | Category.Fort)) != 0) return Color.SaddleBrown;
+            else if ((category & (int)(Category.Cathedral | Category.Castle | Category.Church | Category.Fort)) != 0) return Color.SaddleBrown;
             else if ((category & (int)(Category.Memorial | Category.Monument)) != 0) return Color.GhostWhite;
             else if ((category & (int)(Category.Museum)) != 0) return Color.LightGoldenrodYellow;
             else if ((category & (int)(Category.Resort)) != 0) return Color.Cyan;
