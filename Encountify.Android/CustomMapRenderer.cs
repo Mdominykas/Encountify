@@ -80,10 +80,6 @@ namespace Encountify.Droid
                 {
                     infoSubtitle.Text = marker.Snippet;
                 }
-                if (infoSubtitle != null)
-                {
-                    infoSubtitle.Text = marker.Snippet;
-                }
                 if (infoDistance != null)
                 {
                     infoDistance.Text = "3km";
