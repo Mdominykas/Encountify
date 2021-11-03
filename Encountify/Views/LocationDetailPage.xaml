@@ -35,7 +35,7 @@
             FontSize="Small"/>
 
         <Label 
-            Text="X:" 
+            Text="Longitude:" 
             FontSize="Medium" />
 
         <Label 
@@ -43,7 +43,7 @@
             FontSize="Small"/>
 
         <Label 
-            Text="Y:" 
+            Text="Latitude:" 
             FontSize="Medium" />
 
         <Label 

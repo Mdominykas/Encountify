@@ -33,21 +33,21 @@
                 Margin="0" />
 
             <Label 
-                Text="X" 
+                Text="Longtitude" 
                 FontSize="Medium" />
 
             <Editor 
-                Text="{Binding CoordX, Mode=TwoWay}" 
+                Text="{Binding Longitude, Mode=TwoWay}" 
                 AutoSize="TextChanges" 
                 FontSize="Medium" 
                 Margin="0" />
 
             <Label 
-                Text="Y" 
+                Text="Latitude" 
                 FontSize="Medium" />
 
             <Editor 
-                Text="{Binding CoordY, Mode=TwoWay}" 
+                Text="{Binding Latitude, Mode=TwoWay}" 
                 AutoSize="TextChanges" 
                 FontSize="Medium" 
                 Margin="0" />

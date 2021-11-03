@@ -5,7 +5,7 @@ using Xamarin.Forms;
 namespace Encountify.ViewModels
 {
     [QueryProperty(nameof(Longitude), "Longitude")]
-    [QueryProperty(nameof(Latitude), "Longitude")]
+    [QueryProperty(nameof(Latitude), "Latitude")]
     public class NewLocationViewModel : BaseViewModel
     {
         private string name;

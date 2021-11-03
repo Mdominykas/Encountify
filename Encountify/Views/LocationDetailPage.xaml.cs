@@ -10,10 +10,5 @@ namespace Encountify.Views
             InitializeComponent();
             BindingContext = new LocationDetailViewModel();
         }
-
-/*        protected override async void OnAppearing()
-        {
-            
-        }
-*/    }
+    }
 }
