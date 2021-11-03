@@ -18,7 +18,6 @@ namespace Encountify.ViewModels
         private string distance;
         private Location location;
 
-       
         public int Id
         {
             get => (int)id;
@@ -76,7 +75,7 @@ namespace Encountify.ViewModels
                 Description = location.Description;
                 Longitude = location.Longitude;
                 Latitude = location.Latitude;
-                Distance = await DistanceCounter.GetDistance(location);
+                Distance = await DistanceCounter.GetFormattedDistance(location);
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
             }
             catch (Exception)
