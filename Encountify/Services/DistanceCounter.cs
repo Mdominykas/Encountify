@@ -25,7 +25,7 @@ namespace Encountify.Services
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double dist = GetDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Lattitude);
+            double dist = GetDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Latitude);
             string answer = string.Format("{0:N2} m", dist);
             return answer;
         }
@@ -43,7 +43,7 @@ namespace Encountify.Services
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double distInMeters = GetDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Lattitude);
+            double distInMeters = GetDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Latitude);
             double distInYards = distInMeters * 0.914;
             string answer = string.Format("{0:N2} yd", distInYards);
             return answer;

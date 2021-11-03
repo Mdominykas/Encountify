@@ -39,7 +39,7 @@
             FontSize="Medium" />
 
         <Label 
-            Text="{Binding CoordX}" 
+            Text="{Binding Longitude}" 
             FontSize="Small"/>
 
         <Label 
@@ -47,7 +47,7 @@
             FontSize="Medium" />
 
         <Label 
-            Text="{Binding CoordY}" 
+            Text="{Binding Latitude}" 
             FontSize="Small"/>
         
         <Label 

@@ -24,7 +24,7 @@ namespace Encountify.Views
             {
                 var lat = e.Point.Latitude;
                 var lng = e.Point.Longitude;
-                await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
+                await Shell.Current.GoToAsync($"..?Longitude={lat}&Latitude={lng}");
             };
             BindingContext = _viewModel = new MapViewModel();
         }
@@ -52,7 +52,7 @@ namespace Encountify.Views
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
                 Label = marker.Name,
-                Position = new Position(marker.Lattitude, marker.Longitude),
+                Position = new Position(marker.Latitude, marker.Longitude),
             };
 
             if (!map.Pins.Contains(pin))
@@ -67,7 +67,7 @@ namespace Encountify.Views
             var locationList = access.GetAllAsync().Result;
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.Lattitude, s.Longitude);
+                var marker = new Marker(s.Name, s.Latitude, s.Longitude);
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
@@ -96,12 +96,12 @@ namespace Encountify.Views
     public struct Marker
     {
         public string Name;
-        public double Longitude, Lattitude;
-        public Marker(string name, double lattitude, double longitude)
+        public double Longitude, Latitude;
+        public Marker(string name, double latitude, double longitude)
         {
             Name = name;
             Longitude = longitude;
-            Lattitude = lattitude;
+            Latitude = latitude;
         }
     }
 }
