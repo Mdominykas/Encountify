@@ -1,55 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage 
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Encountify.Views.LocationDetailPage"
     Title="{Binding Title}">
 
-    <StackLayout 
-        Spacing="20" 
+    <StackLayout
+        Spacing="20"
         Padding="15">
-        
-        <Label 
-            Text="Name:" 
+
+        <Label
+            Text="Name:"
             FontSize="Medium" />
-        
-        <Label 
-            Text="{Binding Name}" 
+
+        <Label
+            Text="{Binding Name}"
             FontSize="Small"/>
 
-        <Label 
-            Text="Description:" 
+        <Label
+            Text="Description:"
             FontSize="Medium" />
 
-        <Label 
-            Text="{Binding Description}" 
+        <Label
+            Text="{Binding Description}"
             FontSize="Small"/>
 
-        <Label 
-            Text="X:" 
+        <Label
+            Text="X:"
             FontSize="Medium" />
 
-        <Label 
-            Text="{Binding CoordX}" 
+        <Label
+            Text="{Binding CoordX}"
             FontSize="Small"/>
 
-        <Label 
-            Text="Y:" 
+        <Label
+            Text="Y:"
             FontSize="Medium" />
 
-        <Label 
-            Text="{Binding CoordY}" 
+        <Label
+            Text="{Binding CoordY}"
             FontSize="Small"/>
-        
-        <Label 
-            Text="Category" 
+
+        <Label
+            Text="Category"
             FontSize="Medium" />
 
-        <Label 
-            Text="{Binding Category}" 
+        <Label
+            Text="{Binding Category}"
             FontSize="Small"/>
 
     </StackLayout>
-    
+
 </ContentPage>

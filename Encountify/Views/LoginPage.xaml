@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage 
+<ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -16,22 +16,22 @@
 
     <ContentPage.Content>
 
-        <AbsoluteLayout 
-            HorizontalOptions="FillAndExpand" 
+        <AbsoluteLayout
+            HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
 
-            <StackLayout 
-                Padding="35,125,35,35" 
+            <StackLayout
+                Padding="35,125,35,35"
                 VerticalOptions="Center"
                 HorizontalOptions="FillAndExpand"
-                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All">
-                
+
                 <local:GradientLabel
                     Text="Welcome to Encountify!"/>
 
-                <Frame                
-                    BackgroundColor="{DynamicResource FieldBackground}"                
+                <Frame
+                    BackgroundColor="{DynamicResource FieldBackground}"
                     Padding="0"
                     Margin="0"
                     CornerRadius="50"
@@ -54,7 +54,7 @@
                                 TextColor="{DynamicResource FieldPlaceholder}"
                                 HorizontalTextAlignment="Center"
                                 VerticalTextAlignment="Center"/>
-                            
+
                         </Frame>
 
                         <local:CustomEntry
@@ -91,7 +91,7 @@
                                 TextColor="{DynamicResource FieldPlaceholder}"
                                 HorizontalTextAlignment="Center"
                                 VerticalTextAlignment="Center"/>
-                            
+
                         </Frame>
 
                         <local:CustomEntry
@@ -130,7 +130,8 @@
                 <StackLayout
                     Orientation="Horizontal">
 
-                    <CheckBox 
+                    <CheckBox
+                        x:Name="Remember"
                         IsChecked="False"/>
 
                     <Label
@@ -145,25 +146,30 @@
                         HorizontalTextAlignment="End"
                         HorizontalOptions="EndAndExpand"
                         VerticalOptions="Center"
-                        Padding="0,2,0,0"/>
+                        Padding="0,2,0,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Tapped="OnForgotPasswordClicked"/>
+                        </Label.GestureRecognizers>
+                    </local:CustomLink>
 
                 </StackLayout>
 
                 <Button
-                    Text="Login" 
+                    Text="Login"
                     Clicked="OnLoginClicked"
                     HorizontalOptions="Center"
                     Padding="50,0,50,0"/>
 
             </StackLayout>
 
-            <StackLayout 
-                Padding="35,35,35,35" 
+            <StackLayout
+                Padding="35,35,35,35"
                 VerticalOptions="End"
                 HorizontalOptions="FillAndExpand"
-                AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All">
-                
+
                     <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="Center">
@@ -177,20 +183,20 @@
                     <local:CustomLink
                         Text="Register"
                         HorizontalTextAlignment="Center">
-                        
+
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer
                             Tapped="OnRegisterClicked"/>
                         </Label.GestureRecognizers>
-                        
+
                     </local:CustomLink>
 
                 </StackLayout>
 
             </StackLayout>
-            
+
         </AbsoluteLayout>
 
     </ContentPage.Content>
-    
+
 </ContentPage>

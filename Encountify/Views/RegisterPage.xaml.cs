@@ -1,14 +1,12 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.IO;
-using SQLite;
 using Encountify.Models;
 using Encountify.CustomRenderer;
 using Encountify.Services;
 using System.Text.RegularExpressions;
-using Xunit.Sdk;
 using Encountify.ViewModels;
+using System.Linq;
 
 namespace Encountify.Views
 {
@@ -16,7 +14,7 @@ namespace Encountify.Views
     public partial class RegisterPage : ContentPage
     {
         RegisterPageViewModel _viewModel;
-        User user = new User();
+        public static DatabaseAccess<User> DataStore = new DatabaseAccess<User>();
 
         public RegisterPage()
         {
@@ -31,39 +29,35 @@ namespace Encountify.Views
         private async void OnLoginClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LoginPage");
+            ResetValues();
+            ResetFocus();
         }
 
         private async void OnRegisterClicked(object sender, EventArgs e)
         {
             if (ValidateFields())
             {
-                var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Users.db3");
-                SQLiteConnection db = new SQLiteConnection(dbPath);
-                db.CreateTable<User>();
-                var data = db.Table<User>();
-                var dataUser = data.Where(x => x.Username == Username.Text).FirstOrDefault();
-                if (dataUser == null)
+                var users = await DataStore.GetAllAsync(true);
+                var userWithUsername = users.Where(x => x.Username == Username.Text).FirstOrDefault();
+                if (userWithUsername == null)
                 {
-                    var dataUser2 = data.Where(x => x.Email == Email.Text).FirstOrDefault();
+                    var userWithEmail = users.Where(x => x.Email == Email.Text).FirstOrDefault();
 
-                    if (dataUser2 == null)
+                    if (userWithEmail == null)
                     {
+                        User user = new User();
                         user.Username = Username.Text;
                         user.Password = Password.Text;
                         user.Email = Email.Text;
                         RegisterUser(user);
-                        await Navigation.PushAsync(new LoginPage());
-
-                        Username.Text = string.Empty;
-                        Email.Text = string.Empty;
-                        Password.Text = string.Empty;
-                        PasswordConfirm.Text = string.Empty;
+                        await Shell.Current.GoToAsync("//LoginPage");
+                        ResetValues();
+                        ResetFocus();
                     }
                     else
                     {
                         await DisplayAlert("Warning", "Email in use", "OK");
                     }
-
                 }
                 else
                 {
@@ -73,21 +67,9 @@ namespace Encountify.Views
         }
 
 
-        public void RegisterUser(User user)
+        public async void RegisterUser(User user)
         {
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.UserDatabaseName);
-            SQLiteConnection db = new SQLiteConnection(dbPath);
-            try
-            {
-                db.Insert(user);
-            }
-            catch
-            {
-                db.CreateTable<User>();
-                db.Insert(user);
-            }
-            db.Commit();
-            db.Close();
+            await DataStore.AddAsync(user);
             DependencyService.Get<MessagePopup>().ShortAlert("Record Added Successfully.....");
         }
 
@@ -221,9 +203,21 @@ namespace Encountify.Views
             }
         }
 
+        private void ResetValues()
+        {
+            Username.Text = string.Empty;
+            Email.Text = string.Empty;
+            Password.Text = string.Empty;
+            PasswordConfirm.Text = string.Empty;
+            Terms.IsChecked = false;
+        }
 
-
-
-
+        private void ResetFocus()
+        {
+            Username.Unfocus();
+            Email.Unfocus();
+            Password.Unfocus();
+            PasswordConfirm.Unfocus();
+        }
     }
 }

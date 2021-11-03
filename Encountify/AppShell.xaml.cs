@@ -17,6 +17,7 @@ namespace Encountify
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
+            await DisplayAlert("Quit", "You want to log out?", "Yes");
             await Shell.Current.GoToAsync("//LoginPage");
         }
     }

@@ -9,6 +9,10 @@ namespace Encountify
 {
     public partial class App : Application
     {
+        public static int UserID { get; set; }
+        public static string UserName { get; set; }
+        public static string UserEmail { get; set; }
+        public static string UserPassword { get; set; }
 
         public App()
         {
