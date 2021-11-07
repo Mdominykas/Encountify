@@ -1,4 +1,5 @@
 ﻿using Encountify.Models;
+using Encountify.Services;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -11,10 +12,11 @@ namespace Encountify.ViewModels
         private long id;
         private string name;
         private string description;
-        private double coordX;
-        private double coordY;
+        private double longitude;
+        private double latitude;
         private string category;
-
+        private string distance;
+        private Location location;
 
         public int Id
         {
@@ -39,16 +41,22 @@ namespace Encountify.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public double CoordX
+        public string Distance
         {
-            get => coordX;
-            set => SetProperty(ref coordX, value);
+            get => distance;
+            set => SetProperty(ref distance, value);
         }
 
-        public double CoordY
+        public double Longitude
         {
-            get => coordY;
-            set => SetProperty(ref coordY, value);
+            get => longitude;
+            set => SetProperty(ref longitude, value);
+        }
+
+        public double Latitude
+        {
+            get => latitude;
+            set => SetProperty(ref latitude, value);
         }
 
         public string Category
@@ -61,12 +69,13 @@ namespace Encountify.ViewModels
         {
             try
             {
-                var location = await DataStore.GetAsync(Id);
+                location = await DataStore.GetAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;
-                CoordX = location.CoordX;
-                CoordY = location.CoordY;
+                Longitude = location.Longitude;
+                Latitude = location.Latitude;
+                Distance = await DistanceCounter.GetFormattedDistance(location);
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
             }
             catch (Exception)

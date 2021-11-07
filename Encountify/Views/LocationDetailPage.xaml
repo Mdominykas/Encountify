@@ -18,28 +18,38 @@
             Text="{Binding Name}"
             FontSize="Small"/>
 
-        <Label
-            Text="Description:"
+        <Label 
+            Text="Distance:" 
+            FontSize="Medium" />
+
+        <Label 
+            Text="{Binding Distance}" 
+            FontSize="Small"/>
+
+        <Label 
+            Text="Description:" 
+
             FontSize="Medium" />
 
         <Label
             Text="{Binding Description}"
             FontSize="Small"/>
 
-        <Label
-            Text="X:"
+        <Label 
+            Text="Longitude:" 
             FontSize="Medium" />
 
-        <Label
-            Text="{Binding CoordX}"
+        <Label 
+            Text="{Binding Longitude}" 
             FontSize="Small"/>
 
-        <Label
-            Text="Y:"
+        <Label 
+            Text="Latitude:" 
             FontSize="Medium" />
 
-        <Label
-            Text="{Binding CoordY}"
+        <Label 
+            Text="{Binding Latitude}" 
+
             FontSize="Small"/>
 
         <Label

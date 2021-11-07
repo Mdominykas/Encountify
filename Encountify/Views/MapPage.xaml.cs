@@ -24,7 +24,7 @@ namespace Encountify.Views
             {
                 var lat = e.Point.Latitude;
                 var lng = e.Point.Longitude;
-                await Shell.Current.GoToAsync($"..?CoordX={lat}&CoordY={lng}");
+                await Shell.Current.GoToAsync($"..?Latitude={lat}&Longitude={lng}");
             };
             BindingContext = _viewModel = new MapViewModel();
         }
@@ -67,7 +67,7 @@ namespace Encountify.Views
             var locationList = access.GetAllAsync().Result;
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.CoordY, s.CoordX);
+                var marker = new Marker(s.Name, s.Latitude, s.Longitude);
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
@@ -97,7 +97,7 @@ namespace Encountify.Views
     {
         public string Name;
         public double Longitude, Lattitude;
-        public Marker(string name, double longitude, double lattitude)
+        public Marker(string name, double lattitude, double longitude)
         {
             Name = name;
             Longitude = longitude;

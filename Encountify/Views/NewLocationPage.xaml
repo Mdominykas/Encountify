@@ -32,24 +32,24 @@
                 FontSize="Medium"
                 Margin="0" />
 
-            <Label
-                Text="X"
+            <Label 
+                Text="Longtitude" 
                 FontSize="Medium" />
 
-            <Editor
-                Text="{Binding CoordX, Mode=TwoWay}"
-                AutoSize="TextChanges"
-                FontSize="Medium"
+            <Editor 
+                Text="{Binding Longitude, Mode=TwoWay}" 
+                AutoSize="TextChanges" 
+                FontSize="Medium" 
                 Margin="0" />
 
-            <Label
-                Text="Y"
+            <Label 
+                Text="Latitude" 
                 FontSize="Medium" />
 
-            <Editor
-                Text="{Binding CoordY, Mode=TwoWay}"
-                AutoSize="TextChanges"
-                FontSize="Medium"
+            <Editor 
+                Text="{Binding Latitude, Mode=TwoWay}" 
+                AutoSize="TextChanges" 
+                FontSize="Medium" 
                 Margin="0" />
 
             <Picker
