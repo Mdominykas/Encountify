@@ -4,62 +4,75 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Encountify.Views.LocationDetailPage"
+    xmlns:map = "clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
     Title="{Binding Title}">
 
-    <StackLayout
+    <ScrollView InputTransparent="True">
+        <StackLayout
         Spacing="20"
         Padding="15">
 
-        <Label
+            <Label
             Text="Name:"
             FontSize="Medium" />
 
-        <Label
+            <Label
             Text="{Binding Name}"
             FontSize="Small"/>
 
-        <Label 
+            <Label 
             Text="Distance:" 
             FontSize="Medium" />
 
-        <Label 
+            <Label 
             Text="{Binding Distance}" 
             FontSize="Small"/>
 
-        <Label 
+            <Label 
             Text="Description:" 
 
             FontSize="Medium" />
 
-        <Label
+            <Label
             Text="{Binding Description}"
             FontSize="Small"/>
 
-        <Label 
+            <Label 
             Text="Longitude:" 
             FontSize="Medium" />
 
-        <Label 
+            <Label 
             Text="{Binding Longitude}" 
             FontSize="Small"/>
 
-        <Label 
+            <Label 
             Text="Latitude:" 
             FontSize="Medium" />
 
-        <Label 
+            <Label 
             Text="{Binding Latitude}" 
 
             FontSize="Small"/>
 
-        <Label
+            <Label
             Text="Category"
             FontSize="Medium" />
 
-        <Label
+            <Label
             Text="{Binding Category}"
             FontSize="Small"/>
 
-    </StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="540" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
+                <map:Map  
+                    x:Name="myMap"
+                    MapType="Street" Grid.Row="0">
+                </map:Map>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
