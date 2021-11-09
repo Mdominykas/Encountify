@@ -46,6 +46,14 @@ namespace Encountify.ViewModels
             {
                 var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Please pick a photo" });
                 var newFile = Path.Combine(FileSystem.CacheDirectory, result.FileName);
+                try
+                {
+                    File.Copy(result.FullPath, newFile, true);
+                }
+                catch (IOException iox)
+                {
+                    Debug.WriteLine(iox.Message);
+                }
                 ImageOpenClose.Source = ImageSource.FromFile(newFile);
                 newPicture = File.ReadAllBytes(newFile);
             }
