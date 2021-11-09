@@ -48,7 +48,13 @@ namespace Encountify.ViewModels
                 var newFile = Path.Combine(FileSystem.CacheDirectory, result.FileName);
                 try
                 {
+                    // documentation says that this using FullPath might cause errors
                     File.Copy(result.FullPath, newFile, true);
+                }
+                catch (FileNotFoundException fnfe)
+                {
+                    newFile = null;
+                    Debug.WriteLine(fnfe.ToString());
                 }
                 catch (IOException iox)
                 {
