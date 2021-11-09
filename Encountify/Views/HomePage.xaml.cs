@@ -2,7 +2,6 @@
 using Encountify.ViewModels;
 using System;
 using System.IO;
-using System.Reflection;
 using Xamarin.Forms;
 
 namespace Encountify.Views
@@ -15,7 +14,7 @@ namespace Encountify.Views
             InitializeComponent();
             BindingContext = viewModel = new HomePageViewModel();
             viewModel.ImageOpenClose = new Image();
-            viewModel.ImageOpenClose.Source = ImageCreator.GetDefaultImageStream();
+            viewModel.ImageOpenClose.Source = ImageSource.FromStream(() => new MemoryStream(App.UserPicture));
         }
 
         public void OnScaleRadioButtonCheckedChanged(object sender, EventArgs e)

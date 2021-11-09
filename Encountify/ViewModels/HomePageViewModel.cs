@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Encountify.Models;
+using Encountify.Services;
+using System;
 using System.Diagnostics;
 using System.IO;
 using Xamarin.Essentials;
@@ -9,7 +11,6 @@ namespace Encountify.ViewModels
     class HomePageViewModel : BaseViewModel
     {
         private ImageSource _downloadedImageSource;
-        private Stream _currentStream;
         public Command OnImageChangeCommand { get; }
 
         public HomePageViewModel()
@@ -40,11 +41,13 @@ namespace Encountify.ViewModels
 
         private async void OnChangeImageButtonClicked()
         {
+            byte[] newPicture = null;
             try
             {
                 var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Please pick a photo" });
                 var newFile = Path.Combine(FileSystem.CacheDirectory, result.FileName);
                 ImageOpenClose.Source = ImageSource.FromFile(newFile);
+                newPicture = File.ReadAllBytes(newFile);
             }
             catch (PermissionException pEx)
             {
@@ -54,16 +57,23 @@ namespace Encountify.ViewModels
             }
             catch (FeatureNotSupportedException fnsEx)
             {
+                // Feature is not supported on the device
                 Debug.WriteLine("feature is not supported");
                 Debug.WriteLine(fnsEx.ToString());
-                // Feature is not supported on the device
             }
             catch (NullReferenceException nrE)
             {
-                Debug.WriteLine("no image is selected");
+                // No image has been selected
+                Debug.WriteLine("no image has been selected");
                 Debug.WriteLine(nrE.ToString());
             }
+            if (newPicture != null)
+            {
+                var users = new DatabaseAccess<User>();
+                var newData = await users.GetAsync(App.UserID);
+                newData.Picture = newPicture;
+                await users.UpdateAsync(newData);
+            }
         }
-
     }
 }

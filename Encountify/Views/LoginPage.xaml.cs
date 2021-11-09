@@ -44,6 +44,7 @@ namespace Encountify.Views
                     App.UserName = user.Username;
                     App.UserEmail = user.Email;
                     App.UserPassword = user.Password;
+                    App.UserPicture = user.Picture;
                     OnLogin?.Invoke();
                     DependencyService.Get<MessagePopup>().ShortAlert("Logged in successfully");
                     await Shell.Current.GoToAsync("//HomePage");
