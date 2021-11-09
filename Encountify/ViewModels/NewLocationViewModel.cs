@@ -4,14 +4,14 @@ using Xamarin.Forms;
 
 namespace Encountify.ViewModels
 {
-    [QueryProperty(nameof(CoordX), "CoordX")]
-    [QueryProperty(nameof(CoordY), "CoordY")]
+    [QueryProperty(nameof(Longitude), "Longitude")]
+    [QueryProperty(nameof(Latitude), "Latitude")]
     public class NewLocationViewModel : BaseViewModel
     {
         private string name;
         private string description;
-        private double coordX;
-        private double coordY;
+        private double longitude;
+        private double latitude;
         private string category;
 
         public NewLocationViewModel()
@@ -41,16 +41,16 @@ namespace Encountify.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public double CoordX
+        public double Longitude
         {
-            get => coordX;
-            set => SetProperty(ref coordX, value);
+            get => longitude;
+            set => SetProperty(ref longitude, value);
         }
 
-        public double CoordY
+        public double Latitude
         {
-            get => coordY;
-            set => SetProperty(ref coordY, value);
+            get => latitude;
+            set => SetProperty(ref latitude, value);
         }
 
         public string Category
@@ -74,8 +74,8 @@ namespace Encountify.ViewModels
             {
                 Name = Name,
                 Description = Description,
-                CoordX = CoordX,
-                CoordY = CoordY,
+                Longitude = Longitude,
+                Latitude = Latitude,
                 Category = (int)CategoryConverter.ConvertStringToCategory(Category)
             };
 

@@ -12,9 +12,9 @@ namespace Encountify.Services
         public List<ScoreboardEntry> CreateScoreboard(bool reversed = false)
         {
             DatabaseAccess<User> userData = new DatabaseAccess<User>();
-            List<User> users = (List<User>) userData.GetAllAsync().Result;
+            List<User> users = (List<User>)userData.GetAllAsync().Result;
             DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
-            List<VisitedLocations> visitedLocations = (List<VisitedLocations>) visitedLocationsData.GetAllAsync().Result;
+            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 
             var query =
             users.GroupJoin(visitedLocations,
@@ -28,7 +28,7 @@ namespace Encountify.Services
                     });
             List<ScoreboardEntry> results = new List<ScoreboardEntry>();
 
-            foreach(var group in query)
+            foreach (var group in query)
             {
                 results.Add(new ScoreboardEntry()
                 {
@@ -45,7 +45,7 @@ namespace Encountify.Services
             {
                 results.Sort();
             }
-            
+
             return results;
         }
     }

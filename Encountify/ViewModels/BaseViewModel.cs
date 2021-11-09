@@ -3,7 +3,9 @@ using Encountify.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Encountify.ViewModels
@@ -53,15 +55,15 @@ namespace Encountify.ViewModels
         {
             return new List<Location>()
             {
-                new Location("Vilniaus katedra", coordX : 54.685849042698216, coordY :25.287750880122083, category: (int) Category.Cathedral),
-                new Location("Gedimino bokštas", coordX : 54.68667445192699, coordY : 25.29056883194689, category : (int) Category.Castle ),
-                new Location("Vilniaus Šv. Onos bažnyčia", coordX : 54.68378573230062, coordY : 25.292650881640785, category : (int) Category.Church ),
-                new Location("Trys kryžiai", coordX : 54.68740766559662, coordY : 25.29771489238211, category: (int) Category.Monument ),
-                new Location("Gedimino prospektas", coordX : 54.68644019450281, coordY : 25.285441103636185, category : (int) Category.Street),
-                new Location("Lietuvos Respublikos Prezidento kanceliarija", coordX : 54.68383535000863, coordY : 25.286685648648888, category : (int)Category.None),
-                new Location("Sereikiškių parko Bernardinų sodas", coordX : 54.68413305498285, coordY : 25.29522580235671, category : (int) Category.Park ),
-                new Location("Lietuvos nacionalinis dailės muziejus", coordX : 54.68130476957157, coordY : 25.289818468853266, category : (int) Category.Museum ),
-                new Location("Užupio angelas", coordX : 54.68035, coordY : 25.29515, category : (int) Category.Monument),
+                new Location("Vilniaus katedra", latitude : 54.685849042698216, longitude :25.287750880122083, category: (int) Category.Cathedral),
+                new Location("Gedimino bokštas", latitude : 54.68667445192699, longitude : 25.29056883194689, category : (int) Category.Castle ),
+                new Location("Vilniaus Šv. Onos bažnyčia", latitude : 54.68378573230062, longitude : 25.292650881640785, category : (int) Category.Church ),
+                new Location("Trys kryžiai", latitude : 54.68740766559662, longitude : 25.29771489238211, category: (int) Category.Monument ),
+                new Location("Gedimino prospektas", latitude : 54.68644019450281, longitude : 25.285441103636185, category : (int) Category.Street),
+                new Location("Lietuvos Respublikos Prezidento kanceliarija", latitude : 54.68383535000863, longitude : 25.286685648648888, category : (int)Category.None),
+                new Location("Sereikiškių parko Bernardinų sodas", latitude : 54.68413305498285, longitude : 25.29522580235671, category : (int) Category.Park ),
+                new Location("Lietuvos nacionalinis dailės muziejus", latitude : 54.68130476957157, longitude : 25.289818468853266, category : (int) Category.Museum ),
+                new Location("Užupio angelas", latitude : 54.68035, longitude : 25.29515, category : (int) Category.Monument),
             };
         }
 
@@ -74,16 +76,10 @@ namespace Encountify.ViewModels
             }
         }
 
-        #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            var changed = PropertyChanged;
-            if (changed == null)
-                return;
-
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
     }
 }
