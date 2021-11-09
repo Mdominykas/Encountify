@@ -18,11 +18,10 @@ namespace Encountify.Views
             viewModel.ImageOpenClose.Source = ImageCreator.GetDefaultImageStream();
         }
 
-        public void OnColorsRadioButtonCheckedChanged(object sender, EventArgs e)
+        public void OnScaleRadioButtonCheckedChanged(object sender, EventArgs e)
         {
             if((e as CheckedChangedEventArgs).Value)
                 DistanceCounter.ChangeScale();
         }
-
     }
 }
