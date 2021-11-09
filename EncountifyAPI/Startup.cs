@@ -36,7 +36,7 @@ namespace EncountifyAPI
             });
 
             services.AddDbContext<EncountifyAPIContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                    options.UseSqlServer(Configuration.GetConnectionString("EncountifyAPIContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,9 +45,10 @@ namespace EncountifyAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EncountifyAPI v1"));
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EncountifyAPI v1"));
 
             app.UseHttpsRedirection();
 

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EncountifyAPI.Data;
 using EncountifyAPI.Models;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace EncountifyAPI.Controllers
 {
@@ -14,95 +16,43 @@ namespace EncountifyAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly EncountifyAPIContext _context;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(EncountifyAPIContext context)
+        public UsersController(IConfiguration configuration)
         {
-            _context = context;
+            _configuration = configuration;
         }
 
-        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public IEnumerable<User> Get()
         {
-            return await _context.User.ToListAsync();
+            var users = GetUsers();
+            return users;
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        private IEnumerable<User> GetUsers()
         {
-            var user = await _context.User.FindAsync(id);
-
-            if (user == null)
+            var users = new List<User>();
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("EncountifyAPIContext")))
             {
-                return NotFound();
-            }
-
-            return user;
-        }
-
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                connection.Open();
+                using SqlCommand command = new SqlCommand("SELECT Id, Username, Email, Password, IsAdmin, Image FROM Users", connection);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    var user = new User()
+                    {
+                        Id = (int)reader["Id"],
+                        Username = reader["Username"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        Password = reader["Password"].ToString(),
+                        IsAdmin = Convert.ToBoolean((int)reader["IsAdmin"]),
+                        Image = reader["Image"].ToString(),
+                    };
+                    users.Add(user);
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.Id == id);
+            return users;
         }
     }
 }

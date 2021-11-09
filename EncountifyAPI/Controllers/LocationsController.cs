@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EncountifyAPI.Data;
 using EncountifyAPI.Models;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace EncountifyAPI.Controllers
 {
@@ -14,95 +16,44 @@ namespace EncountifyAPI.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        private readonly EncountifyAPIContext _context;
+        private readonly IConfiguration _configuration;
 
-        public LocationsController(EncountifyAPIContext context)
+        public LocationsController(IConfiguration configuration)
         {
-            _context = context;
+            _configuration = configuration;
         }
 
-        // GET: api/Locations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
+        public IEnumerable<Location> Get()
         {
-            return await _context.Location.ToListAsync();
+            var locations = GetLocations();
+            return locations;
         }
 
-        // GET: api/Locations/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Location>> GetLocation(int id)
+        private IEnumerable<Location> GetLocations()
         {
-            var location = await _context.Location.FindAsync(id);
-
-            if (location == null)
+            var locations = new List<Location>();
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("EncountifyAPIContext")))
             {
-                return NotFound();
-            }
-
-            return location;
-        }
-
-        // PUT: api/Locations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutLocation(int id, Location location)
-        {
-            if (id != location.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(location).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LocationExists(id))
+                connection.Open();
+                using SqlCommand command = new SqlCommand("SELECT Id, Name, Description, Longitude, Latitude, Category, Image FROM Locations", connection);
+                using SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    var location = new Location()
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"].ToString(),
+                        Description = reader["Description"].ToString(),
+                        Longitude = (float)reader["Longitude"],
+                        Latitude = (float)reader["Latitude"],
+                        Category = (int)reader["Category"],
+                        Image = reader["Image"].ToString(),
+                    };
+                    locations.Add(location);
                 }
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Locations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Location>> PostLocation(Location location)
-        {
-            _context.Location.Add(location);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetLocation", new { id = location.Id }, location);
-        }
-
-        // DELETE: api/Locations/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLocation(int id)
-        {
-            var location = await _context.Location.FindAsync(id);
-            if (location == null)
-            {
-                return NotFound();
-            }
-
-            _context.Location.Remove(location);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool LocationExists(int id)
-        {
-            return _context.Location.Any(e => e.Id == id);
+            return locations;
         }
     }
 }
