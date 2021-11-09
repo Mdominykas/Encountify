@@ -5,11 +5,15 @@ using Android.Runtime;
 using Android.OS;
 using Android;
 
-using Xamarin.Forms;
-using Xamarin.Forms.GoogleMaps.Clustering;
 using Xamarin.Forms.GoogleMaps.Clustering.Android;
+using Xamarin.Forms.GoogleMaps.Clustering;
 
-[assembly: ExportRenderer(typeof(ClusteredMap), typeof(ClusteredMapRenderer))]
+using Xamarin.Forms;
+using Encountify.Models;
+using Encountify.Droid;
+
+//[assembly: ExportRenderer(typeof(ClusteredMap), typeof(ClusteredMapRenderer))]
+[assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Encountify.Droid
 
 {
