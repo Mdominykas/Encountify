@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -53,7 +54,14 @@ namespace Encountify.ViewModels
             }
             catch (FeatureNotSupportedException fnsEx)
             {
+                Debug.WriteLine("feature is not supported");
+                Debug.WriteLine(fnsEx.ToString());
                 // Feature is not supported on the device
+            }
+            catch (NullReferenceException nrE)
+            {
+                Debug.WriteLine("no image is selected");
+                Debug.WriteLine(nrE.ToString());
             }
         }
 
