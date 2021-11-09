@@ -100,7 +100,7 @@ namespace Encountify.Views
             var locationList = access.GetAllAsync().Result;
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.Latitude, s.Longitude);
+                var marker = new Marker(s.Name, s.Longitude, s.Latitude);
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
