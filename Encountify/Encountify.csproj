@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="default_image.png" />
     <None Remove="ServiceTerms.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="default_image.png" />
     <EmbeddedResource Include="Resources\Fonts\fa-brands-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
