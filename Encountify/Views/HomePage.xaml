@@ -8,6 +8,10 @@
 
     <StackLayout x:Name="imagePanel">
         <Image x:Name="DownloadedImageSource" Aspect="AspectFit" HeightRequest="60" WidthRequest="70" Source="{Binding ImageOpenClose.Source}"/>
+        <Button
+                Text="Change Profile Picture"
+                Command="{Binding OnImageChangeCommand}"
+                HorizontalOptions="FillAndExpand"/>
         <Label Text="Show distance in:" />
         <RadioButton Content="Yards" CheckedChanged="OnScaleRadioButtonCheckedChanged" />
         <RadioButton Content="Meters" CheckedChanged="OnScaleRadioButtonCheckedChanged" IsChecked="true" />

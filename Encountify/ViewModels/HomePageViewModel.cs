@@ -1,15 +1,21 @@
-﻿using Encountify.Services;
-using System;
-using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Encountify.ViewModels
 {
     class HomePageViewModel : BaseViewModel
     {
-        ImageSource _downloadedImageSource;
+        private ImageSource _downloadedImageSource;
+        private Stream _currentStream;
+        public Command OnImageChangeCommand { get; }
+
+        public HomePageViewModel()
+        {
+            OnImageChangeCommand = new Command(OnChangeImageButtonClicked);
+
+        }
 
         public ImageSource DownloadedImageSource
         {
@@ -30,5 +36,26 @@ namespace Encountify.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private async void OnChangeImageButtonClicked()
+        {
+            try
+            {
+                var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions { Title = "Please pick a photo" });
+                var newFile = Path.Combine(FileSystem.CacheDirectory, result.FileName);
+                ImageOpenClose.Source = ImageSource.FromFile(newFile);
+            }
+            catch (PermissionException pEx)
+            {
+                // Permissions not granted
+                Debug.WriteLine("you don't have permissions");
+                Debug.WriteLine(pEx.ToString());
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Feature is not supported on the device
+            }
+        }
+
     }
 }

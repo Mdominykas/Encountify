@@ -20,7 +20,6 @@ namespace Encountify.Services
                 buffer = new byte[length];
                 stream.Read(buffer, 0, (int)length);
             }
-
             return buffer;
         }
 
