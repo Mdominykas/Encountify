@@ -7,12 +7,14 @@ using EncountifyAPI.Models;
 
 namespace EncountifyAPI.Data
 {
-    public class LocationContext : DbContext
+    public class EncountifyAPIContext : DbContext
     {
-        public LocationContext (DbContextOptions<LocationContext> options)
+        public EncountifyAPIContext (DbContextOptions<EncountifyAPIContext> options)
             : base(options)
         {
         }
+
+        public DbSet<EncountifyAPI.Models.User> User { get; set; }
 
         public DbSet<EncountifyAPI.Models.Location> Location { get; set; }
     }

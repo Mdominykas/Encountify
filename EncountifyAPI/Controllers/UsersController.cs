@@ -14,9 +14,9 @@ namespace EncountifyAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserContext _context;
+        private readonly EncountifyAPIContext _context;
 
-        public UsersController(UserContext context)
+        public UsersController(EncountifyAPIContext context)
         {
             _context = context;
         }

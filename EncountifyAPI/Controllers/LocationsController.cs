@@ -14,9 +14,9 @@ namespace EncountifyAPI.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        private readonly LocationContext _context;
+        private readonly EncountifyAPIContext _context;
 
-        public LocationsController(LocationContext context)
+        public LocationsController(EncountifyAPIContext context)
         {
             _context = context;
         }
