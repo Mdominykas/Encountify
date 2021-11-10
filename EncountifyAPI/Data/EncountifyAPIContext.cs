@@ -7,9 +7,10 @@ using EncountifyAPI.Models;
 
 namespace EncountifyAPI.Data
 {
+#pragma warning disable CS1591
     public class EncountifyAPIContext : DbContext
     {
-        public EncountifyAPIContext (DbContextOptions<EncountifyAPIContext> options)
+        public EncountifyAPIContext(DbContextOptions<EncountifyAPIContext> options)
             : base(options)
         {
         }
@@ -18,4 +19,5 @@ namespace EncountifyAPI.Data
 
         public DbSet<EncountifyAPI.Models.Location> Location { get; set; }
     }
+#pragma warning restore CS1591
 }

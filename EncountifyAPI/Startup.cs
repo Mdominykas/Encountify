@@ -12,7 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using EncountifyAPI.Data;
+using System.IO;
 
 namespace EncountifyAPI
 {
@@ -30,9 +32,28 @@ namespace EncountifyAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EncountifyAPI", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "EncountifyAPI",
+                    Description = "An ASP.NET Core Web API for the Encountify App",
+                    TermsOfService = new Uri("https://github.com/Mdominykas/Encountify"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Contact",
+                        Url = new Uri("https://github.com/Mdominykas/Encountify")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "License",
+                        Url = new Uri("https://github.com/Mdominykas/Encountify/blob/main/LICENSE.md")
+                    }
+                });
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             services.AddDbContext<EncountifyAPIContext>(options =>
