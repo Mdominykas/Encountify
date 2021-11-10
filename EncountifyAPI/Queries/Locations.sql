@@ -1,5 +1,5 @@
 CREATE TABLE "Locations" (
-    "Id" BIGINT IDENTITY(1, 1) PRIMARY KEY,
+    "Id" INTEGER PRIMARY KEY,
     "Name" TEXT NOT NULL,
     "Description" TEXT,
     "Longitude" FLOAT DEFAULT 0,

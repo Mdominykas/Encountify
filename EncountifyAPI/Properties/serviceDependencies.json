@@ -3,6 +3,12 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:EncountifyAPIContext"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
     }
   }
 }

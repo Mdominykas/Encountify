@@ -4,5 +4,5 @@ CREATE TABLE "Users" (
     "Password" TEXT NOT NULL,
     "Email" TEXT NOT NULL,
     "IsAdmin" BIT DEFAULT 0,
-    "Image" TEXT NOT NULL
+    "Image" TEXT
 );

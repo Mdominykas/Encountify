@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EncountifyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("API/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -26,8 +26,6 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get all users
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet]
         public IEnumerable<User> GetAllUsers()
         {
@@ -49,9 +47,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get user with specified id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("id/{id}")]
+        [HttpGet("Id/{id}")]
         public User GetUser(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -68,9 +64,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get user with specified username
         /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        [HttpGet("username/{username}")]
+        [HttpGet("Username/{username}")]
         public User GetUser(string username)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -87,12 +81,6 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Add a new user
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="email"></param>
-        /// <param name="isAdmin"></param>
-        /// <param name="image"></param>
-        /// <returns></returns>
         [HttpPost("")]
         public User AddUser(string username, string password, string email, bool isAdmin = false, string image = "")
         {
@@ -114,13 +102,6 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="email"></param>
-        /// <param name="isAdmin"></param>
-        /// <param name="image"></param>
-        /// <returns></returns>
         [HttpPut("{id}")]
         public User EditUser(int id, string username = "", string password = "", string email = "", bool? isAdmin = null, string image = "")
         {
@@ -155,10 +136,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user's username
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        [HttpPut("{id}/username")]
+        [HttpPut("{id}/Username")]
         public User EditUserName(int id, string username)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -176,10 +154,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user's password
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        [HttpPut("{id}/password")]
+        [HttpPut("{id}/Password")]
         public User EditUserPassword(int id, string password)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -197,10 +172,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user's email
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        [HttpPut("{id}/email")]
+        [HttpPut("{id}/Email")]
         public User EditUserEmail(int id, string email)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -218,10 +190,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user's permissions
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="isAdmin"></param>
-        /// <returns></returns>
-        [HttpPut("{id}/isAdmin")]
+        [HttpPut("{id}/IsAdmin")]
         public User EditUserIsAdmin(int id, bool isAdmin)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -239,10 +208,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing user's image
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="image"></param>
-        /// <returns></returns>
-        [HttpPut("{id}/image")]
+        [HttpPut("{id}/Image")]
         public User EditUserImage(int id, string image)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -260,7 +226,6 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Delete all users
         /// </summary>
-        /// <returns></returns>
         [HttpDelete]
         public IEnumerable<User> DeleteAllUsers()
         {
@@ -277,8 +242,6 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Delete user with specified Id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpDelete("{id}")]
         public User DeleteUser(int id)
         {
@@ -292,7 +255,6 @@ namespace EncountifyAPI.Controllers
             }
             return GetUser(id);
         }
-
 
         private User ParseUser(SqlDataReader reader)
         {
