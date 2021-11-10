@@ -38,7 +38,7 @@ namespace EncountifyAPI
                 {
                     Version = "v1",
                     Title = "EncountifyAPI",
-                    Description = "An ASP.NET Core Web API for the Encountify App",
+                    Description = "An ASP.NET Core Web API for the Encountify Xamarin.Forms App",
                     TermsOfService = new Uri("https://github.com/Mdominykas/Encountify"),
                     Contact = new OpenApiContact
                     {

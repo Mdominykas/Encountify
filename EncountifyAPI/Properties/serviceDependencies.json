@@ -2,14 +2,6 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:UserContext"
-    },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:LocationContext"
-    },
-    "mssql3": {
-      "type": "mssql",
       "connectionId": "ConnectionStrings:EncountifyAPIContext"
     }
   }

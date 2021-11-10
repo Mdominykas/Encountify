@@ -37,7 +37,6 @@ namespace EncountifyAPI.Controllers
                 connection.Open();
                 string query = "SELECT * FROM Users";
                 using SqlCommand command = new SqlCommand(query, connection);
-
                 using SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -53,23 +52,17 @@ namespace EncountifyAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("id/{id}")]
-        public IEnumerable<User> GetUser(int id)
+        public User GetUser(int id)
         {
-            List<User> users = new List<User>();
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 string query = "SELECT * FROM Users WHERE Id = @id";
                 using SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", id);
-
                 using SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    users.Add(ParseUser(reader));
-                }
+                return ParseUser(reader);
             }
-            return users;
         }
 
         /// <summary>
@@ -78,23 +71,17 @@ namespace EncountifyAPI.Controllers
         /// <param name="username"></param>
         /// <returns></returns>
         [HttpGet("username/{username}")]
-        public IEnumerable<User> GetUser(string username)
+        public User GetUser(string username)
         {
-            List<User> users = new List<User>();
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 string query = "SELECT * FROM Users WHERE CONVERT(VARCHAR, Username) = @username";
                 using SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@username", username);
-
                 using SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    users.Add(ParseUser(reader));
-                }
+                return ParseUser(reader);
             }
-            return users;
         }
 
         /// <summary>
@@ -107,7 +94,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost("")]
-        public IEnumerable<User> AddUser(string username, string password, string email, bool isAdmin = false, string image = "")
+        public User AddUser(string username, string password, string email, bool isAdmin = false, string image = "")
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -135,31 +122,30 @@ namespace EncountifyAPI.Controllers
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public IEnumerable<User> EditUser(int id, string username = "", string password = "", string email = "", bool? isAdmin = null, string image = "")
+        public User EditUser(int id, string username = "", string password = "", string email = "", bool? isAdmin = null, string image = "")
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-
                 if (username != "")
                 {
-                    IEnumerable<User> user = EditUserName(id, username);
+                    User user = EditUserName(id, username);
                 }
                 if (password != "")
                 {
-                    IEnumerable<User> user = EditUserPassword(id, password);
+                    User user = EditUserPassword(id, password);
                 }
                 if (email != "")
                 {
-                    IEnumerable<User> user = EditUserEmail(id, email);
+                    User user = EditUserEmail(id, email);
                 }
                 if (isAdmin != null)
                 {
-                    IEnumerable<User> user = EditUserIsAdmin(id, (bool)isAdmin);
+                    User user = EditUserIsAdmin(id, (bool)isAdmin);
                 }
                 if (image != "")
                 {
-                    IEnumerable<User> user = EditUserImage(id, image);
+                    User user = EditUserImage(id, image);
                 }
             }
             return GetUser(id);
@@ -173,7 +159,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="username"></param>
         /// <returns></returns>
         [HttpPut("{id}/username")]
-        public IEnumerable<User> EditUserName(int id, string username)
+        public User EditUserName(int id, string username)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -194,7 +180,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPut("{id}/password")]
-        public IEnumerable<User> EditUserPassword(int id, string password)
+        public User EditUserPassword(int id, string password)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -215,7 +201,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="email"></param>
         /// <returns></returns>
         [HttpPut("{id}/email")]
-        public IEnumerable<User> EditUserEmail(int id, string email)
+        public User EditUserEmail(int id, string email)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -236,7 +222,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="isAdmin"></param>
         /// <returns></returns>
         [HttpPut("{id}/isAdmin")]
-        public IEnumerable<User> EditUserIsAdmin(int id, bool isAdmin)
+        public User EditUserIsAdmin(int id, bool isAdmin)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -257,7 +243,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPut("{id}/image")]
-        public IEnumerable<User> EditUserImage(int id, string image)
+        public User EditUserImage(int id, string image)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -294,7 +280,7 @@ namespace EncountifyAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public IEnumerable<User> DeleteUser(int id)
+        public User DeleteUser(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -306,6 +292,7 @@ namespace EncountifyAPI.Controllers
             }
             return GetUser(id);
         }
+
 
         private User ParseUser(SqlDataReader reader)
         {
