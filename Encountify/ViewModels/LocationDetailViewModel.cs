@@ -3,6 +3,7 @@ using Encountify.Services;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace Encountify.ViewModels
 {
@@ -65,6 +66,8 @@ namespace Encountify.ViewModels
             set => SetProperty(ref category, value);
         }
 
+        public Map Map { get; set; }
+
         public async void LoadLocationId(int Id)
         {
             try
@@ -77,10 +80,28 @@ namespace Encountify.ViewModels
                 Latitude = location.Latitude;
                 Distance = await DistanceCounter.GetFormattedDistance(location);
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
+                LoadMarker(Map, location);
             }
             catch (Exception)
             {
                 Debug.WriteLine("Failed to Load Location");
+            }
+        }
+
+        static public void LoadMarker(Map map, Location location)
+        {
+            Position position = new Position(location.Latitude, location.Longitude);
+            MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);
+            map.MoveToRegion(mapSpan, true);
+            Pin pin = new Pin()
+            {
+                Label = location.Name,
+                Position = position,
+            };
+
+            if (!map.Pins.Contains(pin))
+            {
+                map.Pins.Add(pin);
             }
         }
     }
