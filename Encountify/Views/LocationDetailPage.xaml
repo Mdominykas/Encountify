@@ -38,20 +38,19 @@
             FontSize="Small"/>
 
             <Label 
-            Text="Longitude:" 
-            FontSize="Medium" />
-
-            <Label 
-            Text="{Binding Longitude}" 
-            FontSize="Small"/>
-
-            <Label 
             Text="Latitude:" 
             FontSize="Medium" />
 
             <Label 
             Text="{Binding Latitude}" 
+            FontSize="Small"/>
+            
+            <Label 
+            Text="Longitude:" 
+            FontSize="Medium" />
 
+            <Label 
+            Text="{Binding Longitude}" 
             FontSize="Small"/>
 
             <Label

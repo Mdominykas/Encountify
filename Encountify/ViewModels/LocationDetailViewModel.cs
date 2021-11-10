@@ -13,8 +13,8 @@ namespace Encountify.ViewModels
         private long id;
         private string name;
         private string description;
-        private double longitude;
         private double latitude;
+        private double longitude;
         private string category;
         private string distance;
         private Location location;
@@ -48,16 +48,16 @@ namespace Encountify.ViewModels
             set => SetProperty(ref distance, value);
         }
 
-        public double Longitude
-        {
-            get => longitude;
-            set => SetProperty(ref longitude, value);
-        }
-
         public double Latitude
         {
             get => latitude;
             set => SetProperty(ref latitude, value);
+        }
+
+        public double Longitude
+        {
+            get => longitude;
+            set => SetProperty(ref longitude, value);
         }
 
         public string Category
@@ -76,8 +76,8 @@ namespace Encountify.ViewModels
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;
-                Longitude = location.Longitude;
                 Latitude = location.Latitude;
+                Longitude = location.Longitude;
                 Distance = await DistanceCounter.GetFormattedDistance(location);
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
                 LoadMarker(Map, location);
