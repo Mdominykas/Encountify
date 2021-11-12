@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms;
 
 namespace Encountify.Services
 {
@@ -11,10 +12,9 @@ namespace Encountify.Services
         public ScoreboardEntry this[int i] => CreateScoreboard().ToArray()[i];
         public List<ScoreboardEntry> CreateScoreboard(bool reversed = false)
         {
-            DatabaseAccess<User> userData = new DatabaseAccess<User>();
+            IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
             List<User> users = (List<User>)userData.GetAllAsync().Result;
-            DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
-            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
+            DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>(); List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 
             var query =
             users.GroupJoin(visitedLocations,
