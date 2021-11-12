@@ -4,7 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Encountify.Views.LocationDetailPage"
-    xmlns:map = "clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    xmlns:local="clr-namespace:Encountify.Models"
     Title="{Binding Title}">
 
     <ScrollView InputTransparent="True">
@@ -68,10 +68,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <map:Map  
+                <local:CustomMap  
                     x:Name="myMap"
                     MapType="Street" Grid.Row="0">
-                </map:Map>
+                </local:CustomMap>
             </Grid>
         </StackLayout>
     </ScrollView>

@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using Locations = Xamarin.Essentials.Location;
 
 namespace Encountify.ViewModels
 {
@@ -78,7 +79,7 @@ namespace Encountify.ViewModels
                 Description = location.Description;
                 Longitude = location.Longitude;
                 Latitude = location.Latitude;
-                Distance = await DistanceCounter.GetFormattedDistance(location);
+                Distance = await DistanceCounter.GetFormattedDistance(new Locations(location.Latitude, location.Longitude));
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
                 LoadMarker(Map, location);
             }

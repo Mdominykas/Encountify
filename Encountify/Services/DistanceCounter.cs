@@ -1,52 +1,53 @@
-﻿using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System;
-using Encountify.Models;
 using System.Diagnostics;
 using Xamarin.Essentials;
+using Geolocation = Xamarin.Essentials.Geolocation;
+using Locations = Xamarin.Essentials.Location;
 
 namespace Encountify.Services
 {
-    delegate Task<string> GetDistanceDelegate(Models.Location location);
+    delegate Task<string> GetDistanceDelegate(Locations location);
     public class DistanceCounter
     {
         private static GetDistanceDelegate getDistance = new GetDistanceDelegate(DistanceInMetersAsync);
         private static bool IsInMeters = false;
-        public static async Task<string> DistanceInMetersAsync(Models.Location location)
+        public static async Task<string> DistanceInMetersAsync(Locations location)
         {
-            var locator = CrossGeolocator.Current;
-            Position userPosition = new Position(0, 0);
+            Locations userPosition;
+            Locations pinLocation = new Locations(location.Latitude, location.Longitude);
+
             try
             {
-                userPosition = await locator.GetPositionAsync(TimeSpan.FromSeconds(5));
+                userPosition = await Geolocation.GetLastKnownLocationAsync();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double distance = Xamarin.Essentials.Location.CalculateDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Latitude, DistanceUnits.Kilometers) * 1000;
+            double distance = Locations.CalculateDistance(userPosition, pinLocation, DistanceUnits.Kilometers) * 1000;
             string answer = string.Format("{0:N2} m", distance);
             if (distance > 1000.0)
                 answer = string.Format("{0:N2} km", distance / 1000.0);
             return answer;
         }
 
-        public static async Task<string> DistanceInYardsAsync(Models.Location location)
+        public static async Task<string> DistanceInYardsAsync(Locations location)
         {
-            var locator = CrossGeolocator.Current;
-            Position userPosition;
+            Locations userPosition;
+            Locations pinLocation = new Locations(location.Latitude, location.Longitude);
+
             try
             {
-                userPosition = await locator.GetPositionAsync(TimeSpan.FromSeconds(5));
+                userPosition = await Geolocation.GetLastKnownLocationAsync();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double distInMeters = Xamarin.Essentials.Location.CalculateDistance(userPosition.Longitude, userPosition.Latitude, location.Longitude, location.Latitude, DistanceUnits.Kilometers) * 1000;
+            double distInMeters = Locations.CalculateDistance(userPosition, pinLocation, DistanceUnits.Kilometers) * 1000;
             double distInYards = distInMeters * 0.914;
             string answer = string.Format("{0:N2} yd", distInYards);
             if(distInYards > 1760.0)
@@ -54,7 +55,7 @@ namespace Encountify.Services
             return answer;
         }
 
-        public static async Task<string> GetFormattedDistance(Models.Location location)
+        public static async Task<string> GetFormattedDistance(Locations location)
         {
             return await getDistance(location);
         }

@@ -1,5 +1,4 @@
 ﻿using Encountify.Models;
-using System;
 using Xamarin.Forms;
 
 namespace Encountify.ViewModels
@@ -19,14 +18,16 @@ namespace Encountify.ViewModels
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             SelectCommand = new Command(OnSelect);
-            this.PropertyChanged +=
+            PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(name)
-                && !String.IsNullOrWhiteSpace(description);
+            return !string.IsNullOrWhiteSpace(name)
+                && !string.IsNullOrWhiteSpace(description)
+                && !string.IsNullOrWhiteSpace(longitude.ToString())
+                && !string.IsNullOrWhiteSpace(latitude.ToString());
         }
 
         public string Name

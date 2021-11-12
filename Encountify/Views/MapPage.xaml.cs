@@ -2,6 +2,7 @@ using Encountify.Models;
 using Encountify.Services;
 using Encountify.ViewModels;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        MapViewModel _viewModel;
+        MapViewModel _viewModel = new MapViewModel();
         private CancellationTokenSource cts;
 
         public MapPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new MapViewModel();
+            BindingContext = _viewModel;
 
             map.MapClicked += async (sender, e) =>
             {
@@ -79,13 +80,20 @@ namespace Encountify.Views
             base.OnDisappearing();
         }
 
-        static public void LoadMarker(Map map, Marker marker, Color color)
+        static public async void LoadMarker(Map map, Marker marker, Color color)
         {
+            Geocoder geoCoder = new Geocoder();
+
+            Position position = new Position(marker.Latitude, marker.Longitude);
+            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+            string address = possibleAddresses.FirstOrDefault();
+
             Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
                 Label = marker.Name,
-                Position = new Position(marker.Latitude, marker.Longitude),
+                Address = address,
+                Position = position,
             };
 
             if (!map.Pins.Contains(pin))
