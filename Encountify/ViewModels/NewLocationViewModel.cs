@@ -25,9 +25,7 @@ namespace Encountify.ViewModels
         private bool ValidateSave()
         {
             return !string.IsNullOrWhiteSpace(name)
-                && !string.IsNullOrWhiteSpace(description)
-                && !string.IsNullOrWhiteSpace(longitude.ToString())
-                && !string.IsNullOrWhiteSpace(latitude.ToString());
+                && !string.IsNullOrWhiteSpace(description);
         }
 
         public string Name

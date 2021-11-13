@@ -88,6 +88,11 @@ namespace Encountify.Views
             IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
             string address = possibleAddresses.FirstOrDefault();
 
+            if(address == null)
+            {
+                address = "Unknown";
+            }
+
             Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
