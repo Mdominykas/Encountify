@@ -1,7 +1,9 @@
 ﻿using Encountify.Models;
 using Encountify.Services;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Locations = Xamarin.Essentials.Location;
@@ -89,14 +91,22 @@ namespace Encountify.ViewModels
             }
         }
 
-        static public void LoadMarker(Map map, Location location)
+        static public async void LoadMarker(Map map, Location location)
         {
+
+            Geocoder geoCoder = new Geocoder();
             Position position = new Position(location.Latitude, location.Longitude);
             MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);
+
             map.MoveToRegion(mapSpan, true);
+
+            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
+            string address = possibleAddresses.FirstOrDefault();
+
             Pin pin = new Pin()
             {
                 Label = location.Name,
+                Address = address,
                 Position = position,
             };
 

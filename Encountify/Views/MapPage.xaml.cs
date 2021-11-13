@@ -83,8 +83,8 @@ namespace Encountify.Views
         static public async void LoadMarker(Map map, Marker marker, Color color)
         {
             Geocoder geoCoder = new Geocoder();
-
             Position position = new Position(marker.Latitude, marker.Longitude);
+
             IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
             string address = possibleAddresses.FirstOrDefault();
 
