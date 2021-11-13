@@ -106,6 +106,7 @@ namespace Encountify.Views
         {
             var access = new DatabaseAccess<Location>();
             var locationList = access.GetAllAsync().Result;
+
             foreach (var s in locationList)
             {
                 var marker = new Marker(s.Name, s.Longitude, s.Latitude);

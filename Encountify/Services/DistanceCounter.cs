@@ -14,19 +14,19 @@ namespace Encountify.Services
         private static bool IsInMeters = false;
         public static async Task<string> DistanceInMetersAsync(Locations location)
         {
-            Locations userPosition;
+            Locations userLocation;
             Locations pinLocation = new Locations(location.Latitude, location.Longitude);
 
             try
             {
-                userPosition = await Geolocation.GetLastKnownLocationAsync();
+                userLocation = await Geolocation.GetLastKnownLocationAsync();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double distance = Locations.CalculateDistance(userPosition, pinLocation, DistanceUnits.Kilometers) * 1000;
+            double distance = Locations.CalculateDistance(userLocation, pinLocation, DistanceUnits.Kilometers) * 1000;
             string answer = string.Format("{0:N2} m", distance);
             if (distance > 1000.0)
                 answer = string.Format("{0:N2} km", distance / 1000.0);
@@ -35,19 +35,19 @@ namespace Encountify.Services
 
         public static async Task<string> DistanceInYardsAsync(Locations location)
         {
-            Locations userPosition;
+            Locations userLocation;
             Locations pinLocation = new Locations(location.Latitude, location.Longitude);
 
             try
             {
-                userPosition = await Geolocation.GetLastKnownLocationAsync();
+                userLocation = await Geolocation.GetLastKnownLocationAsync();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
-            double distInMeters = Locations.CalculateDistance(userPosition, pinLocation, DistanceUnits.Kilometers) * 1000;
+            double distInMeters = Locations.CalculateDistance(userLocation, pinLocation, DistanceUnits.Kilometers) * 1000;
             double distInYards = distInMeters * 0.914;
             string answer = string.Format("{0:N2} yd", distInYards);
             if(distInYards > 1760.0)
