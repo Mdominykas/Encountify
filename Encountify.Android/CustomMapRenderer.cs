@@ -43,8 +43,8 @@ namespace Encountify.Droid
 
             if (e.NewElement != null)
             {
-
                 MapControl = (CustomMap)e.NewElement;
+
                 if (_firstLoad)
                 {
                     MapControl.RendererNeedToRefreshWindow += Map_RendererNeedToRefreshWindow;
@@ -63,11 +63,11 @@ namespace Encountify.Droid
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-                var distance = distanceString.Split(" ");
+                var distanceStringList = distanceString.Split(" ");
 
-                if (double.TryParse(distance[0], out var distanceDouble))
+                if (double.TryParse(distanceStringList[0], out var distanceDouble))
                 {
-                    if (distanceDouble <= 30 && distance[1] == "m")
+                    if (distanceDouble <= 30 && distanceStringList[1] == "m")
                     {
                         var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
@@ -120,7 +120,7 @@ namespace Encountify.Droid
                         }
                     }
                 }
-            } 
+            }
         }
 
         public View GetInfoWindowView(int layoutXML, LayoutInflater inflater, Marker marker, string distance = "", string message = " away")
