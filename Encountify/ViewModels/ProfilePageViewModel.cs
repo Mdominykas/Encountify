@@ -14,7 +14,6 @@ namespace Encountify.ViewModels
 {
     class ProfilePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
-
         public ProfilePageViewModel()
         {
             LoginPage.OnLogin += OnLogin;
