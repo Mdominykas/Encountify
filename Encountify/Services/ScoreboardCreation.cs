@@ -14,7 +14,7 @@ namespace Encountify.Services
         {
             IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
             List<User> users = (List<User>)userData.GetAllAsync().Result;
-            DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>(); 
+            DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
             List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 
             var query =
@@ -25,7 +25,9 @@ namespace Encountify.Services
                     new
                     {
                         Users = user.Username,
-                        Locations = locations.Select(loc => loc.LocationId)
+                        UserId = user.Id,
+                        Locations = locations.Select(loc => loc.LocationId),
+                        Points = locations.Select(loc => loc.Points)
                     });
             List<ScoreboardEntry> results = new List<ScoreboardEntry>();
 
@@ -34,7 +36,8 @@ namespace Encountify.Services
                 results.Add(new ScoreboardEntry()
                 {
                     Name = group.Users,
-                    Score = group.Locations.Count()
+                    Score = group.Points.Sum(),
+                    UserId = group.UserId
                 });
             }
 
