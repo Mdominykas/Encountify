@@ -10,7 +10,7 @@ namespace Encountify.Services
     public class ScoreboardCreation
     {
         public ScoreboardEntry this[int i] => CreateScoreboard().ToArray()[i];
-        public List<ScoreboardEntry> CreateScoreboard(bool reversed = false)
+        public List<ScoreboardEntry> CreateScoreboard(bool reversed = true)
         {
             IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
             List<User> users = (List<User>)userData.GetAllAsync().Result;
