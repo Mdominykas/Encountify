@@ -28,7 +28,7 @@ namespace Encountify
             db.DropTable<Location>();
 
             InitializeComponent();
-
+           
             MainPage = new AppShell();
         }
 

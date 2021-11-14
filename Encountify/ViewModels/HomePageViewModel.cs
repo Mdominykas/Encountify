@@ -12,6 +12,7 @@ namespace Encountify.ViewModels
     {
         private ImageSource _downloadedImageSource;
         public Command OnImageChangeCommand { get; }
+        IUser users;
 
         public HomePageViewModel()
         {
@@ -83,7 +84,7 @@ namespace Encountify.ViewModels
             }
             if (newPicture != null)
             {
-                var users = new DatabaseAccess<User>();
+                users = DependencyService.Get<IUser>(); //new DatabaseAccess<User>();
                 var newData = await users.GetAsync(App.UserID);
                 newData.Picture = newPicture;
                 await users.UpdateAsync(newData);
