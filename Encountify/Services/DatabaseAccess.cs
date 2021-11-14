@@ -98,8 +98,8 @@ namespace Encountify.Services
         {
             if (typeof(T) == typeof(Location))
                 return DatabaseAccessConstants.LocationDatabaseName;
-            else if (typeof(T) == typeof(User))
-                return DatabaseAccessConstants.UserDatabaseName;
+            /*else if (typeof(T) == typeof(User))
+                return DatabaseAccessConstants.UserDatabaseName;*/
             else if (typeof(T) == typeof(VisitedLocations))
                 return DatabaseAccessConstants.VisitedLocationDatabaseName;
             else
@@ -110,8 +110,8 @@ namespace Encountify.Services
         {
             if (typeof(T) == typeof(Location))
                 return (element as Location).Id;
-            else if (typeof(T) == typeof(User))
-                return (element as User).Id;
+            /*else if (typeof(T) == typeof(User))
+                return (element as User).Id;*/
             else if (typeof(T) == typeof(VisitedLocations))
                 return (element as VisitedLocations).Id;
             else
@@ -122,8 +122,8 @@ namespace Encountify.Services
         {
             if (typeof(T) == typeof(Location))
                 return (element as Location).Name;
-            else if (typeof(T) == typeof(User))
-                return (element as User).Username;
+            /*else if (typeof(T) == typeof(User))
+                return (element as User).Username;*/
             else
                 throw new Exception("Database of given type is not supported");
         }

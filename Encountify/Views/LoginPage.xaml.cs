@@ -16,10 +16,11 @@ namespace Encountify.Views
     public partial class LoginPage : ContentPage, INotifyPropertyChanged
     {
         String LastSession = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LastSessionJSONName);
-        public static DatabaseAccess<User> DataStore = new DatabaseAccess<User>();
+        IUser DataStore;   //new DatabaseAccess<User>();
 
         public LoginPage()
         {
+            DataStore = DependencyService.Get<IUser>();
             InitializeComponent();
             try
             {

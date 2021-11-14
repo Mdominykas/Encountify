@@ -14,11 +14,13 @@ namespace Encountify.Views
     public partial class RegisterPage : ContentPage
     {
         RegisterPageViewModel _viewModel;
-        public static DatabaseAccess<User> DataStore = new DatabaseAccess<User>();
+        IUser DataStore; //= new DatabaseAccess<User>();
 
         public RegisterPage()
         {
+            DataStore = DependencyService.Get<IUser>();
             InitializeComponent();
+            
             Username.ReturnCommand = new Command(() => Email.Focus());
             Email.ReturnCommand = new Command(() => Password.Focus());
             Password.ReturnCommand = new Command(() => PasswordConfirm.Focus());
