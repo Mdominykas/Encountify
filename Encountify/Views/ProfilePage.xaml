@@ -17,8 +17,6 @@
     <StackLayout
         Spacing="20"
         Padding="15">
-        <Image x:Name="DownloadedImageSource" Aspect="AspectFit" 
-               HeightRequest="150" WidthRequest="150" Source="{Binding ImageOpenClose.Source}"/>
         <Label
             Text="Username:"
             FontSize="Medium"

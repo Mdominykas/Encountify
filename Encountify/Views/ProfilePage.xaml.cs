@@ -13,8 +13,6 @@ namespace Encountify.Views
             InitializeComponent();
 
             BindingContext = viewModel = new ProfilePageViewModel();
-            viewModel.ImageOpenClose = new Image();
-            viewModel.ImageOpenClose.Source = ImageSource.FromStream(() => new MemoryStream(App.UserPicture));
         }
 
         private async void LogOutButton_onClicked(object sender, EventArgs e)
