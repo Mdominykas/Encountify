@@ -11,9 +11,9 @@ namespace Encountify.Models
 
         public void RefreshWindowForPin(CustomPin pin)
         {
-            if (this.RendererNeedToRefreshWindow != null)
+            if (RendererNeedToRefreshWindow != null)
             {
-                this.RendererNeedToRefreshWindow(this, pin);
+                RendererNeedToRefreshWindow(this, pin);
             }
         }
     }

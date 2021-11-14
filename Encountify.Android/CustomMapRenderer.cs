@@ -123,14 +123,6 @@ namespace Encountify.Droid
             } 
         }
 
-        protected void Map_RendererNeedToRefreshWindow(object sender, CustomPin e)
-        {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
-            {
-                RefreshWindow(e);
-            });
-        }
-
         public View GetInfoWindowView(int layoutXML, LayoutInflater inflater, Marker marker, string distance = "", string message = " away")
         {
             View view;
@@ -170,6 +162,14 @@ namespace Encountify.Droid
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
             CurrentPinWindow = null;
+        }
+
+        protected void Map_RendererNeedToRefreshWindow(object sender, CustomPin e)
+        {
+            Task.Delay(500).ContinueWith(delegate (Task arg)
+            {
+                RefreshWindow(e);
+            });
         }
 
         void RefreshWindow(CustomPin pin)
