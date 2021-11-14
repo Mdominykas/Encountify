@@ -19,9 +19,7 @@
         Padding="15">
         <Label
             Text="Username:"
-            FontSize="Medium"
-            />
-
+            FontSize="Medium"/>
         <Label
             Text="{Binding Username}"
             FontSize="Small"/>
