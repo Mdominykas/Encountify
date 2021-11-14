@@ -57,57 +57,114 @@ namespace Encountify.Droid
         public async Task<View> GetInfoWindowAsync(Marker marker)
         {
             var inflater = Context.GetSystemService(Context.LayoutInflaterService) as LayoutInflater;
+
             if (inflater != null)
             {
-                View view;
-
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
-                var distance = await DistanceCounter.GetFormattedDistance(pinLocation);
+                var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-                view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
+                var distance = distanceString.Split(" ");
 
-                var infoPoints = view.FindViewById<TextView>(Resource.Id.InfoWindowPoints);
-                var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
-                var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
-                var infoDistance = view.FindViewById<TextView>(Resource.Id.InfoWindowDistance);
+                if (double.TryParse(distance[0], out var distanceDouble))
+                {
+                    if (distanceDouble <= 30 && distance[1] == "m")
+                    {
+                        var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
-                if (infoPoints != null)
-                {
-                    infoPoints.Text = "500 POINTS✨";
-                }
-                if (infoTitle != null)
-                {
-                    infoTitle.Text = marker.Title;
-                }
-                if (infoSubtitle != null)
-                {
-                    infoSubtitle.Text = marker.Snippet;
-                }
-                if (infoDistance != null)
-                {
-                    infoDistance.Text = distance + " away";
-                }
+                        return GetInfoWindowView(layout, inflater, marker, message: "You're here. PRESS ME!");
+                    }
+                    else //TODO make a InfoWindow for the markers that have already been visited my the user 
+                    {
+                        var layout = Resource.Layout.MapInfoWindow;
 
-                return view;
+                        return GetInfoWindowView(layout, inflater, marker, distance: distanceString);
+                    }
+                }
             }
 
             return null;
         }
 
+        public View GetInfoWindow(Marker marker)
+        {
+            View view = GetInfoWindowAsync(marker).Result;
+
+            return view;
+        }
+
         async void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
-            var access = new DatabaseAccess<Location>();
-            var locationList = access.GetAllAsync().Result;
+            Locations pinLocation = new Locations(e.Marker.Position.Latitude, e.Marker.Position.Longitude);
+            var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-            foreach (var s in locationList)
+            var distance = distanceString.Split(" ");
+
+            if (double.TryParse(distance[0], out var distanceDouble))
             {
-                if (s.Name == e.Marker.Title)
+                if (distanceDouble <= 30 && distance[1] == "m")
                 {
-                    var id = s.Id;
-                    await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
-                    break;
+                    //TODO handle UserVisited event.
                 }
+                else
+                {
+                    var access = new DatabaseAccess<Location>();
+                    var locationList = access.GetAllAsync().Result;
+
+                    foreach (var s in locationList)
+                    {
+                        if (s.Name == e.Marker.Title)
+                        {
+                            var id = s.Id;
+                            await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
+                            break;
+                        }
+                    }
+                }
+            } 
+        }
+
+        protected void Map_RendererNeedToRefreshWindow(object sender, CustomPin e)
+        {
+            Task.Delay(500).ContinueWith(delegate (Task arg)
+            {
+                RefreshWindow(e);
+            });
+        }
+
+        public View GetInfoWindowView(int layoutXML, LayoutInflater inflater, Marker marker, string distance = "", string message = " away")
+        {
+            View view;
+
+            view = inflater.Inflate(layoutXML, null);
+
+            var infoPoints = view.FindViewById<TextView>(Resource.Id.InfoWindowPoints);
+            var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
+            var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
+            var infoDistance = view.FindViewById<TextView>(Resource.Id.InfoWindowDistance);
+
+            if (infoPoints != null)
+            {
+                infoPoints.Text = "500 POINTS✨";
             }
+            if (infoTitle != null)
+            {
+                infoTitle.Text = marker.Title;
+            }
+            if (infoSubtitle != null)
+            {
+                infoSubtitle.Text = marker.Snippet;
+            }
+            if (infoDistance != null)
+            {
+                infoDistance.Text = distance + message;
+            }
+
+            return view;
+        }
+
+        public View GetInfoContents(Marker marker)
+        {
+            return null;
         }
 
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
@@ -133,26 +190,6 @@ namespace Encountify.Droid
                     Console.WriteLine(ex.Message);
                 }
             });
-        }
-
-        protected void Map_RendererNeedToRefreshWindow(object sender, CustomPin e)
-        {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
-            {
-                RefreshWindow(e);
-            });
-        }
-
-        public View GetInfoContents(Marker marker)
-        {
-            return null;
-        }
-
-        public View GetInfoWindow(Marker marker)
-        {
-            View view = GetInfoWindowAsync(marker).Result;
-
-            return view;
         }
     }
 }

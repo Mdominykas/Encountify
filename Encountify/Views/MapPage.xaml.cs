@@ -34,23 +34,6 @@ namespace Encountify.Views
                 var lng = e.Point.Longitude;
                 await Shell.Current.GoToAsync($"..?Latitude={lat}&Longitude={lng}");
             };
-
-            map.PinClicked += async (sender, e) =>
-            {
-                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
-                cts = new CancellationTokenSource();
-                Locations location = await Geolocation.GetLocationAsync(request, cts.Token);
-
-                Locations pinLocation = new Locations(e.Pin.Position.Latitude, e.Pin.Position.Longitude);
-                Locations personLocation = new Locations(location.Latitude, location.Longitude);
-
-                var distance = Locations.CalculateDistance(pinLocation, personLocation, DistanceUnits.Kilometers);
-
-                if (distance <= 0.03)
-                {
-                    await DisplayAlert($"You visited {e.Pin.Label}!" , distance.ToString(), "OK");
-                }
-            };
         }
 
         protected override async void OnAppearing()
