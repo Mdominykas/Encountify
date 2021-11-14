@@ -14,9 +14,12 @@ namespace Encountify.ViewModels
 {
     class ProfilePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
+        private ImageSource _downloadedImageSource;
+
         public ProfilePageViewModel()
         {
             LoginPage.OnLogin += OnLogin;
+            OnPropertyChanged(nameof(DownloadedImageSource));
         }
 
         private void OnLogin()
@@ -25,6 +28,7 @@ namespace Encountify.ViewModels
             OnPropertyChanged(nameof(Username));
             OnPropertyChanged(nameof(Email));
             OnPropertyChanged(nameof(Password));
+            OnPropertyChanged(nameof(DownloadedImageSource));
         }
 
         public int Id
@@ -45,6 +49,26 @@ namespace Encountify.ViewModels
         public string Password
         {
             get => App.UserPassword;
+        }
+
+        public ImageSource DownloadedImageSource
+        {
+            get => _downloadedImageSource;
+            set => SetProperty(ref _downloadedImageSource, value);
+        }
+
+        private Image _imageOpenClose;
+        public Image ImageOpenClose
+        {
+            get
+            {
+                return _imageOpenClose;
+            }
+            set
+            {
+                _imageOpenClose = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

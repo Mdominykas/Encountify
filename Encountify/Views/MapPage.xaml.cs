@@ -80,10 +80,10 @@ namespace Encountify.Views
             base.OnDisappearing();
         }
 
-        static public async void LoadMarker(Map map, Marker marker, Color color)
+        static public async void LoadMarker(Map map, Lazy<Marker> marker, Color color)
         {
             Geocoder geoCoder = new Geocoder();
-            Position position = new Position(marker.Latitude, marker.Longitude);
+            Position position = new Position(marker.Value.Latitude, marker.Value.Longitude);
 
             IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
             string address = possibleAddresses.FirstOrDefault();
@@ -96,7 +96,7 @@ namespace Encountify.Views
             Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.DefaultMarker(color),
-                Label = marker.Name,
+                Label = marker.Value.Name,
                 Address = address,
                 Position = position,
             };
@@ -114,7 +114,7 @@ namespace Encountify.Views
 
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.Latitude, s.Longitude);
+                Lazy<Marker> marker = new Lazy<Marker>(() => new Marker(s.Name, s.Latitude, s.Longitude));
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
