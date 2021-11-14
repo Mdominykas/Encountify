@@ -17,9 +17,11 @@
     <StackLayout
         Spacing="20"
         Padding="15">
+        
         <Label
             Text="Username:"
             FontSize="Medium"/>
+        
         <Label
             Text="{Binding Username}"
             FontSize="Small"/>
