@@ -14,7 +14,7 @@ using Encountify.Services;
 using Encountify.ViewModels;
 using View = Android.Views.View;
 using Marker = Android.Gms.Maps.Model.Marker;
-
+using Locations = Xamarin.Essentials.Location;
 
 namespace Encountify.Droid
 {
@@ -54,12 +54,15 @@ namespace Encountify.Droid
             }
         }
 
-        public View GetInfoWindow(Marker marker)
+        public async Task<View> GetInfoWindowAsync(Marker marker)
         {
             var inflater = Context.GetSystemService(Context.LayoutInflaterService) as LayoutInflater;
             if (inflater != null)
             {
                 View view;
+
+                Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
+                var distance = await DistanceCounter.GetFormattedDistance(pinLocation);
 
                 view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
 
@@ -70,7 +73,7 @@ namespace Encountify.Droid
 
                 if (infoPoints != null)
                 {
-                    infoPoints.Text = "500 POINTS";
+                    infoPoints.Text = "500 POINTS✨";
                 }
                 if (infoTitle != null)
                 {
@@ -82,7 +85,7 @@ namespace Encountify.Droid
                 }
                 if (infoDistance != null)
                 {
-                    infoDistance.Text = "3km";
+                    infoDistance.Text = distance + " away";
                 }
 
                 return view;
@@ -143,6 +146,13 @@ namespace Encountify.Droid
         public View GetInfoContents(Marker marker)
         {
             return null;
+        }
+
+        public View GetInfoWindow(Marker marker)
+        {
+            View view = GetInfoWindowAsync(marker).Result;
+
+            return view;
         }
     }
 }

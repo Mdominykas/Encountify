@@ -1,39 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@android:color/white">
+    android:background="@drawable/layout_bg"
+    android:minWidth="25px"
+    android:minHeight="25px">
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/linearLayout3">
         <TextView
             android:id="@+id/InfoWindowPoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
             android:text="POINTS"
-            android:textColor="@android:color/holo_orange_light"/>
+            android:textSize="10dp"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/InfoWindowTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="InfoWindowTitle"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/InfoWindowSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="InfoWindowSubtitle"
+            android:textSize="10dp"
             android:textColor="@android:color/darker_gray"/>
         <TextView
             android:id="@+id/InfoWindowDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             android:text="Distance"
+            android:textSize="10dp"
             android:textColor="@android:color/holo_red_light"
             android:textStyle="bold"/>
     </LinearLayout>
