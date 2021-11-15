@@ -22,8 +22,8 @@ namespace Encountify.Droid
     class CustomMapRenderer : MapRenderer, GoogleMap.IInfoWindowAdapter, IOnMapReadyCallback
     {
         GoogleMap MapView { get; set; }
-        Map MapControl { get; set; }
-        Pin CurrentPinWindow { get; set; }
+        CustomMap MapControl { get; set; }
+        Marker CurrentPinWindow { get; set; } = null;
 
         public CustomMapRenderer(Context context) : base(context)
         {
@@ -35,6 +35,7 @@ namespace Encountify.Droid
             MapView.InfoWindowClick += OnInfoWindowClick;
             MapView.SetInfoWindowAdapter(this);
             MapView.InfoWindowClose += OnInfoWindowClose;
+            MapView.MyLocationChange += OnMyLocationChange;
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Map> e)
@@ -54,6 +55,7 @@ namespace Encountify.Droid
 
             if (inflater != null)
             {
+                CurrentPinWindow = marker;
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
@@ -97,11 +99,7 @@ namespace Encountify.Droid
             {
                 if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
                 {
-                    DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
-                    List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
-
-                    Console.WriteLine("My ID: " + App.UserID);
-                    Console.WriteLine(visitedLocations);
+                    //TODO yoink Dominykas PR solution for this part
                 }
                 else
                 {
@@ -160,6 +158,24 @@ namespace Encountify.Droid
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
             CurrentPinWindow = null;
+        }
+
+        void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
+        {
+            Task.Delay(500).ContinueWith(delegate (Task arg)
+            {
+                Device.BeginInvokeOnMainThread(delegate ()
+                {
+                    try
+                    {
+                        CurrentPinWindow.ShowInfoWindow();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                });
+            });
         }
     }
 }
