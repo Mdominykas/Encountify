@@ -14,8 +14,6 @@ namespace Encountify.Models
 
         public ScoreboardCell(ScoreboardEntry entry)
         {
-            // IUser userData = DependencyService.Get<IUser>();
-            // User user = userData.GetAsync(entry.UserId).Result;
             Name = entry.Name;
             Score = entry.Score;
             ImageOpenClose = new Lazy<Image>(() => {
@@ -23,8 +21,6 @@ namespace Encountify.Models
                 User user = userData.GetAsync(entry.UserId).Result;
                 return new Image() { Source = ImageSource.FromStream(() => new MemoryStream(user.Picture)) };
             });
-            //ImageOpenClose = new Lazy<Image>();
-            //ImageOpenClose.Value.Source = ImageSource.FromStream(() => new MemoryStream(user.Picture));
         }
 
     }
