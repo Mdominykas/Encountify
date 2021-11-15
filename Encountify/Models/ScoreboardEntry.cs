@@ -7,6 +7,7 @@ namespace Encountify.Models
     public class ScoreboardEntry : IComparable<ScoreboardEntry>
     {
         public string Name { get; set; } = "";
+        public int UserId { get; set; }
         public int Score { get; set; } = 0;
         public int CompareTo(ScoreboardEntry other)
         {

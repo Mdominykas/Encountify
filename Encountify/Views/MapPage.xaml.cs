@@ -30,8 +30,8 @@ namespace Encountify.Views
 
             map.MapClicked += async (sender, e) =>
             {
-                var lat = e.Point.Latitude;
-                var lng = e.Point.Longitude;
+                double lat = e.Point.Latitude;
+                double lng = e.Point.Longitude;
                 await Shell.Current.GoToAsync($"..?Latitude={lat}&Longitude={lng}");
             };
         }
@@ -97,7 +97,7 @@ namespace Encountify.Views
 
             foreach (var s in locationList)
             {
-                var marker = new Marker(s.Name, s.Longitude, s.Latitude);
+                var marker = new Marker(s.Name, s.Latitude, s.Longitude);
                 LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
@@ -126,13 +126,13 @@ namespace Encountify.Views
     public struct Marker
     {
         public string Name;
-        public double Longitude, Latitude;
-        public Marker(string name, double longitude, double latitude)
+        public double Latitude, Longitude;
+        public Marker(string name, double latitude, double longitude)
 
         {
             Name = name;
-            Longitude = longitude;
             Latitude = latitude;
+            Longitude = longitude;
         }
     }
 }

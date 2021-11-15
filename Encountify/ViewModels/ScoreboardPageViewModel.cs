@@ -11,16 +11,16 @@ namespace Encountify.ViewModels
 {
     public class ScoreboardPageViewModel : BaseViewModel
     {
-        public ObservableCollection<ScoreboardEntry> Scoreboard { get; }
+        public ObservableCollection<ScoreboardCell> Scoreboard { get; }
 
         public ScoreboardPageViewModel()
         {
-            Scoreboard = new ObservableCollection<ScoreboardEntry>();
+            Scoreboard = new ObservableCollection<ScoreboardCell>();
             var scoreboardCreator = new ScoreboardCreation();
             var list = scoreboardCreator.CreateScoreboard();
 
             foreach (var element in list)
-                Scoreboard.Add(element);
+                Scoreboard.Add(new ScoreboardCell(element));
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Encountify.Services
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
+
             double distance = Locations.CalculateDistance(userLocation, pinLocation, DistanceUnits.Kilometers) * 1000;
             string answer = string.Format("{0:N2} m", distance);
             if (distance > 1000.0)
@@ -47,6 +48,7 @@ namespace Encountify.Services
                 Debug.WriteLine(e.ToString());
                 return "Could not get distance";
             }
+
             double distInMeters = Locations.CalculateDistance(userLocation, pinLocation, DistanceUnits.Kilometers) * 1000;
             double distInYards = distInMeters * 0.914;
             string answer = string.Format("{0:N2} yd", distInYards);
