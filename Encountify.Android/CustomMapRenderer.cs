@@ -36,7 +36,7 @@ namespace Encountify.Droid
 
         private async void AddToDatabase(int id)
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100};
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
         }

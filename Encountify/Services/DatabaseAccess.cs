@@ -122,8 +122,8 @@ namespace Encountify.Services
         {
             if (typeof(T) == typeof(Location))
                 return (element as Location).Name;
-            /*else if (typeof(T) == typeof(User))
-                return (element as User).Username;*/
+            else if (typeof(T) == typeof(User))
+                return (element as User).Username;
             else if (typeof(T) == typeof(VisitedLocations))
                 return (element as VisitedLocations).UserId.ToString() + "/" + (element as VisitedLocations).LocationId.ToString();
             else
