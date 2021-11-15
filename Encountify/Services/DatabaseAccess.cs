@@ -124,6 +124,8 @@ namespace Encountify.Services
                 return (element as Location).Name;
             else if (typeof(T) == typeof(User))
                 return (element as User).Username;
+            else if (typeof(T) == typeof(VisitedLocations))
+                return (element as VisitedLocations).UserId.ToString() + "/" + (element as VisitedLocations).LocationId.ToString();
             else
                 throw new Exception("Database of given type is not supported");
         }

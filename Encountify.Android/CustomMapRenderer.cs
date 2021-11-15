@@ -16,6 +16,7 @@ using Encountify.ViewModels;
 using View = Android.Views.View;
 using Marker = Android.Gms.Maps.Model.Marker;
 using Locations = Xamarin.Essentials.Location;
+using System.Linq;
 
 namespace Encountify.Droid
 {
@@ -25,8 +26,24 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
+        public delegate void updateVisitingType(int x);
+        private updateVisitingType updateVisiting = new updateVisitingType(CustomMapRenderer.saveFromNullPointerException);
+
         public CustomMapRenderer(Context context) : base(context)
         {
+            updateVisiting += new updateVisitingType(this.AddToDatabase);
+        }
+
+        static public void saveFromNullPointerException(int id)
+        {
+
+        }
+
+        private async void AddToDatabase(int id)
+        {
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID};
+            var visitedAccess = new DatabaseAccess<VisitedLocations>();
+            await visitedAccess.AddAsync(newVisit);
         }
 
         public void OnMapReady(GoogleMap googleMap)
@@ -99,6 +116,15 @@ namespace Encountify.Droid
             {
                 if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
                 {
+                    var access = new DatabaseAccess<Location>();
+                    var locationList = access.GetAllAsync().Result;
+
+                    Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
+                    if(visited != null)
+                    {
+                        updateVisiting(visited.Id);
+                    }
+
                     //TODO yoink Dominykas PR solution for this part
                 }
                 else
