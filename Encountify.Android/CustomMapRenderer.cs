@@ -31,7 +31,7 @@ namespace Encountify.Droid
 
         public CustomMapRenderer(Context context) : base(context)
         {
-            updateVisiting += new updateVisitingType(this.AddToDatabase);
+            updateVisiting += new updateVisitingType(AddToDatabase);
         }
 
         private async void AddToDatabase(int id)
@@ -119,8 +119,6 @@ namespace Encountify.Droid
                     {
                         updateVisiting(visited.Id);
                     }
-
-                    //TODO yoink Dominykas PR solution for this part
                 }
                 else
                 {
@@ -187,7 +185,7 @@ namespace Encountify.Droid
             {
                 Device.BeginInvokeOnMainThread(delegate ()
                 {
-                    try
+                    try //This place might raise an exception during debugging but doesn't "seem" to crash the app
                     {
                         CurrentPinWindow.ShowInfoWindow();
                     }
