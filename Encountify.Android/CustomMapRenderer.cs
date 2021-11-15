@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
 using Android.Content;
@@ -20,10 +21,9 @@ namespace Encountify.Droid
 {
     class CustomMapRenderer : MapRenderer, GoogleMap.IInfoWindowAdapter, IOnMapReadyCallback
     {
-        bool _firstLoad = true;
         GoogleMap MapView { get; set; }
-        CustomMap MapControl { get; set; }
-        CustomPin CurrentPinWindow { get; set; }
+        Map MapControl { get; set; }
+        Pin CurrentPinWindow { get; set; }
 
         public CustomMapRenderer(Context context) : base(context)
         {
@@ -44,12 +44,6 @@ namespace Encountify.Droid
             if (e.NewElement != null)
             {
                 MapControl = (CustomMap)e.NewElement;
-
-                if (_firstLoad)
-                {
-                    MapControl.RendererNeedToRefreshWindow += Map_RendererNeedToRefreshWindow;
-                }
-
                 ((MapView)Control).GetMapAsync(this);
             }
         }
@@ -101,9 +95,13 @@ namespace Encountify.Droid
 
             if (double.TryParse(distance[0], out var distanceDouble))
             {
-                if (distanceDouble <= 30 && distance[1] == "m")
+                if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
                 {
-                    //TODO handle UserVisited event.
+                    DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
+                    List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
+
+                    Console.WriteLine("My ID: " + App.UserID);
+                    Console.WriteLine(visitedLocations);
                 }
                 else
                 {
@@ -162,34 +160,6 @@ namespace Encountify.Droid
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
             CurrentPinWindow = null;
-        }
-
-        protected void Map_RendererNeedToRefreshWindow(object sender, CustomPin e)
-        {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
-            {
-                RefreshWindow(e);
-            });
-        }
-
-        void RefreshWindow(CustomPin pin)
-        {
-            Device.BeginInvokeOnMainThread(delegate ()
-            {
-                try
-                {
-                    var marker = pin.Atts["Marker"] as Marker;
-                    if (CurrentPinWindow == pin)
-                    {
-                        marker.HideInfoWindow();
-                        marker.ShowInfoWindow();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            });
         }
     }
 }
