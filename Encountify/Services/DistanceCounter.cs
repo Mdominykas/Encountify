@@ -11,7 +11,7 @@ namespace Encountify.Services
     public class DistanceCounter
     {
         private static GetDistanceDelegate getDistance = new GetDistanceDelegate(DistanceInMetersAsync);
-        private static bool IsInMeters = false;
+        public static bool IsInMeters = true;
         public static async Task<string> DistanceInMetersAsync(Locations location)
         {
             Locations userLocation;
@@ -63,12 +63,12 @@ namespace Encountify.Services
         }
         public static void ChangeScale()
         {
-            bool var = IsInMeters;
             if (IsInMeters)
                 getDistance = new GetDistanceDelegate(DistanceInYardsAsync);
             else
                 getDistance = new GetDistanceDelegate(DistanceInMetersAsync);
             IsInMeters = !IsInMeters;
+            var final = IsInMeters;
         }
     }
 }
