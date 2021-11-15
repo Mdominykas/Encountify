@@ -24,7 +24,7 @@ namespace Encountify.Services
 
             foreach (User oldElement in oldElements)
             {
-                if (String.Equals(user.Username, user.Username))
+                if (String.Equals(user.Username, oldElement.Username))
                     return Task.FromResult(false);
             }
 

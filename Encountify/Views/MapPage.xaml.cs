@@ -48,6 +48,17 @@ namespace Encountify.Views
 
                 if (distance <= 0.03)
                 {
+                    var access = new DatabaseAccess<Location>();
+                    var locationList = await access.GetAllAsync();
+
+                    Location visited = locationList.FirstOrDefault(s => s.Name == e.Pin.Label);
+                    if(visited != null)
+                    {
+                        // hardcoded 100, it might be nice to change to something later on
+                        VisitedLocations newVisit = new VisitedLocations() { LocationId = visited.Id, UserId = App.UserID, Points = 100};
+                        var visitedAccess = new DatabaseAccess<VisitedLocations>();
+                        await visitedAccess.AddAsync(newVisit);
+                    }
                     await DisplayAlert($"You visited {e.Pin.Label}!" , distance.ToString(), "OK");
                 }
             };

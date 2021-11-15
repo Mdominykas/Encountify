@@ -73,7 +73,7 @@ namespace Encountify.Droid
 
                 if (infoPoints != null)
                 {
-                    infoPoints.Text = "500 POINTS✨";
+                    infoPoints.Text = "100 POINTS✨";
                 }
                 if (infoTitle != null)
                 {

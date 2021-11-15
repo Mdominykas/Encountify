@@ -11,5 +11,6 @@ namespace Encountify.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int LocationId { get; set; }
+        public int Points { get; set; }
     }
 }
