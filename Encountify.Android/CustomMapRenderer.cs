@@ -27,16 +27,11 @@ namespace Encountify.Droid
         Marker CurrentPinWindow { get; set; } = null;
 
         public delegate void updateVisitingType(int x);
-        private updateVisitingType updateVisiting = new updateVisitingType(CustomMapRenderer.saveFromNullPointerException);
+        private updateVisitingType updateVisiting;
 
         public CustomMapRenderer(Context context) : base(context)
         {
             updateVisiting += new updateVisitingType(this.AddToDatabase);
-        }
-
-        static public void saveFromNullPointerException(int id)
-        {
-
         }
 
         private async void AddToDatabase(int id)
