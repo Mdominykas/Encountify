@@ -59,7 +59,6 @@ namespace EncountifyAPI.Controllers
         [HttpPost]
         public IEnumerable<Location> AddLocation(string name, string description = "", double latitude = 0, double longitude = 0, int category = 0, string image = "")
         {
-
             ExecuteLocationQuery("INSERT INTO Locations VALUES (@name, @description, @latitude, @longitude, @category, @image)", name: name, description: description, latitude: latitude, longitude: longitude, category: category, image:image);
             return GetLocation(name);
         }
@@ -68,14 +67,14 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location
         /// </summary>
         [HttpPut("{id}")]
-        public IEnumerable<Location> EditLocation(int id, string name = "", string description = "", double latitude = 0, double longitude = 0, int category = 0, string image = "")
+        public IEnumerable<Location> EditLocation(int id, string? name = null, string? description = null, double? latitude = null, double? longitude = null, int? category = null, string? image = null)
         {
-            if (name != "") EditLocationName(id, name);
-            if (description != "") EditLocationDescription(id, description);
-            if (latitude != 0) EditLocationLatitude(id, latitude);
-            if (longitude != 0) EditLocationLongitude(id, longitude);
-            if (category != 0) EditLocationCategory(id, category);
-            if (image != "") EditLocationImage(id, image);
+            if (name != null) EditLocationName(id, name);
+            if (description != null) EditLocationDescription(id, description);
+            if (latitude != null) EditLocationLatitude(id, latitude ?? default(double));
+            if (longitude != null) EditLocationLongitude(id, longitude ?? default(double));
+            if (category != null) EditLocationCategory(id, category ?? default(int));
+            if (image != null) EditLocationImage(id, image);
 
             return GetLocation(id);
         }
@@ -161,7 +160,7 @@ namespace EncountifyAPI.Controllers
             return GetLocation(id);
         }
 
-        private List<Location> ExecuteLocationReader(string query, int id = -1, string name = null, string description = null, double latitude = -1, double longitude = -1, int category = -1, string image = null)
+        private List<Location> ExecuteLocationReader(string query, int? id = null, string? name = null, string? description = null, double? latitude = null, double? longitude = null, int? category = null, string? image = null)
         {
             List<Location> locations = new List<Location>();
             using (var connection = new SqlConnection(ConnectionString))
@@ -169,13 +168,13 @@ namespace EncountifyAPI.Controllers
                 connection.Open();
                 using SqlCommand command = new SqlCommand(query, connection);
 
-                if (id != -1) command.Parameters.AddWithValue("@id", id);
-                if (name != null) command.Parameters.AddWithValue("@name", name);
-                if (description != null) command.Parameters.AddWithValue("@description", description);
-                if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
-                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
-                if (category != -1) command.Parameters.AddWithValue("@category", category);
-                if (image != null) command.Parameters.AddWithValue("@image", image);
+                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
+                if (name != null) command.Parameters.AddWithValue("@name", name ?? default(string));
+                if (description != null) command.Parameters.AddWithValue("@description", description ?? default(string));
+                if (latitude != null) command.Parameters.AddWithValue("@latitude", latitude ?? default(double));
+                if (longitude != null) command.Parameters.AddWithValue("@longitude", longitude ?? default(double));
+                if (category != null) command.Parameters.AddWithValue("@category", category ?? default(int));
+                if (image != null) command.Parameters.AddWithValue("@image", image ?? default(string));
 
                 using SqlDataReader reader = command.ExecuteReader();
 
@@ -183,26 +182,28 @@ namespace EncountifyAPI.Controllers
                 {
                     locations.Add(ParseLocation(reader));
                 }
+                connection.Close();
             }
             return locations;
         }
 
-        private void ExecuteLocationQuery(string query, int id = -1, string name = null, string description = null, double latitude = -1, double longitude = -1, int category = -1, string image = null)
+        private void ExecuteLocationQuery(string query, int? id = null, string name = null, string description = null, double? latitude = null, double? longitude = null, int? category = null, string image = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 using SqlCommand command = new SqlCommand(query, connection);
 
-                if (id != -1) command.Parameters.AddWithValue("@id", id);
-                if (name != null) command.Parameters.AddWithValue("@name", name);
-                if (name != null) command.Parameters.AddWithValue("@description", description);
-                if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
-                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
-                if (category != -1) command.Parameters.AddWithValue("@category", category);
-                if (image != null) command.Parameters.AddWithValue("@image", image);
+                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
+                if (name != null) command.Parameters.AddWithValue("@name", name ?? default(string));
+                if (description != null) command.Parameters.AddWithValue("@description", description ?? default(string));
+                if (latitude != null) command.Parameters.AddWithValue("@latitude", latitude ?? default(double));
+                if (longitude != null) command.Parameters.AddWithValue("@longitude", longitude ?? default(double));
+                if (category != null) command.Parameters.AddWithValue("@category", category ?? default(int));
+                if (image != null) command.Parameters.AddWithValue("@image", image ?? default(string));
 
                 command.ExecuteNonQuery();
+                connection.Close();
             }
         }
 

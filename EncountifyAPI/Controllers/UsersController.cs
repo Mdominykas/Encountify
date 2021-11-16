@@ -68,14 +68,14 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user
         /// </summary>
         [HttpPut("{id}")]
-        public IEnumerable<User> EditUser(int id, string username = null, string password = null, string email = null)
+        public IEnumerable<User> EditUser(int id, string? username = null, string? password = null, string? email = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                if (username != "") EditUserName(id, username);
-                if (password != "") EditUserPassword(id, password);
-                if (email != "") EditUserEmail(id, email);
+                if (username != null) EditUserName(id, username);
+                if (password != null) EditUserPassword(id, password);
+                if (email != null) EditUserEmail(id, email);
             }
             return GetUser(id);
         }
@@ -150,7 +150,7 @@ namespace EncountifyAPI.Controllers
             return GetUser(id);
         }
 
-        private List<User> ExecuteUserReader(string query, int id = -1, string username = null, string password = null, string email = null, bool? isAdmin = null, byte[] picture = null, int points = -1)
+        private List<User> ExecuteUserReader(string query, int? id = null, string? username = null, string? password = null, string? email = null, bool? isAdmin = null, byte[] picture = null, int? points = null)
         {
             List<User> users = new List<User>();
             using (var connection = new SqlConnection(ConnectionString))
@@ -158,13 +158,13 @@ namespace EncountifyAPI.Controllers
                 connection.Open();
                 using SqlCommand command = new SqlCommand(query, connection);
 
-                if (id != -1) command.Parameters.AddWithValue("@id", id);
-                if (username != null) command.Parameters.AddWithValue("@username", username);
-                if (password != null) command.Parameters.AddWithValue("@password", password);
-                if (email != null) command.Parameters.AddWithValue("@email", email);
-                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin);
-                if (picture != null && picture.Length > 0) command.Parameters.Add("@picture", SqlDbType.Image).Value = picture;
-                if (points != -1) command.Parameters.AddWithValue("@points", points);
+                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
+                if (username != null) command.Parameters.AddWithValue("@username", username ?? default(string));
+                if (password != null) command.Parameters.AddWithValue("@password", password ?? default(string));
+                if (email != null) command.Parameters.AddWithValue("@email", email ?? default(string));
+                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin ?? default(bool));
+                if (picture?.Length > 0) command.Parameters.Add("@picture", SqlDbType.Image).Value = picture;
+                if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
 
                 using SqlDataReader reader = command.ExecuteReader();
 
@@ -176,20 +176,20 @@ namespace EncountifyAPI.Controllers
             return users;
         }
 
-        private void ExecuteUserQuery(string query, int id = -1, string username = null, string password = null, string email = null, bool? isAdmin = null, byte[] picture = null, int points = -1)
+        private void ExecuteUserQuery(string query, int? id = null, string? username = null, string? password = null, string? email = null, bool? isAdmin = null, byte[] picture = null, int? points = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 using SqlCommand command = new SqlCommand(query, connection);
 
-                if (id != -1) command.Parameters.AddWithValue("@id", id);
-                if (username != null) command.Parameters.AddWithValue("@username", username);
-                if (password != null) command.Parameters.AddWithValue("@password", password);
-                if (email != null) command.Parameters.AddWithValue("@email", email);
-                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin);
+                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
+                if (username != null) command.Parameters.AddWithValue("@username", username ?? default(string));
+                if (password != null) command.Parameters.AddWithValue("@password", password ?? default(string));
+                if (email != null) command.Parameters.AddWithValue("@email", email ?? default(string));
+                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin ?? default(bool));
                 if (picture?.Length > 0) command.Parameters.Add("@picture", SqlDbType.Image).Value = picture;
-                if (points != -1) command.Parameters.AddWithValue("@points", points);
+                if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
 
                 command.ExecuteNonQuery();
             }
