@@ -48,8 +48,9 @@ namespace EncountifyAPI.Controllers
         /// Get user with specified id
         /// </summary>
         [HttpGet("Id/{id}")]
-        public User GetUser(int id)
+        public IEnumerable<User> GetUser(int id)
         {
+            List<User> users = new List<User>();
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -57,16 +58,21 @@ namespace EncountifyAPI.Controllers
                 using SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", id);
                 using SqlDataReader reader = command.ExecuteReader();
-                return ParseUser(reader);
+                while (reader.Read())
+                {
+                    users.Add(ParseUser(reader));
+                }
             }
+            return users;
         }
 
         /// <summary>
         /// Get user with specified username
         /// </summary>
         [HttpGet("Username/{username}")]
-        public User GetUser(string username)
+        public IEnumerable<User> GetUser(string username)
         {
+            List<User> users = new List<User>();
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -74,15 +80,19 @@ namespace EncountifyAPI.Controllers
                 using SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@username", username);
                 using SqlDataReader reader = command.ExecuteReader();
-                return ParseUser(reader);
+                while (reader.Read())
+                {
+                    users.Add(ParseUser(reader));
+                }
             }
+            return users;
         }
 
         /// <summary>
         /// Add a new user
         /// </summary>
         [HttpPost("")]
-        public User AddUser(string username, string password, string email, bool isAdmin = false, string image = "")
+        public IEnumerable<User> AddUser(string username, string password, string email, bool isAdmin = false, string image = "")
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -94,7 +104,7 @@ namespace EncountifyAPI.Controllers
                 command.Parameters.AddWithValue("@email", email);
                 command.Parameters.AddWithValue("@isAdmin", isAdmin ? 1 : 0);
                 command.Parameters.AddWithValue("@image", image);
-                command.ExecuteNonQuery();                
+                command.ExecuteNonQuery();
             }
             return GetUser(username);
         }
@@ -103,30 +113,30 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user
         /// </summary>
         [HttpPut("{id}")]
-        public User EditUser(int id, string username = "", string password = "", string email = "", bool? isAdmin = null, string image = "")
+        public IEnumerable<User> EditUser(int id, string username = "", string password = "", string email = "", bool? isAdmin = null, string image = "")
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 if (username != "")
                 {
-                    User user = EditUserName(id, username);
+                    IEnumerable<User> user = EditUserName(id, username);
                 }
                 if (password != "")
                 {
-                    User user = EditUserPassword(id, password);
+                    IEnumerable<User> user = EditUserPassword(id, password);
                 }
                 if (email != "")
                 {
-                    User user = EditUserEmail(id, email);
+                    IEnumerable<User> user = EditUserEmail(id, email);
                 }
                 if (isAdmin != null)
                 {
-                    User user = EditUserIsAdmin(id, (bool)isAdmin);
+                    IEnumerable<User> user = EditUserIsAdmin(id, (bool)isAdmin);
                 }
                 if (image != "")
                 {
-                    User user = EditUserImage(id, image);
+                    IEnumerable<User> user = EditUserImage(id, image);
                 }
             }
             return GetUser(id);
@@ -137,7 +147,7 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user's username
         /// </summary>
         [HttpPut("{id}/Username")]
-        public User EditUserName(int id, string username)
+        public IEnumerable<User> EditUserName(int id, string username)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -155,7 +165,7 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user's password
         /// </summary>
         [HttpPut("{id}/Password")]
-        public User EditUserPassword(int id, string password)
+        public IEnumerable<User> EditUserPassword(int id, string password)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -173,7 +183,7 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user's email
         /// </summary>
         [HttpPut("{id}/Email")]
-        public User EditUserEmail(int id, string email)
+        public IEnumerable<User> EditUserEmail(int id, string email)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -191,7 +201,7 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user's permissions
         /// </summary>
         [HttpPut("{id}/IsAdmin")]
-        public User EditUserIsAdmin(int id, bool isAdmin)
+        public IEnumerable<User> EditUserIsAdmin(int id, bool isAdmin)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -209,7 +219,7 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing user's image
         /// </summary>
         [HttpPut("{id}/Image")]
-        public User EditUserImage(int id, string image)
+        public IEnumerable<User> EditUserImage(int id, string image)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -243,7 +253,7 @@ namespace EncountifyAPI.Controllers
         /// Delete user with specified Id
         /// </summary>
         [HttpDelete("{id}")]
-        public User DeleteUser(int id)
+        public IEnumerable<User> DeleteUser(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -264,7 +274,7 @@ namespace EncountifyAPI.Controllers
                 Username = reader["Username"].ToString(),
                 Email = reader["Email"].ToString(),
                 Password = reader["Password"].ToString(),
-                IsAdmin = Convert.ToBoolean((int)reader["IsAdmin"]),
+                IsAdmin = Convert.ToBoolean(reader["IsAdmin"]),
                 Image = reader["Image"].ToString(),
             };
             return user;

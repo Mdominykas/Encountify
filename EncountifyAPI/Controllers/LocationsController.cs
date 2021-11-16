@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,7 +82,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Add a new location
         /// </summary>
-        [HttpPost("")]
+        [HttpPost]
         public Location AddLocation(string name, string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -286,8 +287,8 @@ namespace EncountifyAPI.Controllers
                 Id = (int)reader["Id"],
                 Name = reader["Name"].ToString(),
                 Description = reader["Description"].ToString(),
-                Longitude = (float)reader["Longitude"],
-                Latitude = (float)reader["Latitude"],
+                Longitude = Convert.ToDouble(reader["Longitude"]),
+                Latitude = Convert.ToDouble(reader["Latitude"]),
                 Category = (int)reader["Category"],
                 Image = reader["Image"].ToString(),
             };
