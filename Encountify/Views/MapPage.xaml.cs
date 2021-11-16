@@ -20,6 +20,7 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        ILocation locationAccess;
         MapViewModel _viewModel = new MapViewModel();
         private CancellationTokenSource cts;
 
@@ -27,6 +28,8 @@ namespace Encountify.Views
         {
             InitializeComponent();
             BindingContext = _viewModel;
+
+            locationAccess = DependencyService.Get<ILocation>();
 
             map.MapClicked += async (sender, e) =>
             {
@@ -92,8 +95,7 @@ namespace Encountify.Views
 
         public void LoadMarkersFromDb(Map map)
         {
-            var access = new DatabaseAccess<Location>();
-            var locationList = access.GetAllAsync().Result;
+            var locationList = locationAccess.GetAllAsync().Result;
 
             foreach (var s in locationList)
             {

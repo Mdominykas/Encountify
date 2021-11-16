@@ -17,7 +17,7 @@ namespace Encountify.ViewModels
         {
             Scoreboard = new ObservableCollection<ScoreboardCell>();
             var scoreboardCreator = new ScoreboardCreation();
-            var list = scoreboardCreator.CreateScoreboard();
+            var list = scoreboardCreator.CreateScoreboard().Result;
 
             foreach (var element in list)
                 Scoreboard.Add(new ScoreboardCell(element));

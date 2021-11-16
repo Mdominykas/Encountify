@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Encountify.Services
 {
     public class ScoreboardCreation
     {
-        public ScoreboardEntry this[int i] => CreateScoreboard().ToArray()[i];
-        public List<ScoreboardEntry> CreateScoreboard(bool reversed = true)
+        public ScoreboardEntry this[int i] => CreateScoreboard().Result.ToArray()[i];
+        public async Task<List<ScoreboardEntry>> CreateScoreboard(bool reversed = true)
         {
             IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
-            List<User> users = (List<User>)userData.GetAllAsync().Result;
+            List<User> users = (List<User>) await userData.GetAllAsync();
             DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
             List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 

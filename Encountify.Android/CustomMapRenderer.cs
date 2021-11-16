@@ -28,9 +28,11 @@ namespace Encountify.Droid
 
         public delegate void updateVisitingType(int x);
         private updateVisitingType updateVisiting;
+        ILocation locationAccess;
 
         public CustomMapRenderer(Context context) : base(context)
         {
+            locationAccess = DependencyService.Get<ILocation>();
             updateVisiting += new updateVisitingType(AddToDatabase);
         }
 
@@ -111,8 +113,7 @@ namespace Encountify.Droid
             {
                 if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = locationAccess.GetAllAsync().Result;
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
                     if(visited != null)
@@ -122,8 +123,7 @@ namespace Encountify.Droid
                 }
                 else
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = locationAccess.GetAllAsync().Result;
 
                     foreach (var s in locationList)
                     {

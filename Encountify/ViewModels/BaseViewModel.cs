@@ -13,13 +13,13 @@ namespace Encountify.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         //public IDataStore<Location> DataStore => DependencyService.Get<IDataStore<Location>>();
-        public static DatabaseAccess<Location> DataStore = null;
+        public static ILocation LocationData = null;
 
         public BaseViewModel()
         {
-            if (DataStore == null)
+            if (LocationData == null)
             {
-                DataStore = new DatabaseAccess<Location>();
+                LocationData = DependencyService.Get<ILocation>();
                 LoadLocationDummyData();
             }
         }
@@ -53,6 +53,7 @@ namespace Encountify.ViewModels
 
         public List<Location> DummyLocationList()
         {
+            LocationData.DeleteAllAsync();
             return new List<Location>()
             {
                 new Location("Vilniaus katedra", latitude : 54.685849042698216, longitude :25.287750880122083, category: (int) Category.Cathedral),
@@ -64,6 +65,7 @@ namespace Encountify.ViewModels
                 new Location("Sereikiškių parko Bernardinų sodas", latitude : 54.68413305498285, longitude : 25.29522580235671, category : (int) Category.Park ),
                 new Location("Lietuvos nacionalinis dailės muziejus", latitude : 54.68130476957157, longitude : 25.289818468853266, category : (int) Category.Museum ),
                 new Location("Užupio angelas", latitude : 54.68035, longitude : 25.29515, category : (int) Category.Monument),
+                new Location("Pavadinimas", latitude : 54.68, longitude : 25.295, category : (int) Category.SportFacility)
             };
         }
 
@@ -72,7 +74,7 @@ namespace Encountify.ViewModels
             var locationList = DummyLocationList();
             foreach (Location location in locationList)
             {
-                DataStore.AddAsync(location);
+                LocationData.AddAsync(location);
             }
         }
 
