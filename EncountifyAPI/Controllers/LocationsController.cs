@@ -57,10 +57,10 @@ namespace EncountifyAPI.Controllers
         /// Add a new location
         /// </summary>
         [HttpPost]
-        public IEnumerable<Location> AddLocation(string name, string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
+        public IEnumerable<Location> AddLocation(string name, string description = "", double latitude = 0, double longitude = 0, int category = 0, string image = "")
         {
 
-            ExecuteLocationQuery("INSERT INTO Locations VALUES (@name, @description, @longitude, @latitude, @category, @image)", name: name, description: description, longitude: longitude, latitude: latitude, category: category, image:image);
+            ExecuteLocationQuery("INSERT INTO Locations VALUES (@name, @description, @latitude, @longitude, @category, @image)", name: name, description: description, latitude: latitude, longitude: longitude, category: category, image:image);
             return GetLocation(name);
         }
 
@@ -68,12 +68,12 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location
         /// </summary>
         [HttpPut("{id}")]
-        public IEnumerable<Location> EditLocation(int id, string name = "", string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
+        public IEnumerable<Location> EditLocation(int id, string name = "", string description = "", double latitude = 0, double longitude = 0, int category = 0, string image = "")
         {
             if (name != "") EditLocationName(id, name);
             if (description != "") EditLocationDescription(id, description);
-            if (longitude != 0) EditLocationLongitude(id, longitude);
             if (latitude != 0) EditLocationLatitude(id, latitude);
+            if (longitude != 0) EditLocationLongitude(id, longitude);
             if (category != 0) EditLocationCategory(id, category);
             if (image != "") EditLocationImage(id, image);
 
@@ -102,22 +102,22 @@ namespace EncountifyAPI.Controllers
         }
 
         /// <summary>
-        /// Edit an existing location's longitude
+        /// Edit an existing location's latitude
         /// </summary>
-        [HttpPut("{id}/Longitude")]
-        public IEnumerable<Location> EditLocationLongitude(int id, float longitude)
+        [HttpPut("{id}/Latitude")]
+        public IEnumerable<Location> EditLocationLatitude(int id, double latitude)
         {
-            ExecuteLocationQuery("UPDATE Locations SET Longitude = @longitude WHERE Id = @id", id: id, longitude: longitude);
+            ExecuteLocationQuery("UPDATE Locations SET Latitude = @latitude WHERE Id = @id", id: id, latitude: latitude);
             return GetLocation(id);
         }
 
         /// <summary>
-        /// Edit an existing location's latitude
+        /// Edit an existing location's longitude
         /// </summary>
-        [HttpPut("{id}/Latitude")]
-        public IEnumerable<Location> EditLocationLatitude(int id, float latitude)
+        [HttpPut("{id}/Longitude")]
+        public IEnumerable<Location> EditLocationLongitude(int id, double longitude)
         {
-            ExecuteLocationQuery("UPDATE Locations SET Latitude = @latitude WHERE Id = @id", id: id, latitude: latitude);
+            ExecuteLocationQuery("UPDATE Locations SET Longitude = @longitude WHERE Id = @id", id: id, longitude: longitude);
             return GetLocation(id);
         }
 
@@ -161,7 +161,7 @@ namespace EncountifyAPI.Controllers
             return GetLocation(id);
         }
 
-        private List<Location> ExecuteLocationReader(string query, int id = -1, string name = null, string description = null, float longitude = -1, float latitude = -1, int category = -1, string image = null)
+        private List<Location> ExecuteLocationReader(string query, int id = -1, string name = null, string description = null, double latitude = -1, double longitude = -1, int category = -1, string image = null)
         {
             List<Location> locations = new List<Location>();
             using (var connection = new SqlConnection(ConnectionString))
@@ -172,8 +172,8 @@ namespace EncountifyAPI.Controllers
                 if (id != -1) command.Parameters.AddWithValue("@id", id);
                 if (name != null) command.Parameters.AddWithValue("@name", name);
                 if (description != null) command.Parameters.AddWithValue("@description", description);
-                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
                 if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
+                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
                 if (category != -1) command.Parameters.AddWithValue("@category", category);
                 if (image != null) command.Parameters.AddWithValue("@image", image);
 
@@ -187,7 +187,7 @@ namespace EncountifyAPI.Controllers
             return locations;
         }
 
-        private void ExecuteLocationQuery(string query, int id = -1, string name = null, string description = null, float longitude = -1, float latitude = -1, int category = -1, string image = null)
+        private void ExecuteLocationQuery(string query, int id = -1, string name = null, string description = null, double latitude = -1, double longitude = -1, int category = -1, string image = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -197,8 +197,8 @@ namespace EncountifyAPI.Controllers
                 if (id != -1) command.Parameters.AddWithValue("@id", id);
                 if (name != null) command.Parameters.AddWithValue("@name", name);
                 if (name != null) command.Parameters.AddWithValue("@description", description);
-                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
                 if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
+                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
                 if (category != -1) command.Parameters.AddWithValue("@category", category);
                 if (image != null) command.Parameters.AddWithValue("@image", image);
 
@@ -213,8 +213,8 @@ namespace EncountifyAPI.Controllers
                 Id = (int)reader["Id"],
                 Name = reader["Name"].ToString(),
                 Description = reader["Description"].ToString(),
-                Longitude = Convert.ToDouble(reader["Longitude"]),
                 Latitude = Convert.ToDouble(reader["Latitude"]),
+                Longitude = Convert.ToDouble(reader["Longitude"]),
                 Category = (int)reader["Category"],
                 Image = reader["Image"].ToString(),
             };
