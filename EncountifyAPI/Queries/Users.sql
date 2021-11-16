@@ -4,5 +4,7 @@ CREATE TABLE "Users" (
     "Password" TEXT NOT NULL,
     "Email" TEXT NOT NULL,
     "IsAdmin" BIT DEFAULT 0,
-    "Image" TEXT DEFAULT NULL
+    "Picture" TEXT DEFAULT NULL,
+    "DateCreated" DATE NOT NULL,
+    "Points" INTEGER DEFAULT 0
 );

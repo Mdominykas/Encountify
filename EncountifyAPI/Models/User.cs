@@ -12,6 +12,8 @@ namespace EncountifyAPI.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
-        public string Image { get; set; }
+        public byte[] Picture { get; set; }
+        public DateTime DateCreated { get; set; }
+        public int Points { get; set; }
     }
 }
