@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Encountify.Services;
+using SQLite;
 
 namespace Encountify.Models
 {
@@ -10,6 +11,6 @@ namespace Encountify.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
-        public string Image { get; set; }
+        public byte[] Picture { get; set; } = ImageCreator.GetDefaultImage();
     }
 }

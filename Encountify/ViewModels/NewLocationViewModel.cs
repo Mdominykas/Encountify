@@ -1,5 +1,4 @@
 ﻿using Encountify.Models;
-using System;
 using Xamarin.Forms;
 
 namespace Encountify.ViewModels
@@ -19,14 +18,14 @@ namespace Encountify.ViewModels
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
             SelectCommand = new Command(OnSelect);
-            this.PropertyChanged +=
+            PropertyChanged +=
                 (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(name)
-                && !String.IsNullOrWhiteSpace(description);
+            return !string.IsNullOrWhiteSpace(name)
+                && !string.IsNullOrWhiteSpace(description);
         }
 
         public string Name
@@ -41,16 +40,16 @@ namespace Encountify.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public double Longitude
-        {
-            get => longitude;
-            set => SetProperty(ref longitude, value);
-        }
-
         public double Latitude
         {
             get => latitude;
             set => SetProperty(ref latitude, value);
+        }
+
+        public double Longitude
+        {
+            get => longitude;
+            set => SetProperty(ref longitude, value);
         }
 
         public string Category
@@ -74,8 +73,8 @@ namespace Encountify.ViewModels
             {
                 Name = Name,
                 Description = Description,
-                Longitude = Longitude,
                 Latitude = Latitude,
+                Longitude = Longitude,
                 Category = (int)CategoryConverter.ConvertStringToCategory(Category)
             };
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="default_image.png" />
     <None Remove="ServiceTerms.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="default_image.png" />
     <EmbeddedResource Include="Resources\Fonts\fa-brands-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-regular-400.ttf" />
     <EmbeddedResource Include="Resources\Fonts\fa-solid-900.ttf" />
@@ -43,7 +45,8 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2195" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />
     <PackageReference Include="Xamarin.Forms.GoogleMaps.Clustering" Version="1.1.0" />

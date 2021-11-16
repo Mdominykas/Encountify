@@ -13,6 +13,8 @@ namespace Encountify
         public static string UserName { get; set; }
         public static string UserEmail { get; set; }
         public static string UserPassword { get; set; }
+        public static byte[] UserPicture { get; set; }
+        public static bool IsUserScaleInMeters { get; set; }
 
         public App()
         {
@@ -27,7 +29,7 @@ namespace Encountify
             db.DropTable<Location>();
 
             InitializeComponent();
-
+           
             MainPage = new AppShell();
         }
 
