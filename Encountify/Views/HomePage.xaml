@@ -12,9 +12,6 @@
                 Text="Change Profile Picture"
                 Command="{Binding OnImageChangeCommand}"
                 HorizontalOptions="FillAndExpand"/>
-        <Label Text="Show distance in:" />
-        <RadioButton Content="Yards" CheckedChanged="OnScaleRadioButtonCheckedChanged" />
-        <RadioButton Content="Meters" CheckedChanged="OnScaleRadioButtonCheckedChanged" IsChecked="true" />
     </StackLayout>
 
 </ContentPage>

@@ -16,11 +16,5 @@ namespace Encountify.Views
             viewModel.ImageOpenClose = new Image();
             viewModel.ImageOpenClose.Source = ImageSource.FromStream(() => new MemoryStream(App.UserPicture));
         }
-
-        public void OnScaleRadioButtonCheckedChanged(object sender, EventArgs e)
-        {
-            if((e as CheckedChangedEventArgs).Value)
-                DistanceCounter.ChangeScale();
-        }
     }
 }

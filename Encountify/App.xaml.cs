@@ -14,6 +14,7 @@ namespace Encountify
         public static string UserEmail { get; set; }
         public static string UserPassword { get; set; }
         public static byte[] UserPicture { get; set; }
+        public static bool IsUserScaleInMeters { get; set; }
 
         public App()
         {

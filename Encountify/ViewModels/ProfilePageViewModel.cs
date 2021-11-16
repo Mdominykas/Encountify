@@ -1,19 +1,20 @@
-﻿using Encountify.Models;
-using System;
-using System.Diagnostics;
-using Xamarin.Forms;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Encountify.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.ComponentModel;
 using Encountify.Views;
 
 namespace Encountify.ViewModels
 {
     class ProfilePageViewModel : BaseViewModel, INotifyPropertyChanged
     {
+        public bool IsCurrentScaleInMeters
+        {
+            get => DistanceCounter.IsInMeters;
+        }
+        public bool IsCurrentScaleInYards
+        {
+            get => !DistanceCounter.IsInMeters;
+        }
+
         public ProfilePageViewModel()
         {
             LoginPage.OnLogin += OnLogin;
@@ -45,6 +46,10 @@ namespace Encountify.ViewModels
         public string Password
         {
             get => App.UserPassword;
+        }
+        public void ChangeScale()
+        {
+            DistanceCounter.ChangeScale();
         }
     }
 }

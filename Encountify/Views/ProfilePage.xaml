@@ -10,7 +10,7 @@
         <viewModel:ProfilePageViewModel/>
     </ContentPage.BindingContext>
 
-<ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>
         <ToolbarItem Text="Logout" Priority="1" Clicked="LogOutButton_onClicked"/>
     </ContentPage.ToolbarItems>
 
@@ -43,5 +43,8 @@
             Text="{Binding Password}"
             FontSize="Small"/>
 
+        <Label Text="Show distance in:" /> 
+        <RadioButton Content="Yards" CheckedChanged="OnScaleRadioButtonCheckedChanged" IsChecked="{Binding IsCurrentScaleInYards}"/>
+        <RadioButton Content="Meters" CheckedChanged="OnScaleRadioButtonCheckedChanged" IsChecked="{Binding IsCurrentScaleInMeters}" />
     </StackLayout>
 </ContentPage>
