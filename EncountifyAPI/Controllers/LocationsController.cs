@@ -30,74 +30,35 @@ namespace EncountifyAPI.Controllers
         [HttpGet]
         public IEnumerable<Location> GetAllLocations()
         {
-            List<Location> locations = new List<Location>();
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT * FROM Locations";
-                using SqlCommand command = new SqlCommand(query, connection);
-                using SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    locations.Add(ParseLocation(reader));
-                }
-            }
-            return locations;
+            return ExecuteReader("SELECT * FROM Locations");
         }
 
         /// <summary>
         /// Get location with specified id
         /// </summary>
         [HttpGet("Id/{id}")]
-        public Location GetLocation(int id)
+        public IEnumerable<Location> GetLocation(int id)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT * FROM Locations WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                using SqlDataReader reader = command.ExecuteReader();
-                return ParseLocation(reader);
-            }
+            return ExecuteReader("SELECT * FROM Locations WHERE Id = @id", id: id);
         }
 
         /// <summary>
-        /// Get location with specified locationname
+        /// Get location with specified location name
         /// </summary>
         [HttpGet("Name/{locationname}")]
-        public Location GetLocation(string name)
+        public IEnumerable<Location> GetLocation(string name)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT * FROM Locations WHERE CONVERT(VARCHAR, Name) = @name";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@name", name);
-                using SqlDataReader reader = command.ExecuteReader();
-                return ParseLocation(reader);
-            }
+            return ExecuteReader("SELECT * FROM Locations WHERE CONVERT(VARCHAR, Name) = @name", name: name);
         }
 
         /// <summary>
         /// Add a new location
         /// </summary>
         [HttpPost]
-        public Location AddLocation(string name, string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
+        public IEnumerable<Location> AddLocation(string name, string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "INSERT INTO Locations VALUES (@name, @description, @longitude, @latitude, @category, @image)";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@description", description);
-                command.Parameters.AddWithValue("@longitude", longitude);
-                command.Parameters.AddWithValue("@latitude", latitude);
-                command.Parameters.AddWithValue("@category", category);
-                command.Parameters.AddWithValue("@image", image);
-                command.ExecuteNonQuery();
-            }
+
+            ExecuteQuery("INSERT INTO Locations VALUES (@name, @description, @longitude, @latitude, @category, @image)", name: name, description: description, longitude: longitude, latitude: latitude, category: category, image:image);
             return GetLocation(name);
         }
 
@@ -105,36 +66,15 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location
         /// </summary>
         [HttpPut("{id}")]
-        public Location EditLocation(int id, string name = "", string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
+        public IEnumerable<Location> EditLocation(int id, string name = "", string description = "", float longitude = 0, float latitude = 0, int category = 0, string image = "")
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                if (name != "")
-                {
-                    Location location = EditLocationName(id, name);
-                }
-                if (description != "")
-                {
-                    Location location = EditLocationDescription(id, description);
-                }
-                if (longitude != 0)
-                {
-                    Location location = EditLocationLongitude(id, longitude);
-                }
-                if (latitude != 0)
-                {
-                    Location location = EditLocationLatitude(id, latitude);
-                }
-                if (category != 0)
-                {
-                    Location location = EditLocationCategory(id, category);
-                }
-                if (image != "")
-                {
-                    Location location = EditLocationImage(id, image);
-                }
-            }
+            if (name != "") EditLocationName(id, name);
+            if (description != "") EditLocationDescription(id, description);
+            if (longitude != 0) EditLocationLongitude(id, longitude);
+            if (latitude != 0) EditLocationLatitude(id, latitude);
+            if (category != 0) EditLocationCategory(id, category);
+            if (image != "") EditLocationImage(id, image);
+
             return GetLocation(id);
         }
 
@@ -143,17 +83,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's name
         /// </summary>
         [HttpPut("{id}/Name")]
-        public Location EditLocationName(int id, string name)
+        public IEnumerable<Location> EditLocationName(int id, string name)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Name = @name WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@name", name);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Name = @name WHERE Id = @id", id: id, name: name);
             return GetLocation(id);
         }
 
@@ -161,17 +93,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's description
         /// </summary>
         [HttpPut("{id}/Description")]
-        public Location EditLocationDescription(int id, string description)
+        public IEnumerable<Location> EditLocationDescription(int id, string description)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Description = @description WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@description", description);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Description = @description WHERE Id = @id", id: id, description: description);
             return GetLocation(id);
         }
 
@@ -179,17 +103,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's longitude
         /// </summary>
         [HttpPut("{id}/Longitude")]
-        public Location EditLocationLongitude(int id, float longitude)
+        public IEnumerable<Location> EditLocationLongitude(int id, float longitude)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Longitude = @longitude WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@longitude", longitude);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Longitude = @longitude WHERE Id = @id", id: id, longitude: longitude);
             return GetLocation(id);
         }
 
@@ -197,17 +113,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's latitude
         /// </summary>
         [HttpPut("{id}/Latitude")]
-        public Location EditLocationLatitude(int id, float latitude)
+        public IEnumerable<Location> EditLocationLatitude(int id, float latitude)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Latitude = @latitude WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@latitude", latitude);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Latitude = @latitude WHERE Id = @id", id: id, latitude: latitude);
             return GetLocation(id);
         }
 
@@ -215,17 +123,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's category
         /// </summary>
         [HttpPut("{id}/Category")]
-        public Location EditLocationCategory(int id, int category)
+        public IEnumerable<Location> EditLocationCategory(int id, int category)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Category = @category WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@category", category);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Category = @category WHERE Id = @id", id: id, category: category);
             return GetLocation(id);
         }
 
@@ -233,17 +133,9 @@ namespace EncountifyAPI.Controllers
         /// Edit an existing location's image
         /// </summary>
         [HttpPut("{id}/Image")]
-        public Location EditLocationImage(int id, string image)
+        public IEnumerable<Location> EditLocationImage(int id, string image)
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "UPDATE Locations SET Image = @image WHERE Id = @id";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@image", image);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("UPDATE Locations SET Image = @image WHERE Id = @id", id: id, image: image);
             return GetLocation(id);
         }
 
@@ -253,13 +145,7 @@ namespace EncountifyAPI.Controllers
         [HttpDelete]
         public IEnumerable<Location> DeleteAllLocations()
         {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "DELETE FROM Locations";
-                using SqlCommand command = new SqlCommand(query, connection);
-                command.ExecuteNonQuery();
-            }
+            ExecuteQuery("DELETE FROM Locations");
             return GetAllLocations();
         }
 
@@ -267,20 +153,58 @@ namespace EncountifyAPI.Controllers
         /// Delete location with specified Id
         /// </summary>
         [HttpDelete("{id}")]
-        public Location DeleteLocation(int id)
+        public IEnumerable<Location> DeleteLocation(int id)
+        {
+            ExecuteQuery("DELETE FROM Locations WHERE Id = @id", id);
+            return GetLocation(id);
+        }
+
+        private List<Location> ExecuteReader(string query, int id = -1, string name = null, string description = null, float longitude = -1, float latitude = -1, int category = -1, string image = null)
+        {
+            List<Location> locations = new List<Location>();
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                using SqlCommand command = new SqlCommand(query, connection);
+
+                if (id != -1) command.Parameters.AddWithValue("@id", id);
+                if (name != null) command.Parameters.AddWithValue("@name", name);
+                if (name != null) command.Parameters.AddWithValue("@description", description);
+                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
+                if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
+                if (category != -1) command.Parameters.AddWithValue("@category", category);
+                if (image != null) command.Parameters.AddWithValue("@image", image);
+
+                using SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    locations.Add(ParseLocation(reader));
+                }
+            }
+            return locations;
+        }
+
+        private void ExecuteQuery(string query, int id = -1, string name = null, string description = null, float longitude = -1, float latitude = -1, int category = -1, string image = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
-                string query = "DELETE FROM Locations WHERE Id = @id";
                 using SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@id", id);
+
+                if (id != -1) command.Parameters.AddWithValue("@id", id);
+                if (name != null) command.Parameters.AddWithValue("@name", name);
+                if (name != null) command.Parameters.AddWithValue("@description", description);
+                if (longitude != -1) command.Parameters.AddWithValue("@longitude", longitude);
+                if (latitude != -1) command.Parameters.AddWithValue("@latitude", latitude);
+                if (category != -1) command.Parameters.AddWithValue("@category", category);
+                if (image != null) command.Parameters.AddWithValue("@image", image);
+
                 command.ExecuteNonQuery();
             }
-            return GetLocation(id);
         }
 
-        private Location ParseLocation(SqlDataReader reader)
+        private static Location ParseLocation(SqlDataReader reader)
         {
             Location location = new Location()
             {
