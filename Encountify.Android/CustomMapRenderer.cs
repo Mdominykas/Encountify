@@ -27,20 +27,19 @@ namespace Encountify.Droid
         Marker CurrentPinWindow { get; set; } = null;
 
         public delegate void updateVisitingType(int locationId, int userId, int points);
-        private event updateVisitingType updateVisiting;
+        private updateVisitingType updateVisiting;
 
         public CustomMapRenderer(Context context) : base(context)
         {
-            Action<int, int, int> ActionAddToDatabase = AddToDatabase;
             updateVisiting += new updateVisitingType(ActionAddToDatabase);
         }
 
-        private async void AddToDatabase(int locationId, int userId, int points)
+        Action<int, int, int> ActionAddToDatabase = async (locationId, userId, points) =>
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = locationId, UserId = userId, Points = points};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = locationId, UserId = userId, Points = points };
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
-        }
+        };
 
         public void OnMapReady(GoogleMap googleMap)
         {
@@ -117,7 +116,7 @@ namespace Encountify.Droid
                     var locationList = access.GetAllAsync().Result;
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
-                    if(visited != null)
+                    if (visited != null)
                     {
                         updateVisiting(visited.Id, App.UserID, 100);
                     }
