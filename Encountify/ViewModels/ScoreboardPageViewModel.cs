@@ -15,6 +15,7 @@ namespace Encountify.ViewModels
 
         public ScoreboardPageViewModel()
         {
+            CreateScoreboard();
         }
 
         public void CreateScoreboard()

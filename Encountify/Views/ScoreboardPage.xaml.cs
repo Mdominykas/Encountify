@@ -13,8 +13,8 @@ using Xamarin.Forms.Xaml;
 
 namespace Encountify.Views
 {
-//    [XamlCompilation(XamlCompilationOptions.Compile)]
-// commenting cause I can't understand what it does
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    // commenting cause I can't understand what it does
     public partial class ScoreboardPage : ContentPage
     {
         ScoreboardPageViewModel _viewModel;
@@ -22,7 +22,7 @@ namespace Encountify.Views
         {
             InitializeComponent();
             BindingContext = _viewModel = new ScoreboardPageViewModel();
-            _viewModel.CreateScoreboard();
+            //_viewModel.CreateScoreboard();
         }
 
         protected override async void OnAppearing()
