@@ -57,7 +57,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Add a new user
         /// </summary>
-        [HttpPost("")]
+        [HttpPost]
         public IEnumerable<User> AddUser(string username, string password, string email)
         {
             ExecuteUserQuery("INSERT INTO Users VALUES (@username, @password, @email, 0, NULL, CURRENT_TIMESTAMP, 0)", username: username, password: password, email: email);

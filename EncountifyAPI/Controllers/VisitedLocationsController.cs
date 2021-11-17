@@ -47,7 +47,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get user's visited locations
         /// </summary>
-        [HttpGet("Last/{id}")]
+        [HttpGet("User/{userId}")]
         public IEnumerable<VisitedLocation> GetUserVisitedLocations(int? userId)
         {
             return ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
@@ -56,7 +56,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get user's last visited location
         /// </summary>
-        [HttpGet("Location/{id}")]
+        [HttpGet("Last/{userId}")]
         public IEnumerable<VisitedLocation> GetUserLastVisitedLocation(int? userId)
         {
             List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
@@ -66,7 +66,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Get locations's visitors
         /// </summary>
-        [HttpGet("User/{username}")]
+        [HttpGet("Location/{locationId}")]
         public IEnumerable<VisitedLocation> GetVisitedLocationUsers(int? locationId)
         {
             return ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE LocationId = @locationId", locationId: locationId);
@@ -75,10 +75,10 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Add a new visit
         /// </summary>
-        [HttpPost("")]
-        public IEnumerable<VisitedLocation> AddVisitedLocation(int locationId, int userId, int? points = 0)
+        [HttpPost]
+        public IEnumerable<VisitedLocation> AddVisitedLocation(int userId, int locationId, int? points = 0)
         {
-            ExecuteVisitedLocationQuery("INSERT INTO VisitedLocations VALUES (@locationId, @userId, @points)", locationId: locationId, userId: userId, points: points);
+            ExecuteVisitedLocationQuery("INSERT INTO VisitedLocations VALUES (@userId, @locationId, @points)", userId: userId, locationId: locationId, points: points);
             return GetUserLastVisitedLocation(userId);
         }
 
@@ -102,7 +102,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing visited location's Id
         /// </summary>
-        [HttpPut("{id}/Username")]
+        [HttpPut("{id}/Location")]
         public IEnumerable<VisitedLocation> EditVisitedLocationId(int id, int? locationId)
         {
             ExecuteVisitedLocationQuery("UPDATE VisitedLocations SET LocationId = @locationId WHERE Id = @id", id: id, locationId: locationId);
@@ -112,7 +112,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing visited location's User Id
         /// </summary>
-        [HttpPut("{id}/Password")]
+        [HttpPut("{id}/User")]
         public IEnumerable<VisitedLocation> EditVisitedLocationUser(int id, int? userId)
         {
             ExecuteVisitedLocationQuery("UPDATE VisitedLocations SET UserId = @userId WHERE Id = @userId", id: id, userId: userId);
@@ -122,7 +122,7 @@ namespace EncountifyAPI.Controllers
         /// <summary>
         /// Edit an existing visited location's points
         /// </summary>
-        [HttpPut("{id}/Email")]
+        [HttpPut("{id}/Points")]
         public IEnumerable<VisitedLocation> EditVisitedLocationPoints(int id, int? points)
         {
             ExecuteVisitedLocationQuery("UPDATE VisitedLocations SET Points = @points WHERE Id = @id", id: id, points: points);
@@ -148,7 +148,7 @@ namespace EncountifyAPI.Controllers
             return GetVisitedLocation(id);
         }
 
-        private List<VisitedLocation> ExecuteVisitedLocationReader(string query, int? id = null, int? locationId = null, int? userId = null, int? points = null)
+        private List<VisitedLocation> ExecuteVisitedLocationReader(string query, int? id = null, int? userId = null, int? locationId = null, int? points = null)
         {
             List<VisitedLocation> visits = new List<VisitedLocation>();
             using (var connection = new SqlConnection(ConnectionString))
@@ -157,8 +157,8 @@ namespace EncountifyAPI.Controllers
                 using SqlCommand command = new SqlCommand(query, connection);
 
                 if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
-                if (locationId != null) command.Parameters.AddWithValue("@locationId", locationId ?? default(int));
                 if (userId != null) command.Parameters.AddWithValue("@userId", userId ?? default(int));
+                if (locationId != null) command.Parameters.AddWithValue("@locationId", locationId ?? default(int));
                 if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
 
                 using SqlDataReader reader = command.ExecuteReader();
@@ -171,7 +171,7 @@ namespace EncountifyAPI.Controllers
             return visits;
         }
 
-        private void ExecuteVisitedLocationQuery(string query, int? id = null, int? locationId = null, int? userId = null, int? points = null)
+        private void ExecuteVisitedLocationQuery(string query, int? id = null, int? userId = null, int? locationId = null, int? points = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -179,8 +179,8 @@ namespace EncountifyAPI.Controllers
                 using SqlCommand command = new SqlCommand(query, connection);
 
                 if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
-                if (locationId != null) command.Parameters.AddWithValue("@locationId", locationId ?? default(int));
                 if (userId != null) command.Parameters.AddWithValue("@userId", userId ?? default(int));
+                if (locationId != null) command.Parameters.AddWithValue("@locationId", locationId ?? default(int));
                 if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
 
                 command.ExecuteNonQuery();
@@ -190,14 +190,14 @@ namespace EncountifyAPI.Controllers
 
         private static VisitedLocation ParseVisitedLocation(SqlDataReader reader)
         {
-            VisitedLocation user = new VisitedLocation()
+            VisitedLocation visit = new VisitedLocation()
             {
                 Id = (int)reader["Id"],
                 UserId = (int)reader["UserId"],
                 LocationId = (int)reader["LocationId"],
                 Points = (int)reader["Points"]
             };
-            return user;
+            return visit;
         }
     }
 }
