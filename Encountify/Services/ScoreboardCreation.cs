@@ -16,7 +16,7 @@ namespace Encountify.Services
             IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
             List<User> users = (List<User>) await userData.GetAllAsync();
             DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
-            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
+            List<VisitedLocations> visitedLocations = (List<VisitedLocations>) await visitedLocationsData.GetAllAsync();
 
             var query =
             users.GroupJoin(visitedLocations,

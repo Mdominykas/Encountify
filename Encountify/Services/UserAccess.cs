@@ -114,7 +114,7 @@ namespace Encountify.Services
         public async Task<IEnumerable<User>> GetAllAsync(bool forceRefresh = true)
         {
             HttpClient client = new HttpClient();
-            client.Timeout = TimeSpan.FromSeconds(10);
+            client.Timeout = TimeSpan.FromSeconds(20);
             HttpResponseMessage response = null;
             try
             {
@@ -130,12 +130,10 @@ namespace Encountify.Services
             {
                 var result = response.Content.ReadAsStringAsync().Result;
                 IEnumerable<User> obj = JsonConvert.DeserializeObject<IEnumerable<User>>(result);
-                Console.WriteLine("Success");
                 return obj;
             }
             else
             {
-                Console.WriteLine("Fail");
                 return null;
             }
         }
