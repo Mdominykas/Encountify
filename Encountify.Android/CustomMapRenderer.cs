@@ -26,17 +26,18 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
-        public delegate void updateVisitingType(int x);
-        private updateVisitingType updateVisiting;
+        public delegate void updateVisitingType(int locationId, int userId, int points);
+        private event updateVisitingType updateVisiting;
 
         public CustomMapRenderer(Context context) : base(context)
         {
-            updateVisiting += new updateVisitingType(AddToDatabase);
+            Action<int, int, int> ActionAddToDatabase = AddToDatabase;
+            updateVisiting += new updateVisitingType(ActionAddToDatabase);
         }
 
-        private async void AddToDatabase(int id)
+        private async void AddToDatabase(int locationId, int userId, int points)
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = locationId, UserId = userId, Points = points};
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
         }
@@ -67,6 +68,7 @@ namespace Encountify.Droid
 
             if (inflater != null)
             {
+                Func<int, LayoutInflater, Marker, string, string, View> FuncGetInfoWindowView = GetInfoWindowView;
                 CurrentPinWindow = marker;
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
@@ -79,13 +81,13 @@ namespace Encountify.Droid
                     {
                         var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
-                        return GetInfoWindowView(layout, inflater, marker, message: "You're here. PRESS ME!");
+                        return FuncGetInfoWindowView(layout, inflater, marker, "", "You're here. PRESS ME!");
                     }
                     else //TODO make a InfoWindow for the markers that have already been visited my the user 
                     {
                         var layout = Resource.Layout.MapInfoWindow;
 
-                        return GetInfoWindowView(layout, inflater, marker, distance: distanceString);
+                        return FuncGetInfoWindowView(layout, inflater, marker, distanceString, " away");
                     }
                 }
             }
@@ -117,7 +119,7 @@ namespace Encountify.Droid
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
                     if(visited != null)
                     {
-                        updateVisiting(visited.Id);
+                        updateVisiting(visited.Id, App.UserID, 100);
                     }
                 }
                 else
@@ -138,7 +140,7 @@ namespace Encountify.Droid
             }
         }
 
-        public View GetInfoWindowView(int layoutXML, LayoutInflater inflater, Marker marker, string distance = "", string message = " away")
+        public View GetInfoWindowView(int layoutXML, LayoutInflater inflater, Marker marker, string distance, string message)
         {
             View view;
 
