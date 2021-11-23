@@ -59,7 +59,6 @@ namespace Encountify.Services
             HttpClient client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(10);
 
-
             var response = await client.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {
@@ -95,7 +94,7 @@ namespace Encountify.Services
             HttpClient client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(10);
 
-            var response = await client.GetAsync("https://encountify.azurewebsites.net/API/Users/Id/" + id.ToString());
+            var response = client.GetAsync("https://encountify.azurewebsites.net/API/Users/Id/" + id.ToString()).Result;
 
             if (response.IsSuccessStatusCode)
             {

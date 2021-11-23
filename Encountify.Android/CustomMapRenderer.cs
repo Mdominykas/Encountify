@@ -69,7 +69,10 @@ namespace Encountify.Droid
 
             if (inflater != null)
             {
-                CurrentPinWindow = marker;
+                lock(CurrentPinWindow)
+                {
+                    CurrentPinWindow = marker;
+                }
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
@@ -176,7 +179,10 @@ namespace Encountify.Droid
 
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
-            CurrentPinWindow = null;
+            lock(CurrentPinWindow)
+            {
+                CurrentPinWindow = null;
+            }
         }
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
@@ -187,7 +193,10 @@ namespace Encountify.Droid
                 {
                     try //This place might raise an exception during debugging but doesn't "seem" to crash the app
                     {
-                        CurrentPinWindow.ShowInfoWindow();
+                        lock(CurrentPinWindow)
+                        {
+                            CurrentPinWindow.ShowInfoWindow();
+                        }
                     }
                     catch (Exception ex)
                     {
