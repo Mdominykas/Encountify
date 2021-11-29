@@ -64,7 +64,6 @@ namespace Encountify.ViewModels
                 new Location("Sereikiškių parko Bernardinų sodas", latitude : 54.68413305498285, longitude : 25.29522580235671, category : (int) Category.Park ),
                 new Location("Lietuvos nacionalinis dailės muziejus", latitude : 54.68130476957157, longitude : 25.289818468853266, category : (int) Category.Museum ),
                 new Location("Užupio angelas", latitude : 54.68035, longitude : 25.29515, category : (int) Category.Monument),
-                new Location("Test", latitude : 54.70707, longitude : 25.28392, category : (int) Category.Monument),
             };
         }
 

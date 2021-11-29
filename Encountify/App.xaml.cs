@@ -24,9 +24,9 @@ namespace Encountify
             //after first run it must be removed
             //cause while this is still here data
             //can not be stored between sessions
-            /*string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LocationDatabaseName);
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseAccessConstants.LocationDatabaseName);
             SQLiteConnection db = new SQLiteConnection(dbPath);
-            db.DropTable<Location>();*/
+            db.DropTable<Location>();
 
             InitializeComponent();
            
