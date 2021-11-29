@@ -4,25 +4,24 @@ using Encountify.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Locations = Xamarin.Essentials.Location;
 
 namespace Encountify.ViewModels
 {
     class LocationsNearUserViewModel : BaseViewModel
     {
-        private Location _locationTapped;
+        private NearUserCell _locationTapped;
+
         public ObservableCollection<NearUserCell> NearLocations { get; }
         public Command LoadLocationsNearUser { get; }
-        public Command<Location> LocationSelected { get; }
+        public Command<NearUserCell> LocationSelected { get; }
 
         public LocationsNearUserViewModel()
         {
             NearLocations = new ObservableCollection<NearUserCell>();
             LoadLocationsNearUser = new Command(async () => await ExecuteLoadLocationsNearUser());
-            LocationSelected = new Command<Location>(OnLocationTapped);
+            LocationSelected = new Command<NearUserCell>(OnLocationTapped);
         }
 
         async Task ExecuteLoadLocationsNearUser()
@@ -35,19 +34,15 @@ namespace Encountify.ViewModels
                 var nearLocationsCreation = new NearUserCreation();
                 var list = await nearLocationsCreation.CreateListAsync();
 
-                foreach(var itiem in list)
+                foreach (var itiem in list)
                 {
                     NearLocations.Add(new NearUserCell(itiem));
-                }
-
-                if (NearLocations.Count == 0 ) //IT WORKS
-                {
-                    await App.Current.MainPage.DisplayAlert("Error", "Location disabled, cannot show locations near user. Showing all locations", "OK");
-                    await Shell.Current.GoToAsync("//LocationsPage");
                 }
             }
             catch (Exception ex)
             {
+                await App.Current.MainPage.DisplayAlert("Error", "Location disabled, cannot show locations near user. Showing all locations", "OK");
+                await Shell.Current.GoToAsync("//LocationsPage");
                 Debug.WriteLine(ex);
             }
             finally
@@ -62,7 +57,7 @@ namespace Encountify.ViewModels
             TappedLocation = null;
         }
 
-        public Location TappedLocation
+        public NearUserCell TappedLocation
         {
             get => _locationTapped;
             set
@@ -72,12 +67,13 @@ namespace Encountify.ViewModels
             }
         }
 
-        async void OnLocationTapped(Location obj)
+        async void OnLocationTapped(NearUserCell obj)
         {
             if (obj == null)
+            {
                 return;
-
-            await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={obj.Id}");
+            }
+            await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={obj.LocationId}");
         }
         
     }

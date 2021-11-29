@@ -1,9 +1,7 @@
 ﻿using Encountify.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Locations = Xamarin.Essentials.Location;
 
@@ -14,8 +12,8 @@ namespace Encountify.Services
         public class Distance
         {
             public int LocationId { get; set; }
-            public string Name { get; set; }
             public double LocationDistance { get; set; }
+            public string FDistance { get; set; }
             public double Latitude { get; set; }
             public double Longitude { get; set; }
         }
@@ -34,10 +32,10 @@ namespace Encountify.Services
                 distances = locations.Select(itiem => new Distance
                 {
                     LocationId = itiem.Id,
-                    Name = itiem.Name,
                     Latitude = itiem.Latitude,
                     Longitude = itiem.Longitude,
-                    LocationDistance = 0
+                    LocationDistance = 0,
+                    FDistance = ""
                 }).ToList();
             }
 
@@ -45,28 +43,15 @@ namespace Encountify.Services
             {
                 var distance = await DistanceCounter.GetFormattedDistance(new Locations(location.Latitude, location.Longitude));
                 if (!distance.Equals("Could not get distance"))
-                {
-                    Debug.WriteLine("Pradzia " + distance + location.Name);
-                    
+                {   
                     var _distance = string.Concat(distance.Split(remove.ToArray()));
-                    
-                    Debug.WriteLine("Tada " + _distance + location.Name);
-                    double _dist, dist;
-                    if (Double.TryParse(_distance, out _dist))
+
+                    if (Double.TryParse(_distance, out double dist))
                     {
-                        dist = _dist;
-                        Debug.WriteLine("Pakeista " + dist);
-
                         location.LocationDistance = dist;
-
-                        Debug.WriteLine("Sudeta " + location.LocationId + location.Name + dist);
+                        location.FDistance = distance;
                     }
                 }
-            }
-
-            foreach (var itiem in distances)
-            {
-                Debug.WriteLine("Vietos " + itiem.LocationId + itiem.Name + itiem.LocationDistance);
             }
 
             var query = distances.Join(
@@ -77,33 +62,28 @@ namespace Encountify.Services
                             {
                                 Id = distance.LocationId,
                                 Name = location.Name,
-                                Distance = distance.LocationDistance
+                                Distance = distance.LocationDistance,
+                                FormattedDistance = distance.FDistance
                             });
 
-            foreach (var itiem in query)
-            {
-                Debug.WriteLine("Nariai " + itiem.Id + itiem.Name + itiem.Distance);
-            }
-
-
-
             List<NearUser> result = new List<NearUser>();
-            double  dis = 3.0;
-
-                foreach(var res in query)
+            
+                foreach (var res in query)
                 {
-                Debug.WriteLine("Galas" + res.Name + res.Distance);
-                if (res.Distance < dis)
-                {
-                    result.Add(new NearUser()
-                    {
-                        LocationId = res.Id,
-                        LocationName = res.Name,
-                        Distance = res.Distance
-                    });
+                    string end = new string(res.FormattedDistance.Where(c => c != ',' && (c < '0' || c > '9')).ToArray());
+                    if (end.Equals(" km") && res.Distance < 3.00 || end.Equals(" m") && res.Distance < 100.00 ||
+                        end.Equals(" yd") && res.Distance < 3280 || end.Equals(" mi") && res.Distance < 0.06)
+                        {
+                            result.Add(new NearUser()
+                            {
+                                LocationId = res.Id,
+                                LocationName = res.Name,
+                                Distance = res.Distance,
+                                FormattedDistance = res.FormattedDistance,
+                                Points = 100
+                            });
+                        }
                 }
-                }
-
                 return result;
             }
         }

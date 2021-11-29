@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Encountify.Models
+﻿namespace Encountify.Models
 {
     public class NearUserCell
     {
         public int LocationId { get; set; } 
         public string LocationName { get; set; } 
-        public double Distance { get; set; }
+        public string Distance { get; set; }
+        public string Points { get; set; }
 
         public NearUserCell (NearUser itiem)
         {
             LocationId = itiem.LocationId;
             LocationName = itiem.LocationName;
-            Distance = itiem.Distance;
+            Distance = itiem.FormattedDistance + " away";
+            Points = itiem.Points + "points✨";
         }
     }
 }

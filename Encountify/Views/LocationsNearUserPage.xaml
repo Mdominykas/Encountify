@@ -24,29 +24,34 @@
         <CollectionView.ItemTemplate>
 
             <DataTemplate>
-                <StackLayout >
+                <StackLayout 
+                    x:DataType="model:NearUserCell">
                     <Grid
                         Padding="10"
                         ColumnDefinitions="Auto,*"
-                        RowDefinitions="Auto, *">
+                        RowDefinitions="Auto,*">
                         <Label
-                            x:DataType="model:NearUserCell"
                             Grid.Column="1"
+                            Grid.Row="1"
                             FontAttributes="Bold"
                             Text="{Binding LocationName}"
                             LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListLocationTextStyle}"
                             FontSize="16" />
 
                         <Label
-                            x:DataType="model:NearUserCell"
                             Grid.Column="1"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Text="{Binding Distance}"
                             LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListLocationDetailTextStyle}"
                             FontSize="13"/>
-                    </Grid>
+
+                            <Label
+                            Grid.Column="1"
+                            Grid.Row="3"
+                            Text="{Binding Points}"
+                            LineBreakMode="NoWrap"
+                            FontSize="13"/>
+                        </Grid>
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer
