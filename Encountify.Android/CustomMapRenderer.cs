@@ -130,6 +130,7 @@ namespace Encountify.Droid
                         if (s.Name == e.Marker.Title)
                         {
                             var id = s.Id;
+                            CurrentPinWindow.HideInfoWindow();
                             await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
                             break;
                         }
@@ -181,11 +182,11 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
+            Task.Delay(10).ContinueWith(delegate (Task arg)
             {
                 Device.BeginInvokeOnMainThread(delegate ()
                 {
-                    try //This place might raise an exception during debugging but doesn't "seem" to crash the app
+                    try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
                     {
                         CurrentPinWindow.ShowInfoWindow();
                     }
