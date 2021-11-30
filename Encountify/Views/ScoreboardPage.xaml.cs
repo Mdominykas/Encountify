@@ -27,8 +27,8 @@ namespace Encountify.Views
 
         protected override async void OnAppearing()
         {
-/*            BindingContext = _viewModel = new ScoreboardPageViewModel();
-*/            //_viewModel.CreateScoreboard();
+            BindingContext = _viewModel = new ScoreboardPageViewModel();
+            //_viewModel.CreateScoreboard();
         }
     }
 }
