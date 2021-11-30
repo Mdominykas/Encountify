@@ -88,7 +88,7 @@ namespace Encountify.ViewModels
                 Description = location.Description;
                 Latitude = location.Latitude;
                 Longitude = location.Longitude;
-                Position position = new Position(location.Latitude, location.Longitude);
+                Position position = new Position(Latitude, Longitude);
                 IEnumerable<string> possibleAddress = await geoCoder.GetAddressesForPositionAsync(position);
                 Address = possibleAddress.FirstOrDefault();
                 Distance = await DistanceCounter.GetFormattedDistance(new Locations(location.Latitude, location.Longitude));
