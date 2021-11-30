@@ -36,7 +36,7 @@ namespace Encountify.Droid
 
         private async void AddToDatabase(int id)
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100 };
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
         }
@@ -115,7 +115,7 @@ namespace Encountify.Droid
                     var locationList = access.GetAllAsync().Result;
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
-                    if(visited != null)
+                    if (visited != null)
                     {
                         updateVisiting(visited.Id);
                     }
@@ -182,19 +182,16 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(10).ContinueWith(delegate (Task arg)
+            Device.BeginInvokeOnMainThread(delegate ()
             {
-                Device.BeginInvokeOnMainThread(delegate ()
+                try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
+                    {
+                    CurrentPinWindow.ShowInfoWindow();
+                }
+                catch (Exception ex)
                 {
-                    try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
-                    {
-                        CurrentPinWindow.ShowInfoWindow();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                });
+                    Console.WriteLine(ex.Message);
+                }
             });
         }
     }
