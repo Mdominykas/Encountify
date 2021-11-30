@@ -20,5 +20,6 @@ namespace Encountify.Views
         private async void OnLocationsClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LocationsNearUserPage");
+        }
     }
 }

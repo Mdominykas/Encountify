@@ -38,6 +38,12 @@ namespace Encountify.ViewModels
                 {
                     NearLocations.Add(new NearUserCell(itiem));
                 }
+
+                if (NearLocations.Count == 0)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "Location disabled, cannot show locations near user. Showing all locations", "OK");
+                    await Shell.Current.GoToAsync("//LocationsPage");
+                }
             }
             catch (Exception ex)
             {
