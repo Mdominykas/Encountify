@@ -88,11 +88,13 @@ namespace Encountify.ViewModels
             }
             if (newPicture != null)
             {
-                users = DependencyService.Get<IUser>(); //new DatabaseAccess<User>();
+                Debug.WriteLine("Commenting these lines as API currently does not seems to be good for images");
+                Debug.WriteLine("Will try to deal with it later on");
+/*                users = DependencyService.Get<IUser>(); //new DatabaseAccess<User>();
                 var newData = await users.GetAsync(App.UserID);
                 newData.Picture = newPicture;
                 await users.UpdateAsync(newData);
-            }
+*/            }
         }
 
         private Task DisplayAlert(string v1, string v2, string v3)

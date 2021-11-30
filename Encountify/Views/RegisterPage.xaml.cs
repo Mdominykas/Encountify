@@ -40,6 +40,8 @@ namespace Encountify.Views
             if (ValidateFields())
             {
                 var users = await DataStore.GetAllAsync(true);
+                if (users == null)
+                    await DisplayAlert("Error", "Problems connecting to server", "OK");
                 var userWithUsername = users.Where(x => x.Username == Username.Text).FirstOrDefault();
                 if (userWithUsername == null)
                 {

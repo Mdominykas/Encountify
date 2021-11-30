@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -21,9 +22,18 @@ namespace Encountify.Services
             HttpClient client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(10);
 
-            var response = await client.GetAsync("https://encountify.azurewebsites.net/API/Locations");
+            HttpResponseMessage response = null;
 
-            if (response.IsSuccessStatusCode)
+            try
+            {
+               response  = await client.GetAsync("https://encountify.azurewebsites.net/API/Locations").ConfigureAwait(false);
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+
+            if ((response != null) && (response.IsSuccessStatusCode))
             {
                 var result = response.Content.ReadAsStringAsync().Result;
                 IEnumerable<Location> obj = JsonConvert.DeserializeObject<IEnumerable<Location>>(result);
@@ -130,15 +140,4 @@ namespace Encountify.Services
             throw new NotImplementedException();
         }
     }
-
-    public interface ILocation
-    {
-        Task<bool> AddAsync(Location user);
-        Task<bool> UpdateAsync(Location user);
-        Task<bool> DeleteAsync(int id);
-        Task<int> DeleteAllAsync();
-        Task<Location> GetAsync(int id);
-        Task<IEnumerable<Location>> GetAllAsync();
-    }
-
 }

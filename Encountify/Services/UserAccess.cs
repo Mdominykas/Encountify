@@ -113,12 +113,12 @@ namespace Encountify.Services
         public async Task<IEnumerable<User>> GetAllAsync(bool forceRefresh = true)
         {
             HttpClient client = new HttpClient();
-            client.Timeout = TimeSpan.FromSeconds(1);
+            client.Timeout = TimeSpan.FromSeconds(20);
             HttpResponseMessage response = null;
             try
             {
                 // here application freezes when entering scoreboard tab
-                response = client.GetAsync("https://encountify.azurewebsites.net/API/Users").Result;
+                response = await client.GetAsync("https://encountify.azurewebsites.net/API/Users").ConfigureAwait(false);
             }
             catch(Exception e)
             {

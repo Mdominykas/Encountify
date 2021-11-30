@@ -26,8 +26,6 @@ namespace Encountify.ViewModels
 
             foreach (var element in list)
                 Scoreboard.Add(new ScoreboardCell(element));
-
-            var a = 5;
         }
     }
 }

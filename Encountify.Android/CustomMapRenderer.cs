@@ -69,10 +69,7 @@ namespace Encountify.Droid
 
             if (inflater != null)
             {
-                lock(CurrentPinWindow)
-                {
-                    CurrentPinWindow = marker;
-                }
+                CurrentPinWindow = marker;
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
@@ -179,24 +176,20 @@ namespace Encountify.Droid
 
         void OnInfoWindowClose(object sender, GoogleMap.InfoWindowCloseEventArgs e)
         {
-            lock(CurrentPinWindow)
-            {
-                CurrentPinWindow = null;
-            }
+            CurrentPinWindow = null;
         }
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
+            // These lines were causing exceptions and/or (depending for whom) crashing devices
+        // So I will comment them until someone finds a good solution for this problem
+/*            Task.Delay(500).ContinueWith(delegate (Task arg)
             {
                 Device.BeginInvokeOnMainThread(delegate ()
                 {
                     try //This place might raise an exception during debugging but doesn't "seem" to crash the app
                     {
-                        lock(CurrentPinWindow)
-                        {
-                            CurrentPinWindow.ShowInfoWindow();
-                        }
+                        CurrentPinWindow.ShowInfoWindow();
                     }
                     catch (Exception ex)
                     {
@@ -204,6 +197,6 @@ namespace Encountify.Droid
                     }
                 });
             });
-        }
+*/        }
     }
 }
