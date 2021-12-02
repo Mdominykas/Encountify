@@ -29,11 +29,11 @@ namespace Encountify.Services
 
             foreach (var location in locations)
             {
-                distances = locations.Select(itiem => new Distance
+                distances = locations.Select(item => new Distance
                 {
-                    LocationId = itiem.Id,
-                    Latitude = itiem.Latitude,
-                    Longitude = itiem.Longitude,
+                    LocationId = item.Id,
+                    Latitude = item.Latitude,
+                    Longitude = item.Longitude,
                     LocationDistance = 0,
                     FDistance = ""
                 }).ToList();

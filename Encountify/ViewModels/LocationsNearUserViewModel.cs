@@ -34,9 +34,9 @@ namespace Encountify.ViewModels
                 var nearLocationsCreation = new NearUserCreation();
                 var list = await nearLocationsCreation.CreateListAsync();
 
-                foreach (var itiem in list)
+                foreach (var item in list)
                 {
-                    NearLocations.Add(new NearUserCell(itiem));
+                    NearLocations.Add(new NearUserCell(item));
                 }
 
                 if (NearLocations.Count == 0)

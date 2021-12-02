@@ -7,12 +7,12 @@
         public string Distance { get; set; }
         public string Points { get; set; }
 
-        public NearUserCell (NearUser itiem)
+        public NearUserCell (NearUser item)
         {
-            LocationId = itiem.LocationId;
-            LocationName = itiem.LocationName;
-            Distance = itiem.FormattedDistance + " away";
-            Points = itiem.Points + "points✨";
+            LocationId = item.LocationId;
+            LocationName = item.LocationName;
+            Distance = item.FormattedDistance + " away";
+            Points = item.Points + " points✨";
         }
     }
 }
