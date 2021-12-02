@@ -70,8 +70,8 @@ namespace Encountify.Services
             
                 foreach (var res in query)
                 {
-                    string end = new string(res.FormattedDistance.Where(c => c != ',' && (c < '0' || c > '9')).ToArray());
-                    if (end.Equals(" km") && res.Distance < 3.00 || end.Equals(" m") && res.Distance < 100.00 ||
+                    string end = new string(res.FormattedDistance.Where(c => c != '.' && (c < '0' || c > '9')).ToArray());
+                    if (end.Equals(" km") && res.Distance < 3.00 || end.Equals(" m") && res.Distance < 1000.00 ||
                         end.Equals(" yd") && res.Distance < 3280 || end.Equals(" mi") && res.Distance < 0.06)
                         {
                             result.Add(new NearUser()
