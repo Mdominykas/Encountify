@@ -36,7 +36,7 @@ namespace Encountify.Droid
 
         private async void AddToDatabase(int id)
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100 };
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
         }
@@ -117,7 +117,7 @@ namespace Encountify.Droid
                     var locationList = access.GetAllAsync().Result;
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
-                    if(visited != null)
+                    if (visited != null)
                     {
                         updateVisiting(visited.Id);
                     }
@@ -127,14 +127,11 @@ namespace Encountify.Droid
                     var access = new DatabaseAccess<Location>();
                     var locationList = access.GetAllAsync().Result;
 
-                    foreach (var s in locationList)
+                    var id = locationList.Aggregate(0, (id, next) => next.Name == e.Marker.Title ? next.Id : id);
+
+                    if (id != 0)
                     {
-                        if (s.Name == e.Marker.Title)
-                        {
-                            var id = s.Id;
-                            await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
-                            break;
-                        }
+                        await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
                     }
                 }
             }
