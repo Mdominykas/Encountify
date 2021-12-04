@@ -71,11 +71,12 @@ namespace Encountify.Droid
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-                var distanceStringList = distanceString.Split(" ");
+                var distanceNumber = distanceString.Split(" ").Take(1).First();
+                var distanceMetric = distanceString.Split(" ").Skip(1).First();
 
-                if (double.TryParse(distanceStringList[0], out var distanceDouble))
+                if (double.TryParse(distanceNumber, out var distanceDouble))
                 {
-                    if (distanceDouble <= 30 && distanceStringList[1] == "m")
+                    if ((distanceDouble <= 30 && distanceMetric == "m") || (distanceDouble <= 32.81 && distanceMetric == "yd"))
                     {
                         var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
@@ -105,11 +106,12 @@ namespace Encountify.Droid
             Locations pinLocation = new Locations(e.Marker.Position.Latitude, e.Marker.Position.Longitude);
             var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-            var distance = distanceString.Split(" ");
+            var distanceNumber = distanceString.Split(" ").Take(1).First();
+            var distanceMetric = distanceString.Split(" ").Skip(1).First();
 
-            if (double.TryParse(distance[0], out var distanceDouble))
+            if (double.TryParse(distanceNumber, out var distanceDouble))
             {
-                if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
+                if ((distanceDouble <= 30 && distanceMetric == "m") || (distanceDouble <= 32.81 && distanceMetric == "yd")) //TODO handle UserVisited event.
                 {
                     var access = new DatabaseAccess<Location>();
                     var locationList = access.GetAllAsync().Result;
@@ -181,7 +183,7 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
+            Task.Delay(10).ContinueWith(delegate (Task arg)
             {
                 Device.BeginInvokeOnMainThread(delegate ()
                 {
