@@ -1,5 +1,4 @@
 ﻿using Encountify.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +20,14 @@ namespace Encountify.Services
         public async Task<List<NearUser>> CreateListAsync()
         {
             DatabaseAccess<Location> locationData = new DatabaseAccess<Location>();
-            List<Location> locations = (List<Location>)locationData.GetAllAsync().Result;
-            
+            DatabaseAccess<VisitedLocations> visitedLocationData = new DatabaseAccess<VisitedLocations>();
+
+            List<Location> allLocations = (List<Location>)locationData.GetAllAsync().Result;
+            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationData.GetAllAsync().Result;
+
             var distances = new List<Distance>();
 
-            List<Char> remove = new List<char> { 'k', 'm', 'y', 'd', 'i'};
+            var locations = allLocations.Where(location => !visitedLocations.Exists(location2 => location2.LocationId == location.Id)); 
 
             foreach (var location in locations)
             {
@@ -43,14 +45,10 @@ namespace Encountify.Services
             {
                 var distance = await DistanceCounter.GetFormattedDistance(new Locations(location.Latitude, location.Longitude));
                 if (!distance.Equals("Could not get distance"))
-                {   
-                    var _distance = string.Concat(distance.Split(remove.ToArray()));
-
-                    if (Double.TryParse(_distance, out double dist))
-                    {
-                        location.LocationDistance = dist;
-                        location.FDistance = distance;
-                    }
+                {
+                    var _distance = DistanceCounter.ConvertedToMetersDistance(distance);
+                    location.LocationDistance = _distance;
+                    location.FDistance = distance;
                 }
             }
 
@@ -66,25 +64,25 @@ namespace Encountify.Services
                                 FormattedDistance = distance.FDistance
                             });
 
+            var orderedResult = query.OrderBy(location => location.Distance).ThenBy(location => location.Name);
+
             List<NearUser> result = new List<NearUser>();
             
-                foreach (var res in query)
+            foreach (var res in orderedResult)
+            {
+                if(res.Distance < 3000.00)
                 {
-                    string end = new string(res.FormattedDistance.Where(c => c != '.' && (c < '0' || c > '9')).ToArray());
-                    if (end.Equals(" km") && res.Distance < 3.00 || end.Equals(" m") && res.Distance < 1000.00 ||
-                        end.Equals(" yd") && res.Distance < 3280 || end.Equals(" mi") && res.Distance < 0.06)
-                        {
-                            result.Add(new NearUser()
-                            {
-                                LocationId = res.Id,
-                                LocationName = res.Name,
-                                Distance = res.Distance,
-                                FormattedDistance = res.FormattedDistance,
-                                Points = 100
-                            });
-                        }
+                    result.Add(new NearUser()
+                    {
+                        LocationId = res.Id,
+                        LocationName = res.Name,
+                        Distance = res.Distance,
+                        FormattedDistance = res.FormattedDistance,
+                        Points = 100
+                    });
                 }
-                return result;
             }
+                return result;
         }
+    }
 }
