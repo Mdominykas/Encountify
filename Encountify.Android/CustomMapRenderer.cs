@@ -27,7 +27,6 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
-        private CancellationTokenSource cts;
         public delegate void updateVisitingType(int x);
         private updateVisitingType updateVisiting;
 
@@ -61,6 +60,20 @@ namespace Encountify.Droid
                 MapControl = (CustomMap)e.NewElement;
                 ((MapView)Control).GetMapAsync(this);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                CurrentPinWindow.HideInfoWindow();
+            }
+            catch (Exception ex)   
+            {
+                Console.WriteLine(ex);
+            }
+
+            base.Dispose(disposing);
         }
 
         public async Task<View> GetInfoWindowAsync(Marker marker)
@@ -182,36 +195,20 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            try
+            Task.Delay(10).ContinueWith(delegate (Task arg)
             {
-                cts?.Cancel();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            using (cts = new CancellationTokenSource())
-            {
-                try
+                Device.BeginInvokeOnMainThread(delegate ()
                 {
-                    Task.Delay(10, cts.Token).ContinueWith(delegate (Task arg)
+                    try
                     {
-                        try //This place might raise an exception during debugging but doesn't "seem" to crash the app
-                        {
-                            CurrentPinWindow.ShowInfoWindow();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-                    });
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
+                        CurrentPinWindow.ShowInfoWindow();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                });
+            });
         }
     }
 }
