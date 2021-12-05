@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
 using Android.Content;
@@ -17,7 +16,6 @@ using View = Android.Views.View;
 using Marker = Android.Gms.Maps.Model.Marker;
 using Locations = Xamarin.Essentials.Location;
 using System.Linq;
-using System.Threading;
 
 namespace Encountify.Droid
 {
