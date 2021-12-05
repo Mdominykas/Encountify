@@ -17,6 +17,7 @@ using View = Android.Views.View;
 using Marker = Android.Gms.Maps.Model.Marker;
 using Locations = Xamarin.Essentials.Location;
 using System.Linq;
+using System.Threading;
 
 namespace Encountify.Droid
 {
@@ -26,6 +27,7 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
+        private CancellationTokenSource cts;
         public delegate void updateVisitingType(int x);
         private updateVisitingType updateVisiting;
 
@@ -104,10 +106,10 @@ namespace Encountify.Droid
         async void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
             Locations pinLocation = new Locations(e.Marker.Position.Latitude, e.Marker.Position.Longitude);
-            var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
+            var distanceString = (await DistanceCounter.GetFormattedDistance(pinLocation)).Split(" ");
 
-            var distanceNumber = distanceString.Split(" ").Take(1).First();
-            var distanceMetric = distanceString.Split(" ").Skip(1).First();
+            var distanceNumber = distanceString.Take(1).First();
+            var distanceMetric = distanceString.Skip(1).First();
 
             if (double.TryParse(distanceNumber, out var distanceDouble))
             {
@@ -127,9 +129,9 @@ namespace Encountify.Droid
                     var access = new DatabaseAccess<Location>();
                     var locationList = access.GetAllAsync().Result;
 
-                    var id = locationList.Aggregate(0, (id, next) => next.Name == e.Marker.Title ? next.Id : id);
+                    var id = locationList.Aggregate(-1, (id, next) => next.Name == e.Marker.Title ? next.Id : id);
 
-                    if (id != 0)
+                    if (id != -1)
                     {
                         await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
                     }
@@ -180,20 +182,36 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(10).ContinueWith(delegate (Task arg)
+            try
             {
-                Device.BeginInvokeOnMainThread(delegate ()
+                cts?.Cancel();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            using (cts = new CancellationTokenSource())
+            {
+                try
                 {
-                    try //This place might raise an exception during debugging but doesn't "seem" to crash the app
+                    Task.Delay(10, cts.Token).ContinueWith(delegate (Task arg)
                     {
-                        CurrentPinWindow.ShowInfoWindow();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                });
-            });
+                        try //This place might raise an exception during debugging but doesn't "seem" to crash the app
+                        {
+                            CurrentPinWindow.ShowInfoWindow();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }
