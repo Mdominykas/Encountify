@@ -6,7 +6,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         <local:CustomMap x:Name="map"
                          PropertyChanged="positionMap_PropertyChanged"
@@ -19,26 +19,26 @@
                HorizontalOptions="CenterAndExpand"
                HeightRequest="50"
                Grid.RowSpan="3"/>
-        
-        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="3">
+
+        <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  Grid.Row="3">
             <Label.FormattedText Grid.Row="3">
                 <FormattedString Grid.Row="3">
-                    <Span FontSize="16" FontAttributes="Bold" Text=" Latitude : " Grid.Row="4"/>
-                    <Span x:Name="Latitude" Grid.Row="3"/>
-                    <Span FontSize="16" FontAttributes="Bold" Text=" Longitude : " Grid.Row="4"/>
-                    <Span x:Name="Longitude" Grid.Row="3"/>
-                    <Span FontSize="16" FontAttributes="Bold" Text=" Address : " Grid.Row="4"/>
-                    <Span x:Name="Address" Grid.Row="3"/>
+                    <Span FontSize="16" FontAttributes="Bold" Text=" Latitude : "/>
+                    <Span x:Name="Latitude"/>
+                    <Span FontSize="16" FontAttributes="Bold" Text=" Longitude : "/>
+                    <Span x:Name="Longitude"/>
+                    <Span FontSize="16" FontAttributes="Bold" Text=" Address : "/>
+                    <Span x:Name="Address"/>
                 </FormattedString>
             </Label.FormattedText>
         </Label>
-
+        
         <Button
                 Text="Select Location"
                 Clicked="Button_Clicked"
                 HorizontalOptions="FillAndExpand"
-                Margin="30"
-                Grid.Row="4"/>
-
+                Margin="10"
+                Grid.Row="4">
+        </Button>
     </Grid>
 </ContentPage>
