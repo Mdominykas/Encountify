@@ -86,20 +86,20 @@ namespace Encountify.Services
                 result *= 1000;
             }
 
-            if(end.Equals(" m"))
+            else if(end.Equals(" m"))
             {
                 var distance = string.Concat(formattedDistance.Split(remove.ToArray()));
                 Double.TryParse(distance, out result);
             }
 
-            if(end.Equals(" yd"))
+            else if(end.Equals(" yd"))
             {
                 var distance = string.Concat(formattedDistance.Split(remove.ToArray()));
                 Double.TryParse(distance, out result);
                 result /= 1.094;
             }
 
-            if(end.Equals(" mi"))
+            else if(end.Equals(" mi"))
             {
                 var distance = string.Concat(formattedDistance.Split(remove.ToArray()));
                 Double.TryParse(distance, out result);
