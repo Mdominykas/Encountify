@@ -85,7 +85,7 @@ namespace Encountify.ViewModels
 
         private async void OnSelect()
         {
-            await Shell.Current.GoToAsync("MapPage");
+            await Shell.Current.GoToAsync("NewLocationMapPage");
         }
     }
 }

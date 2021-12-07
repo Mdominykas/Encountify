@@ -3,7 +3,6 @@ using Encountify.Services;
 using Encountify.ViewModels;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -11,10 +10,8 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
 using Locations = Xamarin.Essentials.Location;
 using Geolocation = Xamarin.Essentials.Geolocation;
-using DistanceUnits = Xamarin.Essentials.DistanceUnits;
-using GeolocationRequest = Xamarin.Essentials.GeolocationRequest;
-using GeolocationAccuracy = Xamarin.Essentials.GeolocationAccuracy;
 using System.Threading.Tasks;
+
 
 namespace Encountify.Views
 {
@@ -23,21 +20,12 @@ namespace Encountify.Views
     {
         ILocation locationAccess;
         MapViewModel _viewModel = new MapViewModel();
-        private CancellationTokenSource cts;
 
         public MapPage()
         {
             InitializeComponent();
             BindingContext = _viewModel;
-
             locationAccess = DependencyService.Get<ILocation>();
-
-            map.MapClicked += async (sender, e) =>
-            {
-                double lat = e.Point.Latitude;
-                double lng = e.Point.Longitude;
-                await Shell.Current.GoToAsync($"..?Latitude={lat}&Longitude={lng}");
-            };
         }
 
         protected override async void OnAppearing()
@@ -46,13 +34,9 @@ namespace Encountify.Views
             {
                 await LoadMarkersFromDb(map);
 
-                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
-                cts = new CancellationTokenSource();
-                Locations location = await Geolocation.GetLocationAsync(request, cts.Token);
-
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(1000)));
+                Locations userLocation = await Geolocation.GetLastKnownLocationAsync();
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userLocation.Latitude, userLocation.Longitude), Distance.FromMeters(1000)));
                 //map.Cluster();
-
             }
             catch (Exception) // Later will need to find a more elegant way on how to handle this on xamarin forms
             {
@@ -62,8 +46,6 @@ namespace Encountify.Views
 
         protected override void OnDisappearing()
         {
-            if (cts != null && !cts.IsCancellationRequested)
-                cts.Cancel();
             base.OnDisappearing();
         }
 
