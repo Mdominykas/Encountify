@@ -14,12 +14,14 @@ using Geolocation = Xamarin.Essentials.Geolocation;
 using DistanceUnits = Xamarin.Essentials.DistanceUnits;
 using GeolocationRequest = Xamarin.Essentials.GeolocationRequest;
 using GeolocationAccuracy = Xamarin.Essentials.GeolocationAccuracy;
+using System.Threading.Tasks;
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        ILocation locationAccess;
         MapViewModel _viewModel = new MapViewModel();
         private CancellationTokenSource cts;
 
@@ -27,6 +29,8 @@ namespace Encountify.Views
         {
             InitializeComponent();
             BindingContext = _viewModel;
+
+            locationAccess = DependencyService.Get<ILocation>();
 
             map.MapClicked += async (sender, e) =>
             {
@@ -40,7 +44,7 @@ namespace Encountify.Views
         {
             try
             {
-                LoadMarkersFromDb(map);
+                await LoadMarkersFromDb(map);
 
                 var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
                 cts = new CancellationTokenSource();
@@ -63,7 +67,7 @@ namespace Encountify.Views
             base.OnDisappearing();
         }
 
-        static public async void LoadMarker(Map map, Marker marker, Color color)
+        static public async Task LoadMarker(Map map, Marker marker, Color color)
         {
             Geocoder geoCoder = new Geocoder();
             Position position = new Position(marker.Latitude, marker.Longitude);
@@ -90,15 +94,14 @@ namespace Encountify.Views
             }
         }
 
-        public void LoadMarkersFromDb(Map map)
+        public async Task LoadMarkersFromDb(Map map)
         {
-            var access = new DatabaseAccess<Location>();
-            var locationList = access.GetAllAsync().Result;
+            var locationList = await locationAccess.GetAllAsync();
 
             foreach (var s in locationList)
             {
                 var marker = new Marker(s.Name, s.Latitude, s.Longitude);
-                LoadMarker(map, marker, SelectMarkerColor(s.Category));
+                await LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
 
