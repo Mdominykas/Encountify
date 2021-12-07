@@ -3,7 +3,6 @@ using Encountify.Services;
 using Encountify.ViewModels;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -11,10 +10,6 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
 using Locations = Xamarin.Essentials.Location;
 using Geolocation = Xamarin.Essentials.Geolocation;
-
-using DistanceUnits = Xamarin.Essentials.DistanceUnits;
-using GeolocationRequest = Xamarin.Essentials.GeolocationRequest;
-using GeolocationAccuracy = Xamarin.Essentials.GeolocationAccuracy;
 using System.Threading.Tasks;
 
 

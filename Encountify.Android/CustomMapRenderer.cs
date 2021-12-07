@@ -183,20 +183,22 @@ namespace Encountify.Droid
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
 
-        // These lines were causing exceptions and/or (depending for whom) crashing devices
-        // So I will comment them until someone finds a good solution for this problem
-/*            Task.Delay(500).ContinueWith(delegate (Task arg)
-            {
-                try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
-                    {
-                    CurrentPinWindow.ShowInfoWindow();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            });
-*/ 
-          }
+            //WILL BE FIXED WITH PR 108
+
+            // These lines were causing exceptions and/or (depending for whom) crashing devices
+            // So I will comment them until someone finds a good solution for this problem
+            /*            Task.Delay(500).ContinueWith(delegate (Task arg)
+                        {
+                            try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
+                                {
+                                CurrentPinWindow.ShowInfoWindow();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        });
+            */
+        }
     }
 }
