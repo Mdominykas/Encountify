@@ -78,14 +78,14 @@ namespace Encountify.ViewModels
                 Category = (int)CategoryConverter.ConvertStringToCategory(Category)
             };
 
-            await DataStore.AddAsync(location);
+            await LocationData.AddAsync(location);
 
             await Shell.Current.GoToAsync("..");
         }
 
         private async void OnSelect()
         {
-            await Shell.Current.GoToAsync("MapPage");
+            await Shell.Current.GoToAsync("NewLocationMapPage");
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Encountify.ViewModels
             Geocoder geoCoder = new Geocoder();
             try
             {
-                location = await DataStore.GetAsync(Id);
+                location = await LocationData.GetAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;

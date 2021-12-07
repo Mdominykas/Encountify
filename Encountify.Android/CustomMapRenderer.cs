@@ -26,17 +26,19 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
-        public delegate void updateVisitingType(int x);
+        public delegate Task updateVisitingType(int x);
         private updateVisitingType updateVisiting;
+        ILocation locationAccess;
 
         public CustomMapRenderer(Context context) : base(context)
         {
+            locationAccess = DependencyService.Get<ILocation>();
             updateVisiting += new updateVisitingType(AddToDatabase);
         }
 
-        private async void AddToDatabase(int id)
+        private async Task AddToDatabase(int id)
         {
-            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100};
+            VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100 };
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
             await visitedAccess.AddAsync(newVisit);
         }
@@ -111,25 +113,24 @@ namespace Encountify.Droid
             {
                 if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = await locationAccess.GetAllAsync();
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
-                    if(visited != null)
+                    if (visited != null)
                     {
-                        updateVisiting(visited.Id);
+                        await updateVisiting(visited.Id);
                     }
                 }
                 else
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = await locationAccess.GetAllAsync();
 
                     foreach (var s in locationList)
                     {
                         if (s.Name == e.Marker.Title)
                         {
                             var id = s.Id;
+                            CurrentPinWindow.HideInfoWindow();
                             await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
                             break;
                         }
@@ -181,20 +182,23 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-            Task.Delay(500).ContinueWith(delegate (Task arg)
-            {
-                Device.BeginInvokeOnMainThread(delegate ()
-                {
-                    try //This place might raise an exception during debugging but doesn't "seem" to crash the app
-                    {
-                        CurrentPinWindow.ShowInfoWindow();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                });
-            });
+
+            //WILL BE FIXED WITH PR 108
+
+            // These lines were causing exceptions and/or (depending for whom) crashing devices
+            // So I will comment them until someone finds a good solution for this problem
+            /*            Task.Delay(500).ContinueWith(delegate (Task arg)
+                        {
+                            try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
+                                {
+                                CurrentPinWindow.ShowInfoWindow();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        });
+            */
         }
     }
 }

@@ -192,4 +192,8 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+# Visual Studio Code Settings
 .vscode/settings.json
+
+# ASP.NET Web API Development settings
+/EncountifyAPI/appsettings.Development.json
