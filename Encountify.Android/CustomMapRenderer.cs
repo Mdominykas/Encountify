@@ -84,12 +84,11 @@ namespace Encountify.Droid
                 Locations pinLocation = new Locations(marker.Position.Latitude, marker.Position.Longitude);
                 var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-                var distanceNumber = distanceString.Split(" ").Take(1).First();
-                var distanceMetric = distanceString.Split(" ").Skip(1).First();
+                var distanceStringList = distanceString.Split(" ");
 
-                if (double.TryParse(distanceNumber, out var distanceDouble))
+                if (double.TryParse(distanceStringList[0], out var distanceDouble))
                 {
-                    if ((distanceDouble <= 30 && distanceMetric == "m") || (distanceDouble <= 32.81 && distanceMetric == "yd"))
+                    if ((distanceDouble <= 30 && distanceStringList[1] == "m") || (distanceDouble <= 32.81 && distanceStringList[1] == "yd"))
                     {
                         var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
@@ -117,14 +116,13 @@ namespace Encountify.Droid
         async void OnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs e)
         {
             Locations pinLocation = new Locations(e.Marker.Position.Latitude, e.Marker.Position.Longitude);
-            var distanceString = (await DistanceCounter.GetFormattedDistance(pinLocation)).Split(" ");
+            var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-            var distanceNumber = distanceString.Take(1).First();
-            var distanceMetric = distanceString.Skip(1).First();
+            var distanceStringList = distanceString.Split(" ");
 
-            if (double.TryParse(distanceNumber, out var distanceDouble))
+            if (double.TryParse(distanceStringList[0], out var distanceDouble))
             {
-                if ((distanceDouble <= 30 && distanceMetric == "m") || (distanceDouble <= 32.81 && distanceMetric == "yd")) //TODO handle UserVisited event.
+                if ((distanceDouble <= 30 && distanceStringList[1] == "m") || (distanceDouble <= 32.81 && distanceStringList[1] == "yd")) //TODO handle UserVisited event.
                 {
                     var access = new DatabaseAccess<Location>();
                     var locationList = access.GetAllAsync().Result;
@@ -140,11 +138,14 @@ namespace Encountify.Droid
                     var access = new DatabaseAccess<Location>();
                     var locationList = access.GetAllAsync().Result;
 
-                    var id = locationList.Aggregate(-1, (id, next) => next.Name == e.Marker.Title ? next.Id : id);
-
-                    if (id != -1)
+                    foreach (var s in locationList)
                     {
-                        await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
+                        if (s.Name == e.Marker.Title)
+                        {
+                            var id = s.Id;
+                            await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
+                            break;
+                        }
                     }
                 }
             }

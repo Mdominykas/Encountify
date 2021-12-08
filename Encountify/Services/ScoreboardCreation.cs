@@ -29,17 +29,18 @@ namespace Encountify.Services
                         Locations = locations.Select(loc => loc.LocationId),
                         Points = locations.Select(loc => loc.Points)
                     });
-            List<ScoreboardEntry> results = new List<ScoreboardEntry>();
 
-            foreach (var group in query)
-            {
-                results.Add(new ScoreboardEntry()
+            var results = query.Aggregate(new List<ScoreboardEntry>(),
+                (list, group) =>
                 {
-                    Name = group.Users,
-                    Score = group.Points.Sum(),
-                    UserId = group.UserId
+                    list.Add(new ScoreboardEntry()
+                    {
+                        Name = group.Users,
+                        Score = group.Points.Sum(),
+                        UserId = group.UserId
+                    });
+                    return list;
                 });
-            }
 
             if (reversed)
             {
