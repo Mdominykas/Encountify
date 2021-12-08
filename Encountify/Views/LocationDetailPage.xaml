@@ -30,7 +30,6 @@
 
             <Label 
             Text="Description:" 
-
             FontSize="Medium" />
 
             <Label
@@ -38,21 +37,13 @@
             FontSize="Small"/>
 
             <Label 
-            Text="Latitude:" 
+            Text="Address:" 
             FontSize="Medium" />
 
             <Label 
-            Text="{Binding Latitude}" 
+            Text="{Binding Address}" 
             FontSize="Small"/>
             
-            <Label 
-            Text="Longitude:" 
-            FontSize="Medium" />
-
-            <Label 
-            Text="{Binding Longitude}" 
-            FontSize="Small"/>
-
             <Label
             Text="Category"
             FontSize="Medium" />

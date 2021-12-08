@@ -16,5 +16,10 @@ namespace Encountify.Views
             viewModel.ImageOpenClose = new Image();
             viewModel.ImageOpenClose.Source = ImageSource.FromStream(() => new MemoryStream(App.UserPicture));
         }
+
+        private async void OnLocationsClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LocationsNearUserPage");
+        }
     }
 }
