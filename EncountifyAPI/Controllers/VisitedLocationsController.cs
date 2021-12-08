@@ -64,6 +64,36 @@ namespace EncountifyAPI.Controllers
         }
 
         /// <summary>
+        /// Get user's last few visited location
+        /// </summary>
+        [HttpGet("Last/{userId}/{numberOfLocations}")]
+        public IEnumerable<VisitedLocation> GetUserLastsVisitedLocation(int? userId, int numberOfLocations)
+        {
+            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            return visits.Skip(visits.Count - numberOfLocations);
+        }
+
+        /// <summary>
+        /// Get user's first visited location
+        /// </summary>
+        [HttpGet("First/{userId}")]
+        public IEnumerable<VisitedLocation> GetUserFirstVisitedLocation(int? userId)
+        {
+            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            yield return visits.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get user's first few visited location
+        /// </summary>
+        [HttpGet("First/{userId}/{numberOfLocations}")]
+        public IEnumerable<VisitedLocation> GetUserFirstsVisitedLocation(int? userId, int numberOfLocations)
+        {
+            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            return visits.Take(numberOfLocations);
+        }
+
+        /// <summary>
         /// Get locations's visitors
         /// </summary>
         [HttpGet("Location/{locationId}")]
@@ -97,7 +127,6 @@ namespace EncountifyAPI.Controllers
             }
             return GetVisitedLocation(id);
         }
-
 
         /// <summary>
         /// Edit an existing visited location's Id

@@ -21,7 +21,7 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        ILocation locationAccess;
+        ILocationAccess locationAccess;
         MapViewModel _viewModel = new MapViewModel();
         private CancellationTokenSource cts;
 
@@ -30,7 +30,7 @@ namespace Encountify.Views
             InitializeComponent();
             BindingContext = _viewModel;
 
-            locationAccess = DependencyService.Get<ILocation>();
+            locationAccess = DependencyService.Get<ILocationAccess>();
 
             map.MapClicked += async (sender, e) =>
             {

@@ -10,11 +10,11 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ForgotPasswordPage : ContentPage
     {
-        IUser DataStore; //new DatabaseAccess<User>();
+        IUserAccess DataStore; //new DatabaseAccess<User>();
 
         public ForgotPasswordPage()
         {
-            DataStore = DependencyService.Get<IUser>();
+            DataStore = DependencyService.Get<IUserAccess>();
             InitializeComponent();
         }
 

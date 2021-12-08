@@ -28,11 +28,11 @@ namespace Encountify.Droid
 
         public delegate Task updateVisitingType(int x);
         private updateVisitingType updateVisiting;
-        ILocation locationAccess;
+        ILocationAccess locationAccess;
 
         public CustomMapRenderer(Context context) : base(context)
         {
-            locationAccess = DependencyService.Get<ILocation>();
+            locationAccess = DependencyService.Get<ILocationAccess>();
             updateVisiting += new updateVisitingType(AddToDatabase);
         }
 

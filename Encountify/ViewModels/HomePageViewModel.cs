@@ -13,7 +13,7 @@ namespace Encountify.ViewModels
     {
         private ImageSource _downloadedImageSource;
         public Command OnImageChangeCommand { get; }
-        IUser users;
+        IUserAccess users;
 
         public HomePageViewModel()
         {

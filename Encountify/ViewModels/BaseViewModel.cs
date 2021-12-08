@@ -9,13 +9,13 @@ namespace Encountify.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public static ILocation LocationData = null;
+        public static ILocationAccess LocationData = null;
 
         public BaseViewModel()
         {
             if (LocationData == null)
             {
-                LocationData = DependencyService.Get<ILocation>();
+                LocationData = DependencyService.Get<ILocationAccess>();
             }
         }
 

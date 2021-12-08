@@ -14,7 +14,7 @@ using Xamarin.Forms;
 [assembly:Dependency(typeof(UserAccess))]
 namespace Encountify.Services
 {
-    public class UserAccess : IUser
+    public class UserAccess : IUserAccess
     {
         public async Task<bool> AddAsync(User user)
         {

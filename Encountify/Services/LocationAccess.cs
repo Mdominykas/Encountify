@@ -15,7 +15,7 @@ using Xamarin.Forms;
 
 namespace Encountify.Services
 {
-    public class LocationAccess : ILocation
+    public class LocationAccess : ILocationAccess
     {
         public async Task<IEnumerable<Location>> GetAllAsync()
         {
