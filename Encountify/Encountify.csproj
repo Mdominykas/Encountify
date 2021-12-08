@@ -79,9 +79,11 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Views\LocationsNearUserPage.xaml">
-    <EmbeddedResource Update="Views\NewLocationMapPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+		<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	</EmbeddedResource>
+	  <EmbeddedResource Update="Views\NewLocationMapPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
     <EmbeddedResource Update="Views\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
