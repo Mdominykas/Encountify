@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 using Locations = Xamarin.Essentials.Location;
 
 namespace Encountify.Services
@@ -19,7 +20,7 @@ namespace Encountify.Services
 
         public async Task<List<NearUser>> CreateListAsync()
         {
-            DatabaseAccess<Location> locationData = new DatabaseAccess<Location>();
+            ILocation locationData = DependencyService.Get<ILocation>(); ;
             DatabaseAccess<VisitedLocations> visitedLocationData = new DatabaseAccess<VisitedLocations>();
 
             List<Location> allLocations = (List<Location>)locationData.GetAllAsync().Result;
