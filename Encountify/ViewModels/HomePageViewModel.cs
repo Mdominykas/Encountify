@@ -3,6 +3,7 @@ using Encountify.Services;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -69,6 +70,9 @@ namespace Encountify.ViewModels
                 // Permissions not granted
                 Debug.WriteLine("you don't have permissions");
                 Debug.WriteLine(pEx.ToString());
+
+                //await DisplayAlert("Error", "Image can not be selected without permissions", "Ok");
+
             }
             catch (FeatureNotSupportedException fnsEx)
             {
@@ -84,11 +88,18 @@ namespace Encountify.ViewModels
             }
             if (newPicture != null)
             {
-                users = DependencyService.Get<IUser>(); //new DatabaseAccess<User>();
+                Debug.WriteLine("Commenting these lines as API currently does not seems to be good for images");
+                Debug.WriteLine("Will try to deal with it later on");
+/*                users = DependencyService.Get<IUser>(); //new DatabaseAccess<User>();
                 var newData = await users.GetAsync(App.UserID);
                 newData.Picture = newPicture;
                 await users.UpdateAsync(newData);
-            }
+*/            }
+        }
+
+        private Task DisplayAlert(string v1, string v2, string v3)
+        {
+            throw new NotImplementedException();
         }
     }
 }

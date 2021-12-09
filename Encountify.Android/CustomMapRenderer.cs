@@ -25,15 +25,17 @@ namespace Encountify.Droid
         CustomMap MapControl { get; set; }
         Marker CurrentPinWindow { get; set; } = null;
 
-        public delegate void updateVisitingType(int x);
+        public delegate Task updateVisitingType(int x);
         private updateVisitingType updateVisiting;
+        ILocation locationAccess;
 
         public CustomMapRenderer(Context context) : base(context)
         {
+            locationAccess = DependencyService.Get<ILocation>();
             updateVisiting += new updateVisitingType(AddToDatabase);
         }
 
-        private async void AddToDatabase(int id)
+        private async Task AddToDatabase(int id)
         {
             VisitedLocations newVisit = new VisitedLocations() { LocationId = id, UserId = App.UserID, Points = 100 };
             var visitedAccess = new DatabaseAccess<VisitedLocations>();
@@ -124,25 +126,24 @@ namespace Encountify.Droid
             {
                 if ((distanceDouble <= 30 && distanceStringList[1] == "m") || (distanceDouble <= 32.81 && distanceStringList[1] == "yd")) //TODO handle UserVisited event.
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = await locationAccess.GetAllAsync();
 
                     Location visited = locationList.FirstOrDefault(s => s.Name == e.Marker.Title);
                     if (visited != null)
                     {
-                        updateVisiting(visited.Id);
+                        await updateVisiting(visited.Id);
                     }
                 }
                 else
                 {
-                    var access = new DatabaseAccess<Location>();
-                    var locationList = access.GetAllAsync().Result;
+                    var locationList = await locationAccess.GetAllAsync();
 
                     foreach (var s in locationList)
                     {
                         if (s.Name == e.Marker.Title)
                         {
                             var id = s.Id;
+                            CurrentPinWindow.HideInfoWindow();
                             await Shell.Current.GoToAsync($"{nameof(LocationDetailPage)}?{nameof(LocationDetailViewModel.Id)}={id}");
                             break;
                         }

@@ -34,7 +34,7 @@ namespace Encountify.ViewModels
             try
             {
                 Locations.Clear();
-                var locations = await DataStore.GetAllAsync(true);
+                var locations = await LocationData.GetAllAsync();
                 foreach (var location in locations)
                 {
                     Locations.Add(location);

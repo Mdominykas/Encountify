@@ -20,6 +20,7 @@ namespace Encountify.ViewModels
         private double longitude;
         private string category;
         private string distance;
+        private string address;
         private Location location;
 
         public int Id
@@ -68,21 +69,31 @@ namespace Encountify.ViewModels
             set => SetProperty(ref category, value);
         }
 
+        public string Address
+        {
+            get => address;
+            set => SetProperty(ref address, value);
+        }
+
         public Map Map { get; set; }
 
         public async void LoadLocationId(int Id)
         {
+            Geocoder geoCoder = new Geocoder();
             try
             {
-                location = await DataStore.GetAsync(Id);
+                location = await LocationData.GetAsync(Id);
                 Id = location.Id;
                 Name = location.Name;
                 Description = location.Description;
-                Longitude = location.Longitude;
                 Latitude = location.Latitude;
+                Longitude = location.Longitude;
+                Position position = new Position(Latitude, Longitude);
+                IEnumerable<string> possibleAddress = await geoCoder.GetAddressesForPositionAsync(position);
+                Address = possibleAddress.FirstOrDefault();
                 Distance = await DistanceCounter.GetFormattedDistance(new Locations(location.Latitude, location.Longitude));
                 Category = CategoryConverter.ConvertCategoryToString((Category)location.Category);
-                LoadMarker(Map, location);
+                LoadMarker(Map, location, position, Address);
             }
             catch (Exception)
             {
@@ -90,17 +101,11 @@ namespace Encountify.ViewModels
             }
         }
 
-        static public async void LoadMarker(Map map, Location location)
+        static public void LoadMarker(Map map, Location location, Position position, string address)
         {
-
-            Geocoder geoCoder = new Geocoder();
-            Position position = new Position(location.Latitude, location.Longitude);
             MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);
 
             map.MoveToRegion(mapSpan, true);
-
-            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
-            string address = possibleAddresses.FirstOrDefault();
 
             Pin pin = new Pin()
             {

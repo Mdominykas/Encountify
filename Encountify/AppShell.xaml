@@ -32,6 +32,14 @@
     </FlyoutItem>
 
     <FlyoutItem
+        Title="LocationsNearUser"
+        FlyoutItemIsVisible="False">
+        <ShellContent
+            Route="LocationsNearUserPage"
+            ContentTemplate="{DataTemplate local:LocationsNearUserPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
         Title="Home">
         <ShellContent
             Route="HomePage"

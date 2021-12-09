@@ -3,7 +3,6 @@ using Encountify.Services;
 using Encountify.ViewModels;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -11,44 +10,33 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Forms.GoogleMaps;
 using Locations = Xamarin.Essentials.Location;
 using Geolocation = Xamarin.Essentials.Geolocation;
-using DistanceUnits = Xamarin.Essentials.DistanceUnits;
-using GeolocationRequest = Xamarin.Essentials.GeolocationRequest;
-using GeolocationAccuracy = Xamarin.Essentials.GeolocationAccuracy;
+using System.Threading.Tasks;
+
 
 namespace Encountify.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        ILocation locationAccess;
         MapViewModel _viewModel = new MapViewModel();
-        private CancellationTokenSource cts;
 
         public MapPage()
         {
             InitializeComponent();
             BindingContext = _viewModel;
-
-            map.MapClicked += async (sender, e) =>
-            {
-                double lat = e.Point.Latitude;
-                double lng = e.Point.Longitude;
-                await Shell.Current.GoToAsync($"..?Latitude={lat}&Longitude={lng}");
-            };
+            locationAccess = DependencyService.Get<ILocation>();
         }
 
         protected override async void OnAppearing()
         {
             try
             {
-                LoadMarkersFromDb(map);
+                await LoadMarkersFromDb(map);
 
-                var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(1));
-                cts = new CancellationTokenSource();
-                Locations location = await Geolocation.GetLocationAsync(request, cts.Token);
-
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(1000)));
+                Locations userLocation = await Geolocation.GetLastKnownLocationAsync();
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userLocation.Latitude, userLocation.Longitude), Distance.FromMeters(1000)));
                 //map.Cluster();
-
             }
             catch (Exception) // Later will need to find a more elegant way on how to handle this on xamarin forms
             {
@@ -58,12 +46,10 @@ namespace Encountify.Views
 
         protected override void OnDisappearing()
         {
-            if (cts != null && !cts.IsCancellationRequested)
-                cts.Cancel();
             base.OnDisappearing();
         }
 
-        static public async void LoadMarker(Map map, Marker marker, Color color)
+        static public async Task LoadMarker(Map map, Marker marker, Color color)
         {
             Geocoder geoCoder = new Geocoder();
             Position position = new Position(marker.Latitude, marker.Longitude);
@@ -90,15 +76,14 @@ namespace Encountify.Views
             }
         }
 
-        public void LoadMarkersFromDb(Map map)
+        public async Task LoadMarkersFromDb(Map map)
         {
-            var access = new DatabaseAccess<Location>();
-            var locationList = access.GetAllAsync().Result;
+            var locationList = await locationAccess.GetAllAsync();
 
             foreach (var s in locationList)
             {
                 var marker = new Marker(s.Name, s.Latitude, s.Longitude);
-                LoadMarker(map, marker, SelectMarkerColor(s.Category));
+                await LoadMarker(map, marker, SelectMarkerColor(s.Category));
             }
         }
 
