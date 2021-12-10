@@ -20,7 +20,7 @@ namespace Encountify.Services
 
         public async Task<List<NearUser>> CreateListAsync()
         {
-            ILocation locationData = DependencyService.Get<ILocation>(); ;
+            ILocationAccess locationData = DependencyService.Get<ILocationAccess>(); ;
             DatabaseAccess<VisitedLocations> visitedLocationData = new DatabaseAccess<VisitedLocations>();
 
             List<Location> allLocations = (List<Location>)locationData.GetAllAsync().Result;
