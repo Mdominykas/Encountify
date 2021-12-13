@@ -51,8 +51,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Tests.cs" />
+    <Compile Include="DistanceTests.cs" />
+    <Compile Include="LocationTests.cs" />
+    <Compile Include="UserTests.cs" />
+    <Compile Include="VisitedLocationsTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

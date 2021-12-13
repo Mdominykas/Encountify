@@ -13,10 +13,9 @@ namespace Encountify.Services
         public ScoreboardEntry this[int i] => CreateScoreboard().Result.ToArray()[i];
         public async Task<List<ScoreboardEntry>> CreateScoreboard(bool reversed = true)
         {
-            IUserAccess userData = DependencyService.Get<IUserAccess>();    //new DatabaseAccess<User>();
+            IUserAccess userData = DependencyService.Get<IUserAccess>(); 
             List<User> users = (List<User>) userData.GetAllAsync().Result;
             IVisitedLocationAccess visitedLocationsData = DependencyService.Get<IVisitedLocationAccess>();
-            //DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
             List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 
             var query =
