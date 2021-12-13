@@ -40,7 +40,9 @@ namespace EncountifyAPI
               .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
               .CreateLogger();
 
-            Log.Information("Hello World");
+            Log.Information("-------------------------------------------------------------------");
+            Log.Information("NEW LOGGNG SESSION");
+            Log.Information("-------------------------------------------------------------------");
 
             services.AddControllers();
             services.AddSwaggerGen(options =>
