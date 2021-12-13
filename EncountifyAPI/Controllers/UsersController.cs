@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EncountifyAPI.Data;
 using EncountifyAPI.Models;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System.Text;
-using System.Data;
+using EncountifyAPI.Interfaces;
 
 namespace EncountifyAPI.Controllers
 {
@@ -18,11 +13,13 @@ namespace EncountifyAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly string ConnectionString;
+        private readonly string _connectionString;
+        private readonly IUserHandlerExecutables _userHandling;
 
-        public UsersController(IConfiguration configuration)
+        public UsersController(IConfiguration configuration, IUserHandlerExecutables userHandling)
         {
-            ConnectionString = configuration.GetConnectionString("EncountifyAPIContext");
+            _connectionString = configuration.GetConnectionString("EncountifyAPIContext");
+            _userHandling = userHandling;
         }
 
         /// <summary>
@@ -31,7 +28,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet]
         public IEnumerable<User> GetAllUsers()
         {
-            return ExecuteUserReader("SELECT * FROM Users");
+            return _userHandling.ExecuteUserReader(_connectionString, "SELECT * FROM Users");
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet("Id/{id}")]
         public IEnumerable<User> GetUser(int id)
         {
-            List<User> users = ExecuteUserReader("SELECT * FROM Users WHERE Id = @id", id: id);
+            List<User> users = _userHandling.ExecuteUserReader(_connectionString, "SELECT * FROM Users WHERE Id = @id", id: id);
             yield return users.FirstOrDefault();
         }
 
@@ -50,7 +47,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet("Username/{username}")]
         public IEnumerable<User> GetUser(string username)
         {
-            List<User> users = ExecuteUserReader("SELECT * FROM Users WHERE CONVERT(VARCHAR, Username) = @username", username: username);
+            List<User> users = _userHandling.ExecuteUserReader(_connectionString, "SELECT * FROM Users WHERE CONVERT(VARCHAR, Username) = @username", username: username);
             yield return users.FirstOrDefault();
         }
 
@@ -60,7 +57,7 @@ namespace EncountifyAPI.Controllers
         [HttpPost]
         public IEnumerable<User> AddUser(string username, string password, string email)
         {
-            ExecuteUserQuery("INSERT INTO Users VALUES (@username, @password, @email, 0, NULL, CURRENT_TIMESTAMP, 0)", username: username, password: password, email: email);
+            _userHandling.ExecuteUserReader(_connectionString, "INSERT INTO Users VALUES (@username, @password, @email, 0, NULL, CURRENT_TIMESTAMP, 0)", username: username, password: password, email: email);
             return GetUser(username);
         }
 
@@ -70,7 +67,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}")]
         public IEnumerable<User> EditUser(int id, string? username = null, string? password = null, string? email = null)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 if (username != null) EditUserName(id, username);
@@ -87,7 +84,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/Username")]
         public IEnumerable<User> EditUserName(int id, string username)
         {
-            ExecuteUserQuery("UPDATE Users SET Username = @username WHERE Id = @id", id: id, username: username);
+            _userHandling.ExecuteUserReader(_connectionString, "UPDATE Users SET Username = @username WHERE Id = @id", id: id, username: username);
             return GetUser(id);
         }
 
@@ -97,7 +94,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/Password")]
         public IEnumerable<User> EditUserPassword(int id, string password)
         {
-            ExecuteUserQuery("UPDATE Users SET Password = @password WHERE Id = @id", id: id, password: password);
+            _userHandling.ExecuteUserReader(_connectionString, "UPDATE Users SET Password = @password WHERE Id = @id", id: id, password: password);
             return GetUser(id);
         }
 
@@ -107,7 +104,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/Email")]
         public IEnumerable<User> EditUserEmail(int id, string email)
         {
-            ExecuteUserQuery("UPDATE Users SET Email = @email WHERE Id = @id", id: id, email: email);
+            _userHandling.ExecuteUserReader(_connectionString, "UPDATE Users SET Email = @email WHERE Id = @id", id: id, email: email);
             return GetUser(id);
         }
 
@@ -117,7 +114,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/IsAdmin")]
         public IEnumerable<User> EditUserIsAdmin(int id, bool isAdmin)
         {
-            ExecuteUserQuery("UPDATE Users SET IsAdmin = @isAdmin WHERE Id = @id", id: id, isAdmin: isAdmin);
+            _userHandling.ExecuteUserReader(_connectionString, "UPDATE Users SET IsAdmin = @isAdmin WHERE Id = @id", id: id, isAdmin: isAdmin);
             return GetUser(id);
         }
 
@@ -127,7 +124,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/Picture")]
         public IEnumerable<User> EditUserPicture(int id, byte[] picture)
         {
-            ExecuteUserQuery("UPDATE Users SET Picture = @picture WHERE Id = @id", id: id, picture: picture);
+            _userHandling.ExecuteUserReader(_connectionString, "UPDATE Users SET Picture = @picture WHERE Id = @id", id: id, picture: picture);
             return GetUser(id);
         }
 
@@ -137,7 +134,7 @@ namespace EncountifyAPI.Controllers
         [HttpDelete]
         public void DeleteAllUsers()
         {
-            ExecuteUserQuery("DELETE FROM Users");
+            _userHandling.ExecuteUserReader(_connectionString, "DELETE FROM Users");
         }
 
         /// <summary>
@@ -146,70 +143,8 @@ namespace EncountifyAPI.Controllers
         [HttpDelete("{id}")]
         public IEnumerable<User> DeleteUser(int id)
         {
-            ExecuteUserQuery("DELETE FROM Users WHERE Id = @id", id);
+            _userHandling.ExecuteUserReader(_connectionString, "DELETE FROM Users WHERE Id = @id", id);
             return GetUser(id);
-        }
-
-        private List<User> ExecuteUserReader(string query, int? id = null, string? username = null, string? password = null, string? email = null, bool? isAdmin = null, byte[] picture = null, int? points = null)
-        {
-            List<User> users = new List<User>();
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                using SqlCommand command = new SqlCommand(query, connection);
-
-                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
-                if (username != null) command.Parameters.AddWithValue("@username", username ?? default(string));
-                if (password != null) command.Parameters.AddWithValue("@password", password ?? default(string));
-                if (email != null) command.Parameters.AddWithValue("@email", email ?? default(string));
-                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin ?? default(bool));
-                if (picture?.Length > 0) command.Parameters.Add("@picture", SqlDbType.Image).Value = picture;
-                if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
-
-                using SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    users.Add(ParseUser(reader));
-                }
-            }
-            return users;
-        }
-
-        private void ExecuteUserQuery(string query, int? id = null, string? username = null, string? password = null, string? email = null, bool? isAdmin = null, byte[] picture = null, int? points = null)
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                using SqlCommand command = new SqlCommand(query, connection);
-
-                if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
-                if (username != null) command.Parameters.AddWithValue("@username", username ?? default(string));
-                if (password != null) command.Parameters.AddWithValue("@password", password ?? default(string));
-                if (email != null) command.Parameters.AddWithValue("@email", email ?? default(string));
-                if (isAdmin != null) command.Parameters.AddWithValue("@isAdmin", isAdmin ?? default(bool));
-                if (picture?.Length > 0) command.Parameters.Add("@picture", SqlDbType.Image).Value = picture;
-                if (points != null) command.Parameters.AddWithValue("@points", points ?? default(int));
-
-                command.ExecuteNonQuery();
-            }
-        }
-
-
-        private static User ParseUser(SqlDataReader reader)
-        {
-            User user = new User()
-            {
-                Id = (int)reader["Id"],
-                Username = reader["Username"].ToString(),
-                Email = reader["Email"].ToString(),
-                Password = reader["Password"].ToString(),
-                IsAdmin = Convert.ToBoolean(reader["IsAdmin"]),
-                Picture = Encoding.ASCII.GetBytes(reader["Picture"].ToString()),
-                DateCreated = (DateTime)reader["DateCreated"],
-                Points = (int)reader["Points"]
-            };
-            return user;
         }
     }
 }
