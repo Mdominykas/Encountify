@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
 using Android.Content;
@@ -63,6 +62,20 @@ namespace Encountify.Droid
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            try
+            {
+                CurrentPinWindow.HideInfoWindow();
+            }
+            catch (Exception ex)   
+            {
+                Console.WriteLine(ex);
+            }
+
+            base.Dispose(disposing);
+        }
+
         public async Task<View> GetInfoWindowAsync(Marker marker)
         {
             var inflater = Context.GetSystemService(Context.LayoutInflaterService) as LayoutInflater;
@@ -77,7 +90,7 @@ namespace Encountify.Droid
 
                 if (double.TryParse(distanceStringList[0], out var distanceDouble))
                 {
-                    if (distanceDouble <= 30 && distanceStringList[1] == "m")
+                    if ((distanceDouble <= 30 && distanceStringList[1] == "m") || (distanceDouble <= 32.81 && distanceStringList[1] == "yd"))
                     {
                         var layout = Resource.Layout.VisitedInfoWindow; //TODO make the VisitedInfoWindow actually look good
 
@@ -107,11 +120,11 @@ namespace Encountify.Droid
             Locations pinLocation = new Locations(e.Marker.Position.Latitude, e.Marker.Position.Longitude);
             var distanceString = await DistanceCounter.GetFormattedDistance(pinLocation);
 
-            var distance = distanceString.Split(" ");
+            var distanceStringList = distanceString.Split(" ");
 
-            if (double.TryParse(distance[0], out var distanceDouble))
+            if (double.TryParse(distanceStringList[0], out var distanceDouble))
             {
-                if (distanceDouble <= 30 && distance[1] == "m") //TODO handle UserVisited event.
+                if ((distanceDouble <= 30 && distanceStringList[1] == "m") || (distanceDouble <= 32.81 && distanceStringList[1] == "yd")) //TODO handle UserVisited event.
                 {
                     var locationList = await locationAccess.GetAllAsync();
 
@@ -182,23 +195,20 @@ namespace Encountify.Droid
 
         void OnMyLocationChange(object sender, GoogleMap.MyLocationChangeEventArgs e)
         {
-
-            //WILL BE FIXED WITH PR 108
-
-            // These lines were causing exceptions and/or (depending for whom) crashing devices
-            // So I will comment them until someone finds a good solution for this problem
-            /*            Task.Delay(500).ContinueWith(delegate (Task arg)
-                        {
-                            try //I guess may crach due to thread not finishing task before being force closed during page switching. May be fixible with cancelation token wizardry (my guess lowering delay reduces the chances of the crash)
-                                {
-                                CurrentPinWindow.ShowInfoWindow();
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-                        });
-            */
+            Task.Delay(10).ContinueWith(delegate (Task arg)
+            {
+                Device.BeginInvokeOnMainThread(delegate ()
+                {
+                    try
+                    {
+                        CurrentPinWindow.ShowInfoWindow();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                });
+            });
         }
     }
 }

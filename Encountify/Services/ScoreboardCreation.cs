@@ -31,6 +31,7 @@ namespace Encountify.Services
                         Locations = locations.Select(loc => loc.LocationId),
                         Points = locations.Select(loc => loc.Points)
                     });
+
             List<ScoreboardEntry> results = new List<ScoreboardEntry>();
 
             foreach (var group in query)
