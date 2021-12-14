@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Encountify.Services
 {
-    public interface IUser
+    public interface IUserAccess
     {
         Task<bool> AddAsync(User user);
         Task<bool> UpdateAsync(User user);

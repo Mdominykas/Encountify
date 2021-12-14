@@ -13,9 +13,10 @@ namespace Encountify.Services
         public ScoreboardEntry this[int i] => CreateScoreboard().Result.ToArray()[i];
         public async Task<List<ScoreboardEntry>> CreateScoreboard(bool reversed = true)
         {
-            IUser userData = DependencyService.Get<IUser>();    //new DatabaseAccess<User>();
+            IUserAccess userData = DependencyService.Get<IUserAccess>();    //new DatabaseAccess<User>();
             List<User> users = (List<User>) userData.GetAllAsync().Result;
-            DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
+            IVisitedLocationAccess visitedLocationsData = DependencyService.Get<IVisitedLocationAccess>();
+            //DatabaseAccess<VisitedLocations> visitedLocationsData = new DatabaseAccess<VisitedLocations>();
             List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
 
             var query =
@@ -37,7 +38,7 @@ namespace Encountify.Services
                 results.Add(new ScoreboardEntry()
                 {
                     Name = group.Users,
-                    Score = group.Points.Sum(),
+                    Score = group.Points.Aggregate(0, (agg, next) => agg + next),
                     UserId = group.UserId
                 });
             }

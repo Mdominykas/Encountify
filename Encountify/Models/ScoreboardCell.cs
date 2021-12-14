@@ -16,7 +16,7 @@ namespace Encountify.Models
         {
             Name = entry.Name;
             Score = entry.Score;
-            IUser userData = DependencyService.Get<IUser>();
+            IUserAccess userData = DependencyService.Get<IUserAccess>();
             User user = userData.GetAsync(entry.UserId).Result;
 
             ImageOpenClose = new Image() { Source = ImageSource.FromStream(() => new MemoryStream(user.Picture)) };

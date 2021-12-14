@@ -18,14 +18,15 @@ namespace Encountify.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        ILocation locationAccess;
+        ILocationAccess locationAccess;
         MapViewModel _viewModel = new MapViewModel();
 
         public MapPage()
         {
             InitializeComponent();
             BindingContext = _viewModel;
-            locationAccess = DependencyService.Get<ILocation>();
+
+            locationAccess = DependencyService.Get<ILocationAccess>();
         }
 
         protected override async void OnAppearing()
