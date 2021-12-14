@@ -41,7 +41,7 @@ namespace EncountifyAPI
               .CreateLogger();
 
             Log.Information("-------------------------------------------------------------------");
-            Log.Information("NEW LOGGNG SESSION");
+            Log.Information("NEW LOGGING SESSION");
             Log.Information("-------------------------------------------------------------------");
 
             services.AddControllers();
