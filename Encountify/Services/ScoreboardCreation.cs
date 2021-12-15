@@ -8,15 +8,20 @@ using Xamarin.Forms;
 
 namespace Encountify.Services
 {
-    public class ScoreboardCreation
+    public class ScoreboardCreation : IScoreboardCreation
     {
+        IUserAccess userAccess;
+        IVisitedLocationAccess visitedLocationAccess;
+        public ScoreboardCreation(IUserAccess userAccess, IVisitedLocationAccess visitedLocationAccess)
+        {
+            this.userAccess = userAccess;
+            this.visitedLocationAccess = visitedLocationAccess;
+        }
         public ScoreboardEntry this[int i] => CreateScoreboard().Result.ToArray()[i];
         public async Task<List<ScoreboardEntry>> CreateScoreboard(bool reversed = true)
         {
-            IUserAccess userData = DependencyService.Get<IUserAccess>(); 
-            List<User> users = (List<User>) userData.GetAllAsync().Result;
-            IVisitedLocationAccess visitedLocationsData = DependencyService.Get<IVisitedLocationAccess>();
-            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationsData.GetAllAsync().Result;
+            List<User> users = (List<User>)userAccess.GetAllAsync().Result;
+            List<VisitedLocations> visitedLocations = (List<VisitedLocations>)visitedLocationAccess.GetAllAsync().Result;
 
             var query =
             users.GroupJoin(visitedLocations,

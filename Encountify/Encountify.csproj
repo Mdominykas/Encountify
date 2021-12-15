@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="MailKit" Version="2.15.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="sqlite-net" Version="1.6.292" />
