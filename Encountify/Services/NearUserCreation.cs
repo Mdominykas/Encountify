@@ -1,5 +1,6 @@
 ﻿using Encountify.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -20,7 +21,7 @@ namespace Encountify.Services
 
         public async Task<List<NearUser>> CreateListAsync()
         {
-            ILocation locationData = DependencyService.Get<ILocation>(); ;
+            ILocationAccess locationData = DependencyService.Get<ILocationAccess>(); ;
             DatabaseAccess<VisitedLocations> visitedLocationData = new DatabaseAccess<VisitedLocations>();
 
             List<Location> allLocations = (List<Location>)locationData.GetAllAsync().Result;
@@ -28,8 +29,45 @@ namespace Encountify.Services
 
             var distances = new List<Distance>();
 
-            var locations = allLocations.Where(location => !visitedLocations.Exists(location2 => location2.LocationId == location.Id)); 
+            var locations = allLocations.Where(location => !visitedLocations.Exists(location2 => location2.LocationId == location.Id));
 
+            distances = await CreateDistancesList(locations, distances);
+
+            var query = distances.Join(
+                            locations,
+                            distance => distance.LocationId,
+                            location => location.Id,
+                            (distance, location) => new
+                            {
+                                Id = distance.LocationId,
+                                Name = location.Name,
+                                Distance = distance.LocationDistance,
+                                FormattedDistance = distance.FDistance
+                            });
+
+            var orderedResult = query.OrderBy(location => location.Distance);
+
+            List<NearUser> result = new List<NearUser>();
+
+            foreach (var res in orderedResult)
+            {
+                if(res.Distance < 3000.00)
+                {
+                    result.Add(new NearUser()
+                    {
+                        LocationId = res.Id,
+                        LocationName = res.Name,
+                        Distance = res.Distance,
+                        FormattedDistance = res.FormattedDistance,
+                        Points = 100
+                    });
+                }
+            }
+                return result;
+        }
+
+        public async Task<List<Distance>> CreateDistancesList(IEnumerable<Location> locations, List<Distance> distances)
+        {
             foreach (var location in locations)
             {
                 distances = locations.Select(item => new Distance
@@ -53,37 +91,8 @@ namespace Encountify.Services
                 }
             }
 
-            var query = distances.Join(
-                            locations,
-                            distance => distance.LocationId,
-                            location => location.Id,
-                            (distance, location) => new
-                            {
-                                Id = distance.LocationId,
-                                Name = location.Name,
-                                Distance = distance.LocationDistance,
-                                FormattedDistance = distance.FDistance
-                            });
-
-            var orderedResult = query.OrderBy(location => location.Distance).ThenBy(location => location.Name);
-
-            List<NearUser> result = new List<NearUser>();
-            
-            foreach (var res in orderedResult)
-            {
-                if(res.Distance < 3000.00)
-                {
-                    result.Add(new NearUser()
-                    {
-                        LocationId = res.Id,
-                        LocationName = res.Name,
-                        Distance = res.Distance,
-                        FormattedDistance = res.FormattedDistance,
-                        Points = 100
-                    });
-                }
-            }
-                return result;
+            return distances;
         }
+
     }
 }

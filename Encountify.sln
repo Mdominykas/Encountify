@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Encountify", "Encountify\En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncountifyAPI", "EncountifyAPI\EncountifyAPI.csproj", "{A6630543-D7F5-4CD3-A3CC-C0640DA1BD80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppTests", "AppTests\AppTests.csproj", "{B60F44D0-9A07-40F7-9956-F170D19C5D24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{A6630543-D7F5-4CD3-A3CC-C0640DA1BD80}.Release|iPhone.Build.0 = Release|Any CPU
 		{A6630543-D7F5-4CD3-A3CC-C0640DA1BD80}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{A6630543-D7F5-4CD3-A3CC-C0640DA1BD80}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|iPhone.Build.0 = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B60F44D0-9A07-40F7-9956-F170D19C5D24}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
