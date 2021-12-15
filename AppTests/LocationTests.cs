@@ -3,16 +3,19 @@ using Xunit;
 using Encountify.Models;
 using NUnit.Framework;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace AppTests
 {
     public class LocationTests
     {
         private readonly LocationAccess locationAccess;
+        private List<Location> Locations;
 
         public LocationTests()
         {
             locationAccess = new LocationAccess();
+            Locations = (List<Location>)locationAccess.GetAllAsync().Result;
         }
 
         [Fact]
@@ -30,18 +33,14 @@ namespace AppTests
         //Should be not null
         public async void ValidateGetAll()
         {
-            var locations = await locationAccess.GetAllAsync();
-
-            Assert.IsNotNull(locations);
+            Assert.IsNotNull(Locations);
         }
 
         [Fact]
         //Should not be null
         public async void ValidateGet()
         {
-            var locations = await locationAccess.GetAllAsync();
-
-            var location = locations.First();
+            var location = Locations.First();
 
             var test = await locationAccess.GetAsync(location.Id);
 
@@ -52,7 +51,7 @@ namespace AppTests
         //Should be true
         public async void ValidateDelete()
         {
-            Location location = new Location {Name = "Testing", Latitude = 54.69295, Longitude = 25.35268, Category = (int)Category.Park };
+            var location = Locations.Last();
 
             bool validate = await locationAccess.DeleteAsync(location.Id);
 

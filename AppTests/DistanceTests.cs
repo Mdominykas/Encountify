@@ -35,32 +35,32 @@ namespace AppTests
         public void ValidateFormatting()
         {
             //Meters test
-            var distance = "25,69 m";
+            var testDistance = "25,69 m";
 
-            var _distance = DistanceCounter.ConvertedToMetersDistance(distance);
+            var distance = DistanceCounter.ConvertedToMetersDistance(testDistance);
 
-            Assert.AreEqual(_distance, 25,69);
+            Assert.AreEqual(distance, 25.69);
 
             //Kilometers test
-            var distance2 = "25,69 km";
+            var testDistance2 = "25,69 km";
 
-            var _distance2 = DistanceCounter.ConvertedToMetersDistance(distance2);
+            var distance2 = DistanceCounter.ConvertedToMetersDistance(testDistance2);
 
-            Assert.AreEqual(_distance2, 25690);
+            Assert.AreEqual(distance2, 25690);
 
             //Yards test
-            var distance3 = "25,69 yd";
+            var testDistance3 = "25,69 yd";
 
-            var _distance3 = DistanceCounter.ConvertedToMetersDistance(distance3);
+            var distance3 = DistanceCounter.ConvertedToMetersDistance(testDistance3);
 
-            Assert.AreEqual(_distance3, 23,48);
+            Assert.AreEqual(distance3, 23.48);
 
             //Miles test
-            var distance4 = "25,69 mi";
+            var testDistance4 = "25,69 mi";
 
-            var _distance4 = DistanceCounter.ConvertedToMetersDistance(distance4);
+            var distance4 = DistanceCounter.ConvertedToMetersDistance(testDistance4);
 
-            Assert.AreEqual(_distance4, 41335,21);
+            Assert.AreEqual(distance4, 41335.21);
         }
 
     }

@@ -97,6 +97,7 @@ namespace Encountify.Services
                 var distance = string.Concat(formattedDistance.Split(remove.ToArray()));
                 Double.TryParse(distance, out result);
                 result /= 1.094;
+                result = (double)System.Math.Round(result,2);
             }
 
             else if(end.Equals(" mi"))
