@@ -3,16 +3,19 @@ using Xunit;
 using Encountify.Models;
 using NUnit.Framework;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace AppTests
 {
     public class UserTesting
     {
-        private readonly UserAccess _userAccess;
+        private readonly UserAccess userAccess;
+        private List<User> Users;
 
         public UserTesting()
         {
-            _userAccess = new UserAccess();
+            userAccess = new UserAccess();
+            Users =  (List<User>)userAccess.GetAllAsync().Result;
         }
 
         [Fact]
@@ -21,42 +24,39 @@ namespace AppTests
         {
             User user = new User {Id = 100, Username = "Tester", Password = "Testing123/", Email = "testing@gmail.com", IsAdmin = false };
 
-            bool validate = await _userAccess.AddAsync(user);
+            bool validate = await userAccess.AddAsync(user);
 
             Assert.IsTrue(validate);
         }
 
         [Fact]
-        //Should be false
-        public async void ValidateDelete()
-        {
-            User user = new User {Username = "Tester", Password = "Testing123/", Email = "testing@gmail.com", IsAdmin = false };
-
-            bool validate= await _userAccess.DeleteAsync(user.Id);
-
-            Assert.IsFalse(validate);
-        }
-
-        [Fact]
-        //Should be equal
+        //Should be not null
         public async void ValidateGet()
         {
-           var users = await _userAccess.GetAllAsync();
+            var user = Users.First();
 
-            var user = users.First();
-
-            var test = await _userAccess.GetAsync(user.Id);
+            var test = await userAccess.GetAsync(user.Id);
             
             Assert.NotNull(test);
         }
 
         [Fact]
+        //Should be false, cause there is no such user 
+        public async void ValidateDelete()
+        {
+            User user = new User { Username = "AppTest", Password = "Test", Email = "test@gmail.com", IsAdmin = false };
+
+            bool validate = await userAccess.DeleteAsync(user.Id);
+
+            Assert.IsFalse(validate);
+        }
+
+
+        [Fact]
         //Should be not null
         public async void ValidateGetAll()
         {
-            var users = await _userAccess.GetAllAsync();
-
-            Assert.IsNotNull(users);
+            Assert.IsNotNull(Users);
         }
     }
 }
