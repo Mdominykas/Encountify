@@ -76,6 +76,7 @@ namespace Encountify.Services
         public static Double ConvertedToMetersDistance(string formattedDistance)
         {
             List<Char> remove = new List<char> { 'k', 'm', 'y', 'd', 'i' };
+            formattedDistance = formattedDistance.Replace(',', '.');
             string end = new string(formattedDistance.Where(c => c != '.' && c != ',' && (c < '0' || c > '9')).ToArray());
             double result = 0;
 

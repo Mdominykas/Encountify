@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DistanceTests.cs" />
     <Compile Include="LocationTests.cs" />
+    <Compile Include="ScoreboardCreationTests.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="VisitedLocationsTests.cs" />
   </ItemGroup>

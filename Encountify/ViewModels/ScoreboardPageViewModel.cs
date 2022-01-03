@@ -1,4 +1,5 @@
-﻿using Encountify.Models;
+﻿using Autofac;
+using Encountify.Models;
 using Encountify.Services;
 using Encountify.Views;
 using System;
@@ -21,7 +22,12 @@ namespace Encountify.ViewModels
         public void CreateScoreboard()
         {
             Scoreboard = new ObservableCollection<ScoreboardCell>();
-            var scoreboardCreator = new ScoreboardCreation();
+            IScoreboardCreation scoreboardCreator;
+            using (var scope = App.Container.BeginLifetimeScope())
+            {
+                scoreboardCreator = scope.Resolve<IScoreboardCreation>();
+            }
+            //var scoreboardCreator = new ScoreboardCreation();
             var list = scoreboardCreator.CreateScoreboard().Result;
 
             foreach (var element in list)

@@ -46,6 +46,7 @@ namespace AppTests
 
             var distance2 = DistanceCounter.ConvertedToMetersDistance(testDistance2);
 
+
             Assert.AreEqual(distance2, 25690);
 
             //Yards test

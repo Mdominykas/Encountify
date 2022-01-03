@@ -1,4 +1,5 @@
-﻿using Encountify.Models;
+﻿using Autofac;
+using Encountify.Models;
 using Encountify.Services;
 using SQLite;
 using System;
@@ -16,6 +17,8 @@ namespace Encountify
         public static byte[] UserPicture { get; set; }
         public static bool IsUserScaleInMeters { get; set; }
 
+        public static IContainer Container { get; set; }
+
         public App()
         {
             //here it deletes entire previous database
@@ -29,8 +32,21 @@ namespace Encountify
             db.DropTable<Location>();
 
             InitializeComponent();
-           
+            RegisterDependencies();
+
             MainPage = new AppShell();
+        }
+
+        public void RegisterDependencies()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<ScoreboardCreation>().As<IScoreboardCreation>().SingleInstance();
+            builder.RegisterType<UserAccess>().As<IUserAccess>().SingleInstance();
+            builder.RegisterType<LocationAccess>().As<ILocationAccess>().SingleInstance();
+            builder.RegisterType<VisitedLocationAccess>().As<IVisitedLocationAccess>().SingleInstance();
+
+            Container = builder.Build();
         }
 
         protected override void OnStart()
