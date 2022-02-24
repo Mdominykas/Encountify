@@ -1,5 +1,12 @@
 # Encountify <img src="https://imgur.com/793bo2D.png" alt="Encountify Logo" width="30"/>
 
+# Team 'FoodKept' is currently working on this project 2022-02-24
+## Developers: 
+- Armantas Piksrys
+- Lukas Orliukas
+- Andrej Jazevic
+- Vasaris Kaveckas
+
 ![GitHub](https://img.shields.io/github/license/Mdominykas/Encountify) 
 
 **Encountify** is a community-based city encounter game written with **Xamarin.Forms 5.0**
