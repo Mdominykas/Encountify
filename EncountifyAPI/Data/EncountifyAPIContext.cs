@@ -20,6 +20,10 @@ namespace EncountifyAPI.Data
         public DbSet<EncountifyAPI.Models.Location> Location { get; set; }
 
         public DbSet<EncountifyAPI.Models.VisitedLocation> VisitedLocations { get; set; }
+
+        public DbSet<EncountifyAPI.Models.Achievment> Achievments { get; set; }
+
+        public DbSet<EncountifyAPI.Models.AssignedAchievment> AssignedAchievments { get; set; }
     }
 #pragma warning restore CS1591
 }
