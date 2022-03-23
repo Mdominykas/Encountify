@@ -12,6 +12,7 @@ namespace Encountify
         public static int UserID { get; set; }
         public static string UserName { get; set; }
         public static string UserEmail { get; set; }
+        public static bool IsAdmin { get; set; }
         public static string UserPassword { get; set; }
         public static byte[] UserPicture { get; set; }
         public static bool IsUserScaleInMeters { get; set; }
@@ -29,8 +30,17 @@ namespace Encountify
             db.DropTable<Location>();
 
             InitializeComponent();
-           
-            MainPage = new AppShell();
+
+
+            MainPage = new AdminShell();
+            /*if (IsAdmin == true)
+            {
+                MainPage = new AdminShell();
+            }
+            if (IsAdmin == false)
+            {
+                MainPage = new AppShell();
+            }*/
         }
 
         protected override void OnStart()

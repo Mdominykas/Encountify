@@ -44,6 +44,7 @@ namespace Encountify.Views
                     App.UserID = user.Id;
                     App.UserName = user.Username;
                     App.UserEmail = user.Email;
+                    App.IsAdmin = user.IsAdmin;
                     App.UserPassword = user.Password;
                     App.UserPicture = user.Picture;
                     OnLogin?.Invoke();
