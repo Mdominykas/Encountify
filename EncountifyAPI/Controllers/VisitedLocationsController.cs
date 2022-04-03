@@ -140,7 +140,7 @@ namespace EncountifyAPI.Controllers
         [HttpPut("{id}/User")]
         public IEnumerable<VisitedLocation> EditVisitedLocationUser(int id, int? userId)
         {
-            _visitedHandler.ExecuteVisitedLocationReader(ConnectionString, "UPDATE VisitedLocations SET UserId = @userId WHERE Id = @userId", id: id, userId: userId);
+            _visitedHandler.ExecuteVisitedLocationReader(ConnectionString, "UPDATE VisitedLocations SET UserId = @userId WHERE Id = @id", id: id, userId: userId);
             return GetVisitedLocation(id);
         }
 

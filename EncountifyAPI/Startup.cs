@@ -89,6 +89,14 @@ namespace EncountifyAPI
                 .EnableInterfaceInterceptors().InterceptedBy(typeof(LogAspect))
                 .InstancePerDependency();
 
+            builder.RegisterType<AchievmentControllerExecutables>().As<IAchievmentExecutables>()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(LogAspect))
+                .InstancePerDependency();
+
+            builder.RegisterType<AssignedAchievmentControllerExecutables>().As<IAssignedAchievmentExecutables>()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(LogAspect))
+                .InstancePerDependency();
+
             builder.Register(x => Log.Logger).SingleInstance();
             builder.RegisterType<LogAspect>().SingleInstance();
         }
