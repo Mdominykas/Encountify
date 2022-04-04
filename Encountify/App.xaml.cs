@@ -32,15 +32,15 @@ namespace Encountify
             InitializeComponent();
 
 
-            MainPage = new AdminShell();
-            /*if (IsAdmin == true)
+            //MainPage = new AdminShell();
+            if (UserName == "EncountifyAdmin")
             {
                 MainPage = new AdminShell();
             }
-            if (IsAdmin == false)
+            else
             {
                 MainPage = new AppShell();
-            }*/
+            }
         }
 
         protected override void OnStart()
