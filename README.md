@@ -1,3 +1,4 @@
+[![Build and Test](https://github.com/medikornov/Encountify/actions/workflows/Encountify.yml/badge.svg)](https://github.com/medikornov/Encountify/actions/workflows/Encountify.yml)
 # Encountify <img src="https://imgur.com/793bo2D.png" alt="Encountify Logo" width="30"/>
 
 # Team 'FoodKept' is currently working on this project 2022-02-24
