@@ -65,12 +65,12 @@ namespace Encountify.ViewModels
 
         private async void OnAcceptLocation()
         {
-
+            //TODO
         }
 
         private async void OnDenyLocation()
         {
-
+            //TODO
         }
         public void OnAppearing()
         {
