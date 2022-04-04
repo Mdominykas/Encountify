@@ -65,7 +65,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet("Last/{userId}/{numberOfLocations}")]
         public IEnumerable<VisitedLocation> GetUserLastsVisitedLocation(int? userId, int numberOfLocations)
         {
-            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            List<VisitedLocation> visits = _visitedHandler.ExecuteVisitedLocationReader(ConnectionString, "SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
             return visits.Skip(visits.Count - numberOfLocations);
         }
 
@@ -75,7 +75,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet("First/{userId}")]
         public IEnumerable<VisitedLocation> GetUserFirstVisitedLocation(int? userId)
         {
-            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            List<VisitedLocation> visits = _visitedHandler.ExecuteVisitedLocationReader(ConnectionString, "SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
             yield return visits.FirstOrDefault();
         }
 
@@ -85,7 +85,7 @@ namespace EncountifyAPI.Controllers
         [HttpGet("First/{userId}/{numberOfLocations}")]
         public IEnumerable<VisitedLocation> GetUserFirstsVisitedLocation(int? userId, int numberOfLocations)
         {
-            List<VisitedLocation> visits = ExecuteVisitedLocationReader("SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
+            List<VisitedLocation> visits = _visitedHandler.ExecuteVisitedLocationReader(ConnectionString, "SELECT * FROM VisitedLocations WHERE UserId = @userId", userId: userId);
             return visits.Take(numberOfLocations);
         }
 

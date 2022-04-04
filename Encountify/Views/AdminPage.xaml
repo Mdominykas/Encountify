@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Encountify.Views.AdminPage"
+    xmlns:local="clr-namespace:Encountify.ViewModels"
+    xmlns:model="clr-namespace:Encountify.Models"
+    x:Name="BrowseLocationsPage"
+    Title="Admin">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Accept" Command="{Binding AcceptLocationCommand}"/>
+        <ToolbarItem Text="Deny" Command="{Binding DenyLocationCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <RefreshView
+        x:DataType="local:AdminViewModel"
+        Command="{Binding LoadLocationsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        
+        <CollectionView
+            x:Name="LocationListView"
+            ItemsSource="{Binding Locations}"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <StackLayout
+                        Padding="10"
+                        x:DataType="model:Location">
+
+                        <Label
+                            Text="{Binding Name}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListLocationTextStyle}"
+                            FontSize="16" />
+
+                        <Label
+                            Text="{Binding Description}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListLocationDetailTextStyle}"
+                            FontSize="13" />
+
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:AdminViewModel}}, Path=LocationTapped}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+
+                    </StackLayout>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </RefreshView>
+
+</ContentPage>
+
+            
+            
+     

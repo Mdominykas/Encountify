@@ -60,6 +60,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AdminShell.xaml.cs">
+      <DependentUpon>AdminShell.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\LocationsPage.xaml.cs">
       <DependentUpon>LocationsPage.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="AdminShell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AdminPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\LocationsNearUserPage.xaml">
 		<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 	</EmbeddedResource>
