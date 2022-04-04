@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Encountify.Views.AchievmentsPage"
+    xmlns:local="clr-namespace:Encountify.ViewModels"
+    xmlns:model="clr-namespace:Encountify.Models"
+    x:Name="BrowseAchievmentsPage"
+    Title="Achievments">
+
+    <RefreshView
+        x:DataType="local:AchievmentsViewModel"
+        Command="{Binding LoadAchievmentsCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+
+        <CollectionView
+            x:Name="AchievmentsListView"
+            ItemsSource="{Binding Achievments}"
+            SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <StackLayout
+                        Padding="10"
+                        x:DataType="model:Achievment">
+
+                        <Label
+                            Text="{Binding Name}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListLocationTextStyle}"
+                            FontSize="16" />
+
+                        <Label
+                            Text="{Binding Description}"
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListLocationDetailTextStyle}"
+                            FontSize="13" />
+
+                    </StackLayout>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </RefreshView>
+
+</ContentPage>

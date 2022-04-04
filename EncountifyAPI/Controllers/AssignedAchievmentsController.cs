@@ -73,9 +73,9 @@ namespace EncountifyAPI.Controllers
         /// Add a new visit
         /// </summary>
         [HttpPost]
-        public IEnumerable<AssignedAchievment> AddAssignedAchievment(int userId, int achievmentId, DateTime? assignmentDate)
+        public IEnumerable<AssignedAchievment> AddAssignedAchievment(int userId, int achievmentId)
         {
-            _assignedHandler.ExecuteAssignedAchievmentReader(ConnectionString, "INSERT INTO AssignedAchievments VALUES (@userId, @achievmentId, @assignmentDate)", userId: userId, achievmentId: achievmentId, assignmentDate: assignmentDate);
+            _assignedHandler.ExecuteAssignedAchievmentReader(ConnectionString, "INSERT INTO AssignedAchievments VALUES (@userId, @achievmentId)", userId: userId, achievmentId: achievmentId);
             return GetUserLastAssignedAchievment(userId);
         }
 
@@ -83,14 +83,13 @@ namespace EncountifyAPI.Controllers
         /// Edit visit data
         /// </summary>
         [HttpPut("{id}")]
-        public IEnumerable<AssignedAchievment> EditAssignedAchievment(int id, int? achievmentId = null, int? userId = null, DateTime? assignmentDate = null)
+        public IEnumerable<AssignedAchievment> EditAssignedAchievment(int id, int? achievmentId = null, int? userId = null)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 if (achievmentId != null) EditAssignedAchievmentId(id, achievmentId);
                 if (userId != null) EditAssignedAchievmentUser(id, userId);
-                if (assignmentDate != null) EditAssignedAchievmentDate(id, assignmentDate);
             }
             return GetAssignedAchievment(id);
         }
@@ -112,16 +111,6 @@ namespace EncountifyAPI.Controllers
         public IEnumerable<AssignedAchievment> EditAssignedAchievmentUser(int id, int? userId)
         {
             _assignedHandler.ExecuteAssignedAchievmentReader(ConnectionString, "UPDATE AssignedAchievments SET UserId = @userId WHERE Id = @id", id: id, userId: userId);
-            return GetAssignedAchievment(id);
-        }
-
-        /// <summary>
-        /// Edit an existing visited location's points
-        /// </summary>
-        [HttpPut("{id}/Points")]
-        public IEnumerable<AssignedAchievment> EditAssignedAchievmentDate(int id, DateTime? assignmentDate)
-        {
-            _assignedHandler.ExecuteAssignedAchievmentReader(ConnectionString, "UPDATE AssignedAchievments SET AssignmentDate = @assignmentDate WHERE Id = @id", id: id, assignmentDate: assignmentDate);
             return GetAssignedAchievment(id);
         }
 

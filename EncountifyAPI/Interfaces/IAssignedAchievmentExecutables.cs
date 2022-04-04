@@ -6,7 +6,7 @@ namespace EncountifyAPI.Interfaces
 {
     public interface IAssignedAchievmentExecutables
     {
-        List<AssignedAchievment> ExecuteAssignedAchievmentReader(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null, DateTime? assignmentDate = null);
-        void ExecuteAssignedAchievmentQuery(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null, DateTime? assignmentDate = null);
+        List<AssignedAchievment> ExecuteAssignedAchievmentReader(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null);
+        void ExecuteAssignedAchievmentQuery(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null);
     }
 }

@@ -68,6 +68,13 @@
     </FlyoutItem>
 
     <FlyoutItem
+        Title="Achievments">
+        <ShellContent
+            Route="AchievmentsPage"
+            ContentTemplate="{DataTemplate local:AchievmentsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
         Title="Profile">
         <ShellContent
             Route="ProfilePage"

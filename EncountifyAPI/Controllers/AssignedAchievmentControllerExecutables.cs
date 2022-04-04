@@ -8,7 +8,7 @@ namespace EncountifyAPI.Controllers
 {
     public class AssignedAchievmentControllerExecutables : IAssignedAchievmentExecutables
     {
-        public List<AssignedAchievment> ExecuteAssignedAchievmentReader(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null, DateTime? assignmentDate = null)
+        public List<AssignedAchievment> ExecuteAssignedAchievmentReader(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null)
         {
             List<AssignedAchievment> assignments = new List<AssignedAchievment>();
             using (var connection = new SqlConnection(connectionString))
@@ -19,7 +19,6 @@ namespace EncountifyAPI.Controllers
                 if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
                 if (userId != null) command.Parameters.AddWithValue("@userId", userId ?? default(int));
                 if (achievmentId != null) command.Parameters.AddWithValue("@achievmentId", achievmentId ?? default(int));
-                if (assignmentDate != null) command.Parameters.AddWithValue("@assignmentDate", assignmentDate.ToString() ?? default(string));
 
                 using SqlDataReader reader = command.ExecuteReader();
 
@@ -31,7 +30,7 @@ namespace EncountifyAPI.Controllers
             return assignments;
         }
 
-        public void ExecuteAssignedAchievmentQuery(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null, DateTime? assignmentDate = null)
+        public void ExecuteAssignedAchievmentQuery(string connectionString, string query, int? id = null, int? userId = null, int? achievmentId = null)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -41,7 +40,6 @@ namespace EncountifyAPI.Controllers
                 if (id != null) command.Parameters.AddWithValue("@id", id ?? default(int));
                 if (userId != null) command.Parameters.AddWithValue("@userId", userId ?? default(int));
                 if (achievmentId != null) command.Parameters.AddWithValue("@achievmentId", achievmentId ?? default(int));
-                if (assignmentDate != null) command.Parameters.AddWithValue("@assignmentDate", assignmentDate.ToString() ?? default(string));
 
                 command.ExecuteNonQuery();
             }
@@ -55,7 +53,6 @@ namespace EncountifyAPI.Controllers
                 Id = (int)reader["Id"],
                 UserId = (int)reader["UserId"],
                 AchievmentId = (int)reader["AchievmentId"],
-                AssignmentDate = Convert.ToDateTime(reader["AssignmentDate"])
             };
             return assignment;
         }

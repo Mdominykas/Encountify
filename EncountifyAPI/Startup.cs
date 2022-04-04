@@ -117,7 +117,7 @@ namespace EncountifyAPI
 
             app.UseRouting();
 
-            app.UseMiddleware<StatisticsMiddleware>();
+            //app.UseMiddleware<StatisticsMiddleware>();
 
             app.UseAuthorization();
 

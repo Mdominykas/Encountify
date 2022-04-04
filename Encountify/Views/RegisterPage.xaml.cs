@@ -15,10 +15,12 @@ namespace Encountify.Views
     {
         RegisterPageViewModel _viewModel;
         IUserAccess DataStore; //= new DatabaseAccess<User>();
+        IAssignedAchievmentAccess AssignedAchievmentDataStore;
 
         public RegisterPage()
         {
             DataStore = DependencyService.Get<IUserAccess>();
+            AssignedAchievmentDataStore = DependencyService.Get<IAssignedAchievmentAccess>();
             InitializeComponent();
             
             Username.ReturnCommand = new Command(() => Email.Focus());
@@ -54,6 +56,10 @@ namespace Encountify.Views
                         user.Password = Password.Text;
                         user.Email = Email.Text;
                         RegisterUser(user);
+                        await DisplayAlert("Congratulations!", "You got an achievment, Welcome to Encountify!", "OK");
+                        var newUsers = await DataStore.GetAllAsync(true);
+                        var newUser = newUsers.Where(x => x.Username == user.Username).FirstOrDefault();
+                        AssignAchievment(newUser);
                         await Shell.Current.GoToAsync("//LoginPage");
                         ResetValues();
                         ResetFocus();
@@ -75,6 +81,12 @@ namespace Encountify.Views
         {
             await DataStore.AddAsync(user);
             DependencyService.Get<MessagePopup>().ShortAlert("Record Added Successfully.....");
+        }
+
+        public async void AssignAchievment(User user)
+        {
+            var assignedAchievment = new AssignedAchievment() { UserId = user.Id, AchievmentId = 1};
+            await AssignedAchievmentDataStore.AddAsync(assignedAchievment);
         }
 
         private Boolean ValidUsername(string username)

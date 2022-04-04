@@ -10,12 +10,22 @@ namespace Encountify.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public static ILocationAccess LocationData = null;
+        public static IAchievmentAccess AchievmentData = null;
+        public static IAssignedAchievmentAccess AssignedAchievmentData = null;
 
         public BaseViewModel()
         {
             if (LocationData == null)
             {
                 LocationData = DependencyService.Get<ILocationAccess>();
+            }
+            if (AchievmentData == null)
+            {
+                AchievmentData = DependencyService.Get<IAchievmentAccess>();
+            }
+            if (AssignedAchievmentData == null)
+            {
+                AssignedAchievmentData = DependencyService.Get<IAssignedAchievmentAccess>();
             }
         }
 
