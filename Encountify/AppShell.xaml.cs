@@ -15,6 +15,7 @@ namespace Encountify
             Routing.RegisterRoute("MapPage", typeof(MapPage));
             Routing.RegisterRoute("LocationsNearUserPage", typeof(LocationsNearUserPage));
             Routing.RegisterRoute("NewLocationMapPage", typeof(NewLocationMapPage));
+            Routing.RegisterRoute("NewPostPage", typeof(NewPostPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

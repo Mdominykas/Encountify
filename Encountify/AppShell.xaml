@@ -75,6 +75,13 @@
     </FlyoutItem>
 
     <FlyoutItem
+        Title="Forum">
+        <ShellContent
+            Route="UserPostsPage"
+            ContentTemplate="{DataTemplate local:UserPostsPage}"/>
+    </FlyoutItem>
+
+    <FlyoutItem
         Title="Profile">
         <ShellContent
             Route="ProfilePage"
